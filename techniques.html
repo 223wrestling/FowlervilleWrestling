@@ -87,6 +87,32 @@
       gap: 0.5rem;
     }
 
+    .flowchart-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+    .flowchart-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.3rem 0.75rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      text-decoration: none;
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .flowchart-links a:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
     .videos-section h3 {
       color: var(--primary);
       margin-bottom: 0.75rem;
@@ -128,6 +154,11 @@
       <div class="no-print" style="margin-bottom:1rem;">
         <input type="text" id="search-box" placeholder="Search techniques..." style="width:100%;padding:0.6rem 1rem;border:1px solid var(--border);border-radius:var(--radius);font-size:1rem;">
       </div>
+      <div id="flowchart-bar" style="display:none;margin-bottom:1.5rem;">
+        <h3 style="color:var(--primary);margin-bottom:0.25rem;">Chain Wrestling Flowcharts</h3>
+        <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:0.5rem;">See how techniques connect into chains and series</p>
+        <div id="flowchart-links" class="flowchart-links"></div>
+      </div>
       <div id="category-list"></div>
     </div>
 
@@ -151,6 +182,7 @@
       });
 
       renderList();
+      renderFlowchartBar();
       handleRoute();
       window.addEventListener('hashchange', handleRoute);
 
@@ -189,6 +221,30 @@
         const visible = sec.querySelectorAll('.technique-card[style=""], .technique-card:not([style])');
         sec.style.display = visible.length ? '' : 'none';
       });
+    }
+
+    function renderFlowchartBar() {
+      const flowcharts = allData.flowcharts || [];
+      if (!flowcharts.length) return;
+      const bar = document.getElementById('flowchart-bar');
+      const links = document.getElementById('flowchart-links');
+      links.innerHTML = flowcharts.map(fc =>
+        `<a href="flowcharts/chart.html?chart=${fc.id}">&#9741; ${fc.name}</a>`
+      ).join('');
+      bar.style.display = 'block';
+    }
+
+    function findFlowchartsForTechnique(label) {
+      const flowcharts = allData.flowcharts || [];
+      const labelLower = label.toLowerCase();
+      return flowcharts.filter(fc =>
+        fc.nodes.some(n => {
+          const nodeLower = n.label.toLowerCase();
+          return nodeLower === labelLower ||
+                 labelLower.includes(nodeLower) ||
+                 nodeLower.includes(labelLower);
+        })
+      );
     }
 
     function handleRoute() {
@@ -254,6 +310,18 @@
               </div>
             </div>
             ` : ''}
+
+            ${(() => {
+              const fcs = findFlowchartsForTechnique(technique.name);
+              return fcs.length ? `
+              <div class="related-section">
+                <h3>See in Flowchart</h3>
+                <div class="flowchart-links">
+                  ${fcs.map(fc => `<a href="flowcharts/chart.html?chart=${fc.id}">&#9741; ${fc.name}</a>`).join('')}
+                </div>
+              </div>
+              ` : '';
+            })()}
           </div>
 
           <div class="videos-section">
