@@ -73,16 +73,6 @@
   </footer>
 
   <script>
-    const FILE_MAP = {
-      'underhook-series': 'underhook.html',
-      'collar-tie-series': 'collar-tie.html',
-      'head-on-wrist-series': 'head-on-wrist.html',
-      'russian-tie-series': 'russian-tie.html',
-      'russian-tie-reactions': 'russian-tie-reactions.html',
-      'elbow-control-series': 'elbow-control.html',
-      'front-headlock-series': 'front-headlock.html'
-    };
-
     fetch('../techniques.json')
       .then(r => r.json())
       .then(data => {
@@ -90,7 +80,7 @@
         const flowcharts = data.flowcharts || [];
 
         flowcharts.forEach(fc => {
-          const file = FILE_MAP[fc.id] || fc.id + '.html';
+          const file = 'chart.html?chart=' + fc.id;
           const nodeCount = fc.nodes ? fc.nodes.length : 0;
           const edgeCount = fc.edges ? fc.edges.length : 0;
 

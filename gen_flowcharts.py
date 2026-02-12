@@ -150,8 +150,7 @@ def generate_flowchart_html(fc):
         mid_y = (y1_adj + y2_adj) / 2
 
         svg_edges.append(f'''
-    <path class="fc-edge" d="M {x1} {y1_adj} C {x1} {mid_y}, {x2} {mid_y}, {x2} {y2_adj}"
-          marker-end="url(#arrowhead)"/>''')
+    <path class="fc-edge" d="M {x1} {y1_adj} C {x1} {mid_y}, {x2} {mid_y}, {x2} {y2_adj}"/>''')
 
     # Build node data for popups
     node_data = {}
@@ -226,11 +225,7 @@ def generate_flowchart_html(fc):
 
     <div class="flowchart-wrapper">
       <svg viewBox="0 0 {svg_width} {svg_height}" width="{svg_width}" height="{svg_height}" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-            <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
-          </marker>
-        </defs>
+        <defs></defs>
         {''.join(svg_edges)}
         {''.join(svg_nodes)}
       </svg>

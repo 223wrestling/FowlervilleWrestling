@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flow Chart - Fowlerville Wrestling</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .flowchart-wrapper {
+      text-align: center;
+      overflow-x: auto;
+      padding: 1rem;
+    }
+    svg { max-width: 100%; height: auto; }
+    .legend {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+      font-size: 0.85rem;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .legend-dot {
+      width: 16px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--primary);
+    }
+    .legend-dot.root { background: var(--primary); }
+    .legend-dot.action { background: #d9d9d9; }
+    .legend-dot.finish { background: #e8eef4; }
+    .legend-dot.link { background: #fff3cd; border-color: #856404; }
+    .legend-dot.reaction { background: #d4edda; border-color: #155724; }
+    .fc-node { cursor: pointer; }
+  </style>
+</head>
+<body>
+  <script>window.NAV_BASE = '../';</script>
+  <script src="../js/nav.js"></script>
+
+  <div class="container">
+    <a href="index.html" class="back-link" style="display:inline-flex;align-items:center;gap:0.3rem;color:var(--primary);text-decoration:none;font-weight:500;margin-bottom:1rem;">&larr; All Flow Charts</a>
+
+    <h1 id="chart-title" style="color:var(--primary);margin-bottom:0.25rem;"></h1>
+    <p class="text-muted" style="margin-bottom:0.5rem;">Chain Wrestling Flow Chart</p>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot root"></div> Starting Position</div>
+      <div class="legend-item"><div class="legend-dot action"></div> Technique / Action</div>
+      <div class="legend-item"><div class="legend-dot finish"></div> Finish</div>
+      <div class="legend-item"><div class="legend-dot link"></div> Links to Another Series</div>
+    </div>
+
+    <div class="flowchart-wrapper">
+      <svg id="chart-svg" xmlns="http://www.w3.org/2000/svg">
+        <defs></defs>
+      </svg>
+    </div>
+
+    <p id="chart-hint" style="display:none;text-align:center;color:var(--text-light);font-size:0.85rem;margin-top:0.5rem;">Click any node to see technique details and video links</p>
+  </div>
+
+  <!-- Popup -->
+  <div class="popup-overlay" id="popup" onclick="if(event.target===this)closePopup()">
+    <div class="popup-panel">
+      <button class="popup-close" onclick="closePopup()">&times;</button>
+      <div id="popup-content"></div>
+    </div>
+  </div>
+
+  <script>
+  (function() {
+    const chartId = new URLSearchParams(location.search).get('chart');
+    if (!chartId) {
+      document.querySelector('.container').innerHTML = '<p class="text-muted">No chart specified. <a href="index.html">View all flowcharts</a></p>';
+      return;
+    }
+
+    const NODE_W = 150, NODE_H = 50;
+    let techniquesData = null;
+    let nodeData = {};
+
+    // --- BFS tree layout (matches gen_flowcharts.py) ---
+    function layoutTree(fc) {
+      const rootId = fc.rootNode;
+      const children = {};
+      for (const e of fc.edges) {
+        if (!children[e.from]) children[e.from] = [];
+        children[e.from].push(e.to);
+      }
+
+      const levels = {};
+      const queue = [rootId];
+      levels[rootId] = 0;
+      const visited = new Set([rootId]);
+      while (queue.length) {
+        const nid = queue.shift();
+        for (const child of (children[nid] || [])) {
+          if (!visited.has(child)) {
+            levels[child] = levels[nid] + 1;
+            visited.add(child);
+            queue.push(child);
+          }
+        }
+      }
+      for (const n of fc.nodes) {
+        if (!(n.id in levels)) levels[n.id] = 1;
+      }
+
+      const levelGroups = {};
+      for (const [nid, lvl] of Object.entries(levels)) {
+        if (!levelGroups[lvl]) levelGroups[lvl] = [];
+        levelGroups[lvl].push(nid);
+      }
+
+      const maxLevel = Math.max(...Object.values(levels));
+      const H_GAP = 30, V_GAP = 100;
+
+      let maxWidth = 0;
+      for (let lvl = 0; lvl <= maxLevel; lvl++) {
+        const group = levelGroups[lvl] || [];
+        maxWidth = Math.max(maxWidth, group.length * NODE_W + (group.length - 1) * H_GAP);
+      }
+
+      const svgWidth = Math.max(maxWidth + 80, 600);
+      const positions = {};
+      for (let lvl = 0; lvl <= maxLevel; lvl++) {
+        const group = levelGroups[lvl] || [];
+        const n = group.length;
+        const rowWidth = n * NODE_W + (n - 1) * H_GAP;
+        const startX = (svgWidth - rowWidth) / 2;
+        const y = 60 + lvl * (NODE_H + V_GAP);
+        for (let i = 0; i < n; i++) {
+          positions[group[i]] = { x: startX + i * (NODE_W + H_GAP) + NODE_W / 2, y };
+        }
+      }
+
+      const svgHeight = 60 + (maxLevel + 1) * (NODE_H + V_GAP) + 40;
+      return { positions, svgWidth, svgHeight };
+    }
+
+    function wrapText(label, maxLen) {
+      if (label.length <= maxLen) return [label];
+      const words = label.split(' ');
+      const lines = [];
+      let line = '';
+      words.forEach(w => {
+        if ((line + ' ' + w).trim().length > maxLen && line) {
+          lines.push(line);
+          line = w;
+        } else {
+          line = (line + ' ' + w).trim();
+        }
+      });
+      if (line) lines.push(line);
+      return lines;
+    }
+
+    // --- Render ---
+    function renderChart(fc) {
+      const { positions, svgWidth, svgHeight } = layoutTree(fc);
+      const nodesMap = {};
+      fc.nodes.forEach(n => { nodesMap[n.id] = n; });
+
+      const svg = document.getElementById('chart-svg');
+      svg.setAttribute('viewBox', `0 0 ${svgWidth} ${svgHeight}`);
+      svg.setAttribute('width', svgWidth);
+      svg.setAttribute('height', svgHeight);
+
+      // Draw edges
+      fc.edges.forEach(e => {
+        const from = positions[e.from], to = positions[e.to];
+        if (!from || !to) return;
+        const fromNode = nodesMap[e.from], toNode = nodesMap[e.to];
+        const fromRy = NODE_H / 2 + (wrapText(fromNode.label, 18).length > 1 ? 6 : 0);
+        const toRy = NODE_H / 2 + (wrapText(toNode.label, 18).length > 1 ? 6 : 0);
+
+        const y1 = from.y + fromRy;
+        const y2 = to.y - toRy;
+        const midY = (y1 + y2) / 2;
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('class', 'fc-edge');
+        path.setAttribute('d', `M ${from.x} ${y1} C ${from.x} ${midY}, ${to.x} ${midY}, ${to.x} ${y2}`);
+        svg.appendChild(path);
+      });
+
+      // Draw nodes
+      fc.nodes.forEach(n => {
+        const pos = positions[n.id];
+        if (!pos) return;
+        const lines = wrapText(n.label, 18);
+        const rx = NODE_W / 2;
+        const ry = NODE_H / 2 + (lines.length - 1) * 6;
+        const ntype = n.type || 'action';
+
+        nodeData[n.id] = { label: n.label, type: ntype };
+
+        const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        g.setAttribute('class', 'fc-node node-' + ntype);
+        g.setAttribute('data-id', n.id);
+        g.addEventListener('click', () => showNodeInfo(n.id));
+
+        const ellipse = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+        ellipse.setAttribute('cx', pos.x);
+        ellipse.setAttribute('cy', pos.y);
+        ellipse.setAttribute('rx', rx);
+        ellipse.setAttribute('ry', ry);
+        g.appendChild(ellipse);
+
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', pos.x);
+        text.setAttribute('y', pos.y - (lines.length - 1) * 8);
+        lines.forEach((line, i) => {
+          const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+          tspan.setAttribute('x', pos.x);
+          if (i > 0) tspan.setAttribute('dy', '16');
+          tspan.textContent = line;
+          text.appendChild(tspan);
+        });
+        g.appendChild(text);
+        svg.appendChild(g);
+      });
+
+      document.getElementById('chart-hint').style.display = 'block';
+    }
+
+    // --- Popups ---
+    function findTechnique(label) {
+      if (!techniquesData) return null;
+      const labelLower = label.toLowerCase();
+      for (const cat of techniquesData.categories) {
+        for (const t of cat.techniques) {
+          if (t.name.toLowerCase() === labelLower ||
+              labelLower.includes(t.name.toLowerCase()) ||
+              t.name.toLowerCase().includes(labelLower)) {
+            return t;
+          }
+        }
+      }
+      return null;
+    }
+
+    function showNodeInfo(nodeId) {
+      const node = nodeData[nodeId];
+      if (!node) return;
+
+      const technique = findTechnique(node.label);
+      const content = document.getElementById('popup-content');
+
+      let html = '<h2 style="color:var(--primary);margin-bottom:0.5rem;">' + node.label + '</h2>';
+
+      if (technique) {
+        html += '<p style="margin-bottom:1rem;">' + technique.description + '</p>';
+        if (technique.keyPoints && technique.keyPoints.length) {
+          html += '<h3 style="color:var(--primary-light);margin-bottom:0.5rem;">Key Points</h3>';
+          html += '<ul class="key-points">' + technique.keyPoints.map(p => '<li>' + p + '</li>').join('') + '</ul>';
+        }
+        if (technique.videos && technique.videos.length) {
+          html += '<h3 style="color:var(--primary-light);margin:1rem 0 0.5rem;">Video</h3>';
+          const v = technique.videos[0];
+          html += '<div class="video-container"><iframe src="https://www.youtube.com/embed/' + v.id + '" allowfullscreen loading="lazy"></iframe></div>';
+          html += '<p style="font-size:0.85rem;color:var(--text-light);">' + v.title + '</p>';
+        }
+        html += '<div style="margin-top:1rem;"><a href="../techniques.html#' + technique.id + '" class="btn btn-primary" style="color:white;">View Full Details</a></div>';
+      } else {
+        html += '<p style="color:var(--text-light);">Click "View Full Details" for more information about this technique.</p>';
+        const searchTerm = node.label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        html += '<div style="margin-top:1rem;"><a href="../techniques.html#' + searchTerm + '" class="btn btn-outline">Search Techniques</a></div>';
+      }
+
+      content.innerHTML = html;
+      document.getElementById('popup').classList.add('active');
+    }
+
+    window.closePopup = function() {
+      document.getElementById('popup').classList.remove('active');
+    };
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closePopup();
+    });
+
+    // --- Load and render ---
+    fetch('../techniques.json')
+      .then(r => r.json())
+      .then(data => {
+        techniquesData = data;
+        const fc = data.flowcharts.find(f => f.id === chartId);
+        if (!fc) {
+          document.querySelector('.container').innerHTML = '<p class="text-muted">Flowchart not found: ' + chartId + '. <a href="index.html">View all flowcharts</a></p>';
+          return;
+        }
+        document.getElementById('chart-title').textContent = fc.name;
+        document.title = fc.name + ' - Wrestling Flow Chart';
+        renderChart(fc);
+      })
+      .catch(() => {
+        document.querySelector('.container').innerHTML = '<p class="text-muted">Could not load flowchart data.</p>';
+      });
+  })();
+  </script>
+</body>
+</html>

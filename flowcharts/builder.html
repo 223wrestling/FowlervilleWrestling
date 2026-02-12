@@ -125,8 +125,36 @@
     }
     .status-msg.show { opacity: 1; }
 
+    .chart-title {
+      display: none;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 0.4rem 1rem;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .canvas-wrap.mode-preview { cursor: default; }
+    .canvas-wrap.mode-preview .fc-node { cursor: pointer; }
+
+    .preview-banner {
+      display: none;
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 0.3rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+    .preview-banner.show { display: block; }
+
     @media print {
-      .site-nav, .builder-toolbar, .builder-legend, .status-msg { display: none !important; }
+      .site-nav, .builder-toolbar, .builder-legend, .status-msg, .preview-banner { display: none !important; }
+      .chart-title { display: block !important; font-size: 1.5rem; border: none; }
       body { overflow: visible; height: auto; }
       .canvas-wrap { overflow: visible; cursor: default; }
       #canvas { max-width: 100%; height: auto; }
@@ -157,10 +185,15 @@
     </div>
     <div class="tb-sep"></div>
     <div class="tb-group">
-      <button class="tb-btn" id="btn-save" title="Save to browser storage">Save</button>
-      <button class="tb-btn" id="btn-load" title="Load from browser storage">Load</button>
       <button class="tb-btn" id="btn-clear" title="Clear canvas">Clear</button>
       <button class="tb-btn" id="btn-print" title="Print flowchart">Print</button>
+      <button class="tb-btn" id="btn-export" title="Export as JSON">Export JSON</button>
+      <button class="tb-btn" id="btn-import" title="Import from JSON file">Import JSON</button>
+      <input type="file" id="import-file" accept=".json" style="display:none">
+    </div>
+    <div class="tb-sep"></div>
+    <div class="tb-group">
+      <button class="tb-btn" id="btn-preview" title="Preview with technique popups">Preview</button>
     </div>
   </div>
 
@@ -171,16 +204,24 @@
     <div class="legend-item"><div class="legend-dot link"></div> Links to Another Series</div>
   </div>
 
+  <div class="chart-title" id="chart-title"></div>
+
   <div class="canvas-wrap" id="canvas-wrap">
     <svg id="canvas" xmlns="http://www.w3.org/2000/svg" width="2000" height="1500">
-      <defs>
-        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-          <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
-        </marker>
-      </defs>
+      <defs></defs>
       <g id="edges-layer"></g>
       <g id="nodes-layer"></g>
     </svg>
+  </div>
+
+  <div class="preview-banner" id="preview-banner">Preview Mode — click any node to see technique details &amp; videos. Click "Preview" again to return to editing.</div>
+
+  <!-- Popup for preview mode -->
+  <div class="popup-overlay" id="popup" onclick="if(event.target===this)document.getElementById('popup').classList.remove('active')">
+    <div class="popup-panel">
+      <button class="popup-close" onclick="document.getElementById('popup').classList.remove('active')">&times;</button>
+      <div id="popup-content"></div>
+    </div>
   </div>
 
   <div class="status-msg" id="status"></div>
@@ -194,6 +235,26 @@
 
     const NODE_RX = 75;
     const NODE_RY = 25;
+
+    // --- Chart loading from URL param ---
+    const urlParams = new URLSearchParams(window.location.search);
+    const chartId = urlParams.get('chart');
+    let chartMeta = null; // stores original flowchart metadata for export
+
+    // --- Technique data for autocomplete and preview popups ---
+    let techniquesData = null;
+    let techniqueNames = [];
+    fetch('../techniques.json')
+      .then(r => r.json())
+      .then(data => {
+        techniquesData = data;
+        for (const cat of data.categories) {
+          for (const t of cat.techniques) {
+            techniqueNames.push(t.name);
+          }
+        }
+      })
+      .catch(() => {});
 
     // --- Mode state ---
     let mode = 'add';       // 'add' | 'connect' | 'delete'
@@ -262,9 +323,10 @@
 
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         path.setAttribute('d', `M ${x1} ${y1} Q ${midX + perpX} ${midY + perpY}, ${x2} ${y2}`);
-        path.setAttribute('marker-end', 'url(#arrowhead)');
-        path.style.strokeWidth = '2';
-        path.style.stroke = '#666';
+        path.style.strokeWidth = '3.5';
+        path.style.stroke = '#888';
+        path.style.strokeDasharray = '10 5';
+        path.style.strokeLinecap = 'round';
         path.style.fill = 'none';
 
         // Wider invisible hit area for clicking
@@ -361,7 +423,7 @@
       let dragState = null;
 
       g.addEventListener('mousedown', (e) => {
-        if (mode === 'connect' || mode === 'delete') return;
+        if (mode === 'preview' || mode === 'connect' || mode === 'delete') return;
         e.preventDefault();
         const pt = svgPoint(e);
         dragState = { startX: pt.x, startY: pt.y, nodeX: node.x, nodeY: node.y, moved: false };
@@ -390,6 +452,11 @@
 
       g.addEventListener('click', (e) => {
         e.stopPropagation();
+
+        if (mode === 'preview') {
+          showNodePopup(node);
+          return;
+        }
 
         if (mode === 'connect') {
           if (!connectFrom) {
@@ -421,8 +488,9 @@
         }
       });
 
-      // Double-click to edit label
+      // Double-click to edit label (not in preview mode)
       g.addEventListener('dblclick', (e) => {
+        if (mode === 'preview') return;
         e.preventDefault();
         e.stopPropagation();
         editNodeLabel(node);
@@ -439,9 +507,20 @@
       const scrollL = wrap.scrollLeft;
       const scrollT = wrap.scrollTop;
 
+      // Build datalist from technique names
+      const listId = 'tech-suggestions';
+      let datalist = document.getElementById(listId);
+      if (!datalist) {
+        datalist = document.createElement('datalist');
+        datalist.id = listId;
+        document.body.appendChild(datalist);
+      }
+      datalist.innerHTML = techniqueNames.map(n => `<option value="${n}">`).join('');
+
       const input = document.createElement('input');
       input.type = 'text';
       input.className = 'node-label-input';
+      input.setAttribute('list', listId);
       input.value = node.label;
       input.style.left = (node.x - 60 + rect.left - wrap.getBoundingClientRect().left + scrollL) + 'px';
       input.style.top = (node.y - 12 + rect.top - wrap.getBoundingClientRect().top + scrollT) + 'px';
@@ -511,27 +590,6 @@
       showStatus('Click a node or edge to delete it');
     });
 
-    document.getElementById('btn-save').addEventListener('click', () => {
-      const data = JSON.stringify({ nodes, edges, nextId });
-      localStorage.setItem('fc-builder', data);
-      showStatus('Flowchart saved');
-    });
-
-    document.getElementById('btn-load').addEventListener('click', () => {
-      const data = localStorage.getItem('fc-builder');
-      if (!data) { showStatus('No saved flowchart found'); return; }
-      try {
-        const parsed = JSON.parse(data);
-        nodes = parsed.nodes || [];
-        edges = parsed.edges || [];
-        nextId = parsed.nextId || nodes.length + 1;
-        render();
-        showStatus('Flowchart loaded');
-      } catch(e) {
-        showStatus('Error loading saved data');
-      }
-    });
-
     document.getElementById('btn-clear').addEventListener('click', () => {
       if (nodes.length === 0 && edges.length === 0) return;
       if (!confirm('Clear the entire flowchart?')) return;
@@ -567,8 +625,13 @@
       connectFrom = null;
       addType = null;
       clearActiveButtons();
-      wrap.className = 'canvas-wrap' + (m === 'connect' ? ' mode-connect' : m === 'delete' ? ' mode-delete' : ' mode-move');
-      if (m === 'add') wrap.className = 'canvas-wrap';
+      wrap.className = 'canvas-wrap' +
+        (m === 'connect' ? ' mode-connect' :
+         m === 'delete' ? ' mode-delete' :
+         m === 'preview' ? ' mode-preview' :
+         m === 'add' ? '' : ' mode-move');
+      document.getElementById('preview-banner').classList.toggle('show', m === 'preview');
+      if (m === 'preview') document.getElementById('btn-preview').classList.add('active');
       render();
     }
 
@@ -576,9 +639,16 @@
       toolbar.querySelectorAll('.tb-btn').forEach(b => b.classList.remove('active'));
     }
 
-    // Escape to exit modes
+    // Escape to exit modes / close popup
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') setMode('add');
+      if (e.key === 'Escape') {
+        const popup = document.getElementById('popup');
+        if (popup.classList.contains('active')) {
+          popup.classList.remove('active');
+        } else {
+          setMode('add');
+        }
+      }
     });
 
     // Touch support for mobile
@@ -595,7 +665,7 @@
       const node = nodes.find(n => n.id === nodeId);
       if (!node) return;
 
-      if (mode === 'connect' || mode === 'delete') return;
+      if (mode === 'preview' || mode === 'connect' || mode === 'delete') return;
 
       e.preventDefault();
       const pt = svgPoint(touch);
@@ -617,8 +687,256 @@
       touchStart = null;
     });
 
+    // --- Preview mode ---
+    document.getElementById('btn-preview').addEventListener('click', () => {
+      if (mode === 'preview') { setMode('add'); return; }
+      setMode('preview');
+      showStatus('Click any node to see technique details');
+    });
+
+    function findTechnique(label) {
+      if (!techniquesData) return null;
+      const labelLower = label.toLowerCase();
+      for (const cat of techniquesData.categories) {
+        for (const t of cat.techniques) {
+          if (t.name.toLowerCase() === labelLower ||
+              labelLower.includes(t.name.toLowerCase()) ||
+              t.name.toLowerCase().includes(labelLower)) {
+            return t;
+          }
+        }
+      }
+      return null;
+    }
+
+    function showNodePopup(node) {
+      const technique = findTechnique(node.label);
+      const content = document.getElementById('popup-content');
+
+      let html = '<h2 style="color:var(--primary);margin-bottom:0.5rem;">' + node.label + '</h2>';
+
+      if (technique) {
+        html += '<p style="margin-bottom:1rem;">' + technique.description + '</p>';
+        if (technique.keyPoints && technique.keyPoints.length) {
+          html += '<h3 style="color:var(--primary-light);margin-bottom:0.5rem;">Key Points</h3>';
+          html += '<ul class="key-points">' + technique.keyPoints.map(p => '<li>' + p + '</li>').join('') + '</ul>';
+        }
+        if (technique.videos && technique.videos.length) {
+          html += '<h3 style="color:var(--primary-light);margin:1rem 0 0.5rem;">Video</h3>';
+          const v = technique.videos[0];
+          html += '<div class="video-container"><iframe src="https://www.youtube.com/embed/' + v.id + '" allowfullscreen loading="lazy"></iframe></div>';
+          html += '<p style="font-size:0.85rem;color:var(--text-light);">' + v.title + '</p>';
+        }
+        html += '<div style="margin-top:1rem;"><a href="../techniques.html#' + technique.id + '" class="btn btn-primary" style="color:white;" target="_blank">View Full Details</a></div>';
+      } else {
+        html += '<p style="color:var(--text-light);">No matching technique found in the database.</p>';
+        const searchTerm = node.label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        html += '<div style="margin-top:1rem;"><a href="../techniques.html#' + searchTerm + '" class="btn btn-outline" target="_blank">Search Techniques</a></div>';
+      }
+
+      content.innerHTML = html;
+      document.getElementById('popup').classList.add('active');
+    }
+
+    // --- Export JSON ---
+    document.getElementById('btn-export').addEventListener('click', () => {
+      if (nodes.length === 0) { showStatus('Nothing to export'); return; }
+
+      const nodesOut = nodes.map(n => ({ id: n.id, label: n.label, type: n.type }));
+      const edgesOut = edges.map(e => ({ from: e.from, to: e.to }));
+
+      let exportData;
+      if (chartMeta) {
+        // Full techniques.json-ready flowchart object
+        const rootNode = chartMeta.rootNode || (nodes.find(n => n.type === 'root') || nodes[0]).id;
+        exportData = {
+          id: chartMeta.id,
+          name: chartMeta.name,
+          slide: chartMeta.slide,
+          file: chartMeta.file,
+          rootNode: rootNode,
+          nodes: nodesOut,
+          edges: edgesOut
+        };
+      } else {
+        // Blank canvas — include rootNode if one exists
+        const rootN = nodes.find(n => n.type === 'root');
+        exportData = { nodes: nodesOut, edges: edgesOut };
+        if (rootN) exportData.rootNode = rootN.id;
+      }
+
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = (chartMeta ? chartMeta.id : 'flowchart') + '.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      showStatus('JSON exported');
+    });
+
+    // --- Import JSON ---
+    document.getElementById('btn-import').addEventListener('click', () => {
+      document.getElementById('import-file').click();
+    });
+
+    document.getElementById('import-file').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        try {
+          const data = JSON.parse(ev.target.result);
+          if (!data.nodes || !Array.isArray(data.nodes)) {
+            showStatus('Invalid JSON: missing nodes array');
+            return;
+          }
+
+          // Check if nodes already have positions
+          const hasPositions = data.nodes.some(n => typeof n.x === 'number');
+
+          if (hasPositions) {
+            nodes = data.nodes.map(n => ({
+              id: n.id,
+              label: n.label,
+              type: n.type || 'action',
+              x: n.x,
+              y: n.y
+            }));
+          } else {
+            // Auto-layout using BFS tree layout
+            const rootNode = data.rootNode || (data.nodes.find(n => n.type === 'root') || data.nodes[0]).id;
+            const positions = layoutTree({ nodes: data.nodes, edges: data.edges || [], rootNode });
+            nodes = data.nodes.map(n => ({
+              id: n.id,
+              label: n.label,
+              type: (n.type === 'reaction') ? 'action' : (n.type || 'action'),
+              x: positions[n.id] ? positions[n.id].x : 200,
+              y: positions[n.id] ? positions[n.id].y : 200
+            }));
+          }
+
+          edges = (data.edges || []).map(e => ({ from: e.from, to: e.to }));
+          nextId = nodes.length + 1;
+          render();
+          showStatus('Imported: ' + file.name);
+        } catch(err) {
+          showStatus('Error reading JSON file');
+          console.error(err);
+        }
+      };
+      reader.readAsText(file);
+      e.target.value = '';
+    });
+
+    // --- Load existing flowchart from techniques.json ---
+    function layoutTree(fc) {
+      const rootId = fc.rootNode;
+      const children = {};
+
+      for (const e of fc.edges) {
+        if (!children[e.from]) children[e.from] = [];
+        children[e.from].push(e.to);
+      }
+
+      // BFS to get levels
+      const levels = {};
+      const queue = [rootId];
+      levels[rootId] = 0;
+      const visited = new Set([rootId]);
+
+      while (queue.length) {
+        const nid = queue.shift();
+        for (const child of (children[nid] || [])) {
+          if (!visited.has(child)) {
+            levels[child] = levels[nid] + 1;
+            visited.add(child);
+            queue.push(child);
+          }
+        }
+      }
+
+      // Add orphan nodes
+      for (const n of fc.nodes) {
+        if (!(n.id in levels)) levels[n.id] = 1;
+      }
+
+      // Group by level
+      const levelGroups = {};
+      for (const [nid, lvl] of Object.entries(levels)) {
+        if (!levelGroups[lvl]) levelGroups[lvl] = [];
+        levelGroups[lvl].push(nid);
+      }
+
+      const maxLevel = Math.max(...Object.values(levels));
+      const NODE_W = 150, NODE_H = 50, H_GAP = 30, V_GAP = 100;
+
+      let maxWidth = 0;
+      for (let lvl = 0; lvl <= maxLevel; lvl++) {
+        const group = levelGroups[lvl] || [];
+        const n = group.length;
+        maxWidth = Math.max(maxWidth, n * NODE_W + (n - 1) * H_GAP);
+      }
+
+      const svgWidth = Math.max(maxWidth + 80, 600);
+      const positions = {};
+
+      for (let lvl = 0; lvl <= maxLevel; lvl++) {
+        const group = levelGroups[lvl] || [];
+        const n = group.length;
+        const rowWidth = n * NODE_W + (n - 1) * H_GAP;
+        const startX = (svgWidth - rowWidth) / 2;
+        const y = 60 + lvl * (NODE_H + V_GAP);
+        for (let i = 0; i < group.length; i++) {
+          positions[group[i]] = { x: startX + i * (NODE_W + H_GAP) + NODE_W / 2, y };
+        }
+      }
+
+      return positions;
+    }
+
+    async function loadFlowchartFromJSON(id) {
+      try {
+        const resp = await fetch('../techniques.json');
+        const data = await resp.json();
+        const fc = data.flowcharts.find(f => f.id === id);
+        if (!fc) { showStatus('Flowchart not found: ' + id); return; }
+
+        // Store metadata for export
+        chartMeta = { id: fc.id, name: fc.name, slide: fc.slide, file: fc.file, rootNode: fc.rootNode };
+
+        // Update title
+        const titleEl = document.getElementById('chart-title');
+        titleEl.textContent = fc.name;
+        titleEl.style.display = 'block';
+        document.title = fc.name + ' - Flowchart Editor';
+
+        // Layout tree (same BFS algorithm as gen_flowcharts.py)
+        const positions = layoutTree(fc);
+
+        nodes = fc.nodes.map(n => ({
+          id: n.id,
+          label: n.label,
+          type: (n.type === 'reaction') ? 'action' : n.type,
+          x: positions[n.id] ? positions[n.id].x : 200,
+          y: positions[n.id] ? positions[n.id].y : 200
+        }));
+
+        edges = fc.edges.map(e => ({ from: e.from, to: e.to }));
+        nextId = nodes.length + 1;
+        render();
+        showStatus('Loaded: ' + fc.name);
+      } catch(e) {
+        showStatus('Error loading flowchart');
+        console.error(e);
+      }
+    }
+
     // Initial render
     render();
+
+    // Load chart from URL param if present
+    if (chartId) loadFlowchartFromJSON(chartId);
   })();
   </script>
 </body>

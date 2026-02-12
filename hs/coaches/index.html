@@ -37,6 +37,11 @@
         <h3>Forms &amp; Documents</h3>
         <p>MHSAA forms, emergency contacts, and other documents.</p>
       </div>
+      <div class="coach-nav-card" style="cursor:pointer;" onclick="showSection('flowcharts')">
+        <div class="icon">&#128280;</div>
+        <h3>Flowchart Editor</h3>
+        <p>Edit chain wrestling flowcharts in the visual builder.</p>
+      </div>
     </div>
 
     <!-- Practice Plans Section -->
@@ -61,6 +66,13 @@
     <div id="section-forms" class="coach-section" style="display:none;">
       <h2 class="section-title">Forms &amp; Documents</h2>
       <div id="forms-content"></div>
+    </div>
+
+    <!-- Flowchart Editor Section -->
+    <div id="section-flowcharts" class="coach-section" style="display:none;">
+      <h2 class="section-title">Flowchart Editor</h2>
+      <p class="text-muted" style="margin-bottom:1rem;">Open a flowchart in the visual builder to rearrange nodes, add techniques, or update connections. Use <strong>Export JSON</strong> to download your changes.</p>
+      <div id="flowcharts-content" class="grid-2"></div>
     </div>
   </div>
 
@@ -167,6 +179,25 @@
         document.getElementById('nav-cards').insertAdjacentHTML('afterend',
           '<p class="text-muted mt-2">Could not load coaches data.</p>');
       });
+
+    // Load flowcharts list from techniques.json
+    fetch('../../techniques.json')
+      .then(r => r.json())
+      .then(data => {
+        const flowcharts = data.flowcharts || [];
+        const container = document.getElementById('flowcharts-content');
+        if (!flowcharts.length) {
+          container.innerHTML = '<p class="text-muted">No flowcharts found.</p>';
+          return;
+        }
+        container.innerHTML = flowcharts.map(fc => `
+          <a href="../../flowcharts/builder.html?chart=${fc.id}" class="card" style="text-decoration:none;color:inherit;display:block;transition:border-color 0.2s;">
+            <h3 style="color:var(--primary);margin-bottom:0.25rem;">${fc.name}</h3>
+            <p style="font-size:0.85rem;color:var(--text-light);">${fc.nodes.length} nodes &middot; ${fc.edges.length} connections</p>
+          </a>
+        `).join('');
+      })
+      .catch(() => {});
   </script>
 </body>
 </html>
