@@ -2928,102 +2928,102 @@
         }
       ]
     },
+{
+  "id": "front-headlock-series",
+  "name": "Front Headlock Offense",
+  "slide": 18,
+  "file": "flowcharts/front-headlock.html",
+  "rootNode": "front-hl-root",
+  "nodes": [
     {
-      "id": "front-headlock-series",
-      "name": "Front Headlock Offense",
-      "slide": 18,
-      "file": "flowcharts/front-headlock.html",
-      "rootNode": "front-hl-root",
-      "nodes": [
-        {
-          "id": "front-hl-root",
-          "label": "Front Headlock (Offense)",
-          "type": "root"
-        },
-        {
-          "id": "head-in-hole",
-          "label": "Head in the Hole",
-          "type": "action"
-        },
-        {
-          "id": "bounce-fh",
-          "label": "Bounce",
-          "type": "action"
-        },
-        {
-          "id": "gator-roll-fh",
-          "label": "Gator Roll",
-          "type": "action"
-        },
-        {
-          "id": "go-behind-fh",
-          "label": "Go-Behind",
-          "type": "action"
-        },
-        {
-          "id": "cement-job-fh",
-          "label": "Cement Job",
-          "type": "action"
-        },
-        {
-          "id": "shuck-throw-fh",
-          "label": "Shuck or Throw-By",
-          "type": "action"
-        },
-        {
-          "id": "near-cradle-fh",
-          "label": "Near Side Cradle",
-          "type": "finish"
-        },
-        {
-          "id": "arm-block-fh",
-          "label": "Arm Block",
-          "type": "finish"
-        },
-        {
-          "id": "assassin-fh",
-          "label": "Assassin",
-          "type": "finish"
-        }
-      ],
-      "edges": [
-        {
-          "from": "front-hl-root",
-          "to": "head-in-hole"
-        },
-        {
-          "from": "front-hl-root",
-          "to": "bounce-fh"
-        },
-        {
-          "from": "front-hl-root",
-          "to": "gator-roll-fh"
-        },
-        {
-          "from": "front-hl-root",
-          "to": "go-behind-fh"
-        },
-        {
-          "from": "front-hl-root",
-          "to": "cement-job-fh"
-        },
-        {
-          "from": "front-hl-root",
-          "to": "shuck-throw-fh"
-        },
-        {
-          "from": "cement-job-fh",
-          "to": "near-cradle-fh"
-        },
-        {
-          "from": "shuck-throw-fh",
-          "to": "arm-block-fh"
-        },
-        {
-          "from": "go-behind-fh",
-          "to": "assassin-fh"
-        }
-      ]
+      "id": "front-hl-root",
+      "label": "Front Headlock (Offense)",
+      "type": "root"
+    },
+    {
+      "id": "head-in-hole",
+      "label": "Head in the Hole",
+      "type": "action"
+    },
+    {
+      "id": "bounce-fh",
+      "label": "Bounce",
+      "type": "action"
+    },
+    {
+      "id": "gator-roll-fh",
+      "label": "Gator Roll",
+      "type": "action"
+    },
+    {
+      "id": "go-behind-fh",
+      "label": "Go-Behind",
+      "type": "action"
+    },
+    {
+      "id": "cement-job-fh",
+      "label": "Cement Job",
+      "type": "action"
+    },
+    {
+      "id": "shuck-throw-fh",
+      "label": "Shuck or Throw-By",
+      "type": "action"
+    },
+    {
+      "id": "near-cradle-fh",
+      "label": "Near Side Cradle",
+      "type": "finish"
+    },
+    {
+      "id": "arm-block-fh",
+      "label": "Arm Block",
+      "type": "finish"
+    },
+    {
+      "id": "assassin-fh",
+      "label": "Assassin",
+      "type": "finish"
     }
+  ],
+  "edges": [
+    {
+      "from": "front-hl-root",
+      "to": "head-in-hole"
+    },
+    {
+      "from": "front-hl-root",
+      "to": "bounce-fh"
+    },
+    {
+      "from": "front-hl-root",
+      "to": "gator-roll-fh"
+    },
+    {
+      "from": "front-hl-root",
+      "to": "go-behind-fh"
+    },
+    {
+      "from": "front-hl-root",
+      "to": "cement-job-fh"
+    },
+    {
+      "from": "front-hl-root",
+      "to": "shuck-throw-fh"
+    },
+    {
+      "from": "cement-job-fh",
+      "to": "near-cradle-fh"
+    },
+    {
+      "from": "shuck-throw-fh",
+      "to": "arm-block-fh"
+    },
+    {
+      "from": "gator-roll-fh",
+      "to": "assassin-fh"
+    }
+  ]
+}
   ]
 }

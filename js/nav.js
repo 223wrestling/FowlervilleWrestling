@@ -16,12 +16,18 @@
     <button class="nav-toggle" aria-label="Menu">&#9776;</button>
     <ul class="nav-links">
       <li>
+        <a href="#">Wrestling Library <span class="dropdown-arrow">&#9662;</span></a>
+        <ul class="nav-dropdown">
+          <li><a href="${base}techniques.html">Techniques</a></li>
+          <li><a href="${base}checklist.html">Checklist</a></li>
+          <li><a href="${base}flowcharts/index.html">Flowcharts</a></li>
+          <li><a href="${base}flowcharts/builder.html">Build Your Own</a></li>
+        </ul>
+      </li>
+      <li>
         <a href="#">Youth Club <span class="dropdown-arrow">&#9662;</span></a>
         <ul class="nav-dropdown">
           <li><a href="${base}youth/index.html">Program Info</a></li>
-          <li><a href="${base}youth/techniques.html">Technique Library</a></li>
-          <li><a href="${base}youth/checklist.html">Checklist</a></li>
-          <li><a href="${base}flowcharts/index.html">Flowcharts</a></li>
           <li><a href="${base}youth/schedule.html">Schedule</a></li>
         </ul>
       </li>
