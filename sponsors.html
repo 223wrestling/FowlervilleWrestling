@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sponsors - Fowlerville Wrestling</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <script>window.NAV_BASE = '';</script>
+  <script src="js/nav.js"></script>
+
+  <div class="container">
+    <h1 style="color:var(--primary);margin-bottom:0.25rem;">Our Sponsors</h1>
+    <p class="text-muted mb-3">Thank you to the businesses and families who support Fowlerville Wrestling.</p>
+
+    <div id="sponsor-sections"></div>
+
+    <!-- Become a Sponsor -->
+    <div class="card mt-3" style="text-align:center;border-top:4px solid var(--accent);">
+      <h2 style="color:var(--primary);">Become a Sponsor</h2>
+      <p style="color:var(--text-light);max-width:600px;margin:0.5rem auto 1rem;">Your support helps cover tournament fees, equipment, and training resources for our wrestlers. Sponsorships are available at multiple levels.</p>
+      <a href="about.html" class="btn btn-primary">Contact Us</a>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="youth/index.html">Youth Club</a>
+      <a href="hs/index.html">High School</a>
+      <a href="news/index.html">News</a>
+    </div>
+    <div class="footer-copy">Fowlerville Wrestling &mdash; Fowlerville, Michigan</div>
+  </footer>
+
+  <script>
+    const tierOrder = ['gold', 'silver', 'bronze', 'supporter'];
+    const tierLabels = { gold: 'Gold Sponsors', silver: 'Silver Sponsors', bronze: 'Bronze Sponsors', supporter: 'Supporters' };
+
+    fetch('data/sponsors.json')
+      .then(r => r.json())
+      .then(data => {
+        const sponsors = data.sponsors || [];
+        if (!sponsors.length) {
+          document.getElementById('sponsor-sections').innerHTML = '<p class="text-muted">Sponsor information coming soon.</p>';
+          return;
+        }
+
+        // Group by tier
+        const grouped = {};
+        sponsors.forEach(s => {
+          const tier = s.tier || 'supporter';
+          if (!grouped[tier]) grouped[tier] = [];
+          grouped[tier].push(s);
+        });
+
+        const html = tierOrder
+          .filter(tier => grouped[tier])
+          .map(tier => `
+            <h2 class="section-title">${tierLabels[tier] || tier}</h2>
+            <div class="sponsor-grid">
+              ${grouped[tier].map(s => `
+                ${s.url ? `<a href="${s.url}" target="_blank" rel="noopener" class="sponsor-card">` : '<div class="sponsor-card">'}
+                  ${s.logo ? `<img src="${s.logo}" alt="${s.name}">` : `<div style="height:80px;display:flex;align-items:center;justify-content:center;color:var(--primary);font-weight:700;font-size:1.1rem;">${s.name}</div>`}
+                  <div class="sponsor-name">${s.name}</div>
+                ${s.url ? '</a>' : '</div>'}
+              `).join('')}
+            </div>
+          `).join('');
+
+        document.getElementById('sponsor-sections').innerHTML = html;
+      })
+      .catch(() => {
+        document.getElementById('sponsor-sections').innerHTML = '<p class="text-muted">Could not load sponsor data.</p>';
+      });
+  </script>
+</body>
+</html>

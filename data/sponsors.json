@@ -1,0 +1,10 @@
+{
+  "sponsors": [
+    {
+      "name": "Sample Sponsor",
+      "logo": "img/sponsors/placeholder.png",
+      "url": "",
+      "tier": "gold"
+    }
+  ]
+}

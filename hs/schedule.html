@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HS Schedule - Fowlerville Wrestling</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <script>window.NAV_BASE = '../';</script>
+  <script src="../js/nav.js"></script>
+
+  <div class="container">
+    <a href="index.html" class="back-link">&larr; High School</a>
+    <h1 style="color:var(--primary);margin-bottom:0.25rem;">High School Schedule</h1>
+    <p class="text-muted mb-3">Practices, dual meets, and tournaments for the Fowlerville Gladiators.</p>
+
+    <!-- Filter buttons -->
+    <div class="mb-2" id="filters" style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+      <button class="tag active" data-filter="all">All</button>
+      <button class="tag" data-filter="practice">Practice</button>
+      <button class="tag" data-filter="match">Match</button>
+      <button class="tag" data-filter="tournament">Tournament</button>
+    </div>
+
+    <h2 class="section-title">Upcoming</h2>
+    <div id="upcoming" class="schedule-list"></div>
+
+    <h2 class="section-title">Past Events</h2>
+    <div id="past" class="schedule-list"></div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="../index.html">Home</a>
+      <a href="index.html">High School</a>
+      <a href="coaches/index.html">Coaches Area</a>
+      <a href="../news/index.html">News</a>
+    </div>
+    <div class="footer-copy">Fowlerville Wrestling &mdash; Fowlerville, Michigan</div>
+  </footer>
+
+  <script>
+    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    let allEvents = [];
+    let activeFilter = 'all';
+
+    function renderEvents() {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const filtered = activeFilter === 'all'
+        ? allEvents
+        : allEvents.filter(e => e.type === activeFilter);
+
+      const upcoming = filtered
+        .filter(e => new Date(e.date + 'T00:00:00') >= today)
+        .sort((a, b) => a.date.localeCompare(b.date));
+
+      const past = filtered
+        .filter(e => new Date(e.date + 'T00:00:00') < today)
+        .sort((a, b) => b.date.localeCompare(a.date));
+
+      document.getElementById('upcoming').innerHTML = upcoming.length
+        ? upcoming.map(renderItem).join('')
+        : '<p class="text-muted">No upcoming events.</p>';
+
+      document.getElementById('past').innerHTML = past.length
+        ? past.map(renderItem).join('')
+        : '<p class="text-muted">No past events.</p>';
+    }
+
+    function renderItem(e) {
+      const d = new Date(e.date + 'T00:00:00');
+      return `
+        <div class="schedule-item">
+          <div class="schedule-date">
+            <div class="month">${MONTHS[d.getMonth()]}</div>
+            <div class="day">${d.getDate()}</div>
+          </div>
+          <div class="schedule-details">
+            <h3>${e.title}</h3>
+            <p>${e.time || ''} ${e.location ? '&middot; ' + e.location : ''}</p>
+            ${e.notes ? `<p style="font-size:0.8rem;color:var(--text-light);margin-top:0.25rem;">${e.notes}</p>` : ''}
+          </div>
+          <span class="schedule-type type-${e.type}">${e.type}</span>
+        </div>
+      `;
+    }
+
+    document.getElementById('filters').addEventListener('click', e => {
+      if (e.target.dataset.filter === undefined) return;
+      activeFilter = e.target.dataset.filter;
+      document.querySelectorAll('#filters .tag').forEach(t => t.classList.remove('active'));
+      e.target.classList.add('active');
+      renderEvents();
+    });
+
+    fetch('../data/schedule-hs.json')
+      .then(r => r.json())
+      .then(data => {
+        allEvents = data.events;
+        renderEvents();
+      })
+      .catch(() => {
+        document.getElementById('upcoming').innerHTML = '<p class="text-muted">Could not load schedule.</p>';
+      });
+  </script>
+</body>
+</html>

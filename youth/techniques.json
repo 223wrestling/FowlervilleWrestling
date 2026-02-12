@@ -1,0 +1,3029 @@
+{
+  "categories": [
+    {
+      "id": "tie-ups",
+      "name": "Tie-Ups & Setups",
+      "subtitle": "Focus is on stance and motion",
+      "slide": 1,
+      "techniques": [
+        {
+          "id": "collar-tie",
+          "name": "Collar Tie",
+          "category": "tie-ups",
+          "description": "A fundamental upper-body control position. Grip behind opponent's neck with one hand while controlling their elbow or wrist with the other.",
+          "keyPoints": [
+            "Cup the back of the neck, pulling the head down",
+            "Keep elbow tight to your body for maximum leverage",
+            "Use collar tie to set up snaps, drags, and level changes",
+            "Stay in good stance - don't lean forward"
+          ],
+          "commonMistakes": [
+            "Reaching too far and losing balance",
+            "Gripping too high on the head"
+          ],
+          "related": [
+            "snapdown",
+            "duck-under",
+            "front-headlock"
+          ],
+          "videos": [
+            {
+              "id": "dCK8316H-Ao",
+              "title": "Inside Tie & Collar Tie | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=dCK8316H-Ao"
+            },
+            {
+              "id": "TdQPBKnEPBY",
+              "title": "Wrestling Moves KOLAT.COM Clearing Collar Tie",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=TdQPBKnEPBY"
+            }
+          ]
+        },
+        {
+          "id": "inside-outside-control",
+          "name": "Inside/Outside Control",
+          "category": "tie-ups",
+          "description": "Controlling the tie-up battle by fighting for inside or outside wrist and elbow position. Inside ties give you offensive access; outside ties create angles.",
+          "keyPoints": [
+            "Inside position: hands inside opponent's arms, controlling biceps/elbows",
+            "Outside position: hands on outside of opponent's arms",
+            "Constantly fight to clear opponent's hands and re-establish your ties",
+            "Use push-pull motion to create openings"
+          ],
+          "commonMistakes": [
+            "Being passive and letting opponent control ties",
+            "Staying in one position too long"
+          ],
+          "related": [
+            "collar-tie",
+            "underhook",
+            "two-on-one"
+          ],
+          "videos": [
+            {
+              "id": "QD08BC03woQ",
+              "title": "Collar Tie\ud83d\udca5Rip Defense\ud83d\ude09\ud83d\udca5",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=QD08BC03woQ"
+            },
+            {
+              "id": "dCK8316H-Ao",
+              "title": "Inside Tie & Collar Tie | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=dCK8316H-Ao"
+            }
+          ]
+        },
+        {
+          "id": "head-shoulder-post",
+          "name": "Head/Shoulder Post",
+          "category": "tie-ups",
+          "description": "Using your hand on opponent's forehead or shoulder to create distance, control posture, and set up attacks.",
+          "keyPoints": [
+            "Post on forehead or shoulder to control distance",
+            "Use the post to redirect opponent's movement",
+            "Combine with level changes for takedown entries",
+            "Keep arm extended but not locked out"
+          ],
+          "commonMistakes": [
+            "Pushing straight back instead of redirecting",
+            "Leaving arm extended too long"
+          ],
+          "related": [
+            "snapdown",
+            "clear-level-change",
+            "collar-tie"
+          ],
+          "videos": [
+            {
+              "id": "VeqVx1Hvcb4",
+              "title": "Snapping\ud83d\udca51 Hand Post\ud83d\udca5#highschoolwrestling #collegewrestling #freestylewrestling #mma #bjj #wrestling",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=VeqVx1Hvcb4"
+            },
+            {
+              "id": "sNBvWphYCDQ",
+              "title": "Where To Snap Down",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=sNBvWphYCDQ"
+            }
+          ]
+        },
+        {
+          "id": "two-on-one",
+          "name": "2 on 1 / Russian Tie",
+          "category": "tie-ups",
+          "description": "Controlling one of your opponent's arms with both of your hands. One hand grips the wrist, the other controls above the elbow. Creates a dominant angle.",
+          "keyPoints": [
+            "Grip wrist with lead hand, control elbow/tricep with trail hand",
+            "Step to the side to create an angle on your opponent",
+            "Keep opponent's arm tight to your chest",
+            "Use circular motion to off-balance opponent"
+          ],
+          "commonMistakes": [
+            "Standing square in front of opponent",
+            "Loose grip allowing opponent to pull free"
+          ],
+          "related": [
+            "snatch-single",
+            "arm-drag"
+          ],
+          "videos": [
+            {
+              "id": "wBtM_rx8kHk",
+              "title": "2 on 1 Russian Tie Clear & Capture Drill - Cary Kolat Wrestling Drills",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=wBtM_rx8kHk"
+            },
+            {
+              "id": "B7C2s_rYeoA",
+              "title": "High Level Foot Sweep From 2 on 1 - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=B7C2s_rYeoA"
+            }
+          ]
+        },
+        {
+          "id": "underhook",
+          "name": "Underhook",
+          "category": "tie-ups",
+          "description": "Threading your arm under opponent's arm and securing a grip on their back or shoulder. One of the most powerful neutral position controls.",
+          "keyPoints": [
+            "Drive arm deep under opponent's armpit",
+            "Secure grip high on the back or on the far shoulder",
+            "Keep your head tight against opponent's chest/chin",
+            "Circle toward your underhook side to create angles"
+          ],
+          "commonMistakes": [
+            "Shallow underhook that gets shucked off",
+            "Head too far away allowing opponent to snap you down"
+          ],
+          "related": [
+            "bodylock-counter",
+            "duck-under"
+          ],
+          "videos": [
+            {
+              "id": "yanNPE2BTI4",
+              "title": "The Underhook | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=yanNPE2BTI4"
+            },
+            {
+              "id": "nD327KsunmE",
+              "title": "My D1 College Takedown System",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=nD327KsunmE"
+            }
+          ]
+        },
+        {
+          "id": "overhook",
+          "name": "Overhook / Whizzer",
+          "category": "tie-ups",
+          "description": "Clamping down over opponent's arm from outside, hooking above the elbow. Used both offensively and as a counter to opponent's underhook.",
+          "keyPoints": [
+            "Clamp arm tightly over opponent's bicep/upper arm",
+            "Drive hip into opponent to maximize pressure",
+            "Use whizzer to counter opponent's underhook or single leg attempts",
+            "Can transition to throws and go-behinds"
+          ],
+          "commonMistakes": [
+            "Whizzer too loose - no pressure",
+            "Over-relying on whizzer without attacking"
+          ],
+          "related": [
+            "underhook",
+            "hip-toss",
+            "whip-over"
+          ],
+          "videos": [
+            {
+              "id": "Mtvn-qIyD5g",
+              "title": "The Whizzer | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=Mtvn-qIyD5g"
+            },
+            {
+              "id": "Kk0Th7DEX48",
+              "title": "Single Leg Defense Basics - The power of the Whizzer (Overhook)",
+              "channel": "WrestlingTournaments\u2024com",
+              "url": "https://www.youtube.com/watch?v=Kk0Th7DEX48"
+            }
+          ]
+        },
+        {
+          "id": "circle",
+          "name": "Circle",
+          "category": "tie-ups",
+          "description": "Lateral movement in stance to create angles and force reactions from your opponent. Foundation of all good wrestling offense.",
+          "keyPoints": [
+            "Move feet in short, quick steps - never cross feet",
+            "Circle in the direction of your setup (toward your strong side)",
+            "Use circling to force opponent to adjust, creating openings",
+            "Maintain good stance and balance while moving"
+          ],
+          "commonMistakes": [
+            "Crossing feet while circling",
+            "Moving without purpose or setup"
+          ],
+          "related": [
+            "clear-level-change",
+            "fakes"
+          ],
+          "videos": [
+            {
+              "id": "AdU9T_YldUA",
+              "title": "Shadow Wrestling Drill - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=AdU9T_YldUA"
+            },
+            {
+              "id": "NJNT1JSjGtI",
+              "title": "Tricep Circle Double Leg Setup - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=NJNT1JSjGtI"
+            }
+          ]
+        },
+        {
+          "id": "fakes",
+          "name": "Fakes",
+          "category": "tie-ups",
+          "description": "Using deceptive movements (head fakes, level changes, hand fighting) to draw reactions and create openings for real attacks.",
+          "keyPoints": [
+            "Sell the fake - commit enough to make it believable",
+            "Watch for opponent's reaction to determine your real attack",
+            "Combine fakes with changes of direction",
+            "Use multiple fakes before attacking for real"
+          ],
+          "commonMistakes": [
+            "Half-hearted fakes that don't draw a reaction",
+            "Faking without a plan for the follow-up"
+          ],
+          "related": [
+            "clear-level-change",
+            "circle"
+          ],
+          "videos": [
+            {
+              "id": "3G8Un-CCFBE",
+              "title": "Leg Attack Fakes Setup - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=3G8Un-CCFBE"
+            },
+            {
+              "id": "GjfDCIZaSYI",
+              "title": "Elbow Wrist Fake Duck Setups - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=GjfDCIZaSYI"
+            }
+          ]
+        },
+        {
+          "id": "clear-level-change",
+          "name": "Clear & Level Change",
+          "category": "tie-ups",
+          "description": "Clearing opponent's hands from your head/neck and immediately dropping your level to attack the legs. The gateway to most takedowns.",
+          "keyPoints": [
+            "Strip or swim through opponent's grips quickly",
+            "Drop level by bending knees, NOT bending at the waist",
+            "Keep back straight and head up during level change",
+            "Penetration step drives through opponent's hips"
+          ],
+          "commonMistakes": [
+            "Bending at waist instead of knees",
+            "Telegraphing the level change with eyes"
+          ],
+          "related": [
+            "double-leg",
+            "single-leg",
+            "high-crotch"
+          ],
+          "videos": [
+            {
+              "id": "IvTpIAmUgIU",
+              "title": "Split Step Level Change - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=IvTpIAmUgIU"
+            },
+            {
+              "id": "voslHFyocNk",
+              "title": "Penetration Step Power Leg - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=voslHFyocNk"
+            }
+          ]
+        },
+        {
+          "id": "snapdown",
+          "name": "Snapdown",
+          "category": "tie-ups",
+          "description": "A sharp downward pull on opponent's head/neck to break their posture and create a front headlock or go-behind opportunity.",
+          "keyPoints": [
+            "Sharp, quick pull downward - not a slow drag",
+            "Pull with both hands (collar tie + wrist control)",
+            "Step back as you snap to create space",
+            "Immediately follow up: front headlock, go behind, or re-attack"
+          ],
+          "commonMistakes": [
+            "Snapping without moving your feet",
+            "Not following up after the snap"
+          ],
+          "related": [
+            "front-headlock",
+            "go-behind",
+            "collar-tie"
+          ],
+          "videos": [
+            {
+              "id": "gdSb3eJl79E",
+              "title": "Snap Down | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=gdSb3eJl79E"
+            },
+            {
+              "id": "Ft0Mel7y18E",
+              "title": "Using Head Position to Set the Snap - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=Ft0Mel7y18E"
+            }
+          ]
+        },
+        {
+          "id": "arm-drag",
+          "name": "Arm Drag",
+          "category": "tie-ups",
+          "description": "Pulling opponent's arm across their body to create an angle for a go-behind or takedown. Quick, explosive upper body technique.",
+          "keyPoints": [
+            "Grip opponent's wrist and tricep",
+            "Pull arm across while stepping to the side",
+            "Your trail hand reaches for opponent's far hip or back",
+            "Stay low and attack immediately after the drag"
+          ],
+          "commonMistakes": [
+            "Dragging without moving your feet",
+            "Standing too tall during the drag"
+          ],
+          "related": [
+            "go-behind",
+            "single-leg",
+            "two-on-one"
+          ],
+          "videos": [
+            {
+              "id": "VQYSuO61VsA",
+              "title": "Arm Drag to Single Leg Snag - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=VQYSuO61VsA"
+            },
+            {
+              "id": "MIT6QXzTPGA",
+              "title": "The Arm Drag | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=MIT6QXzTPGA"
+            }
+          ]
+        },
+        {
+          "id": "duck-under",
+          "name": "Duck Under",
+          "category": "tie-ups",
+          "description": "Ducking underneath opponent's arm to get behind them. Works from collar tie or underhook position.",
+          "keyPoints": [
+            "Pop opponent's elbow up to create space",
+            "Duck your head under their arm while stepping across",
+            "Keep moving through - don't stop under their arm",
+            "Secure back control immediately (lock hands around waist)"
+          ],
+          "commonMistakes": [
+            "Ducking without popping the arm up first",
+            "Stopping halfway and getting re-faced"
+          ],
+          "related": [
+            "collar-tie",
+            "underhook",
+            "go-behind"
+          ],
+          "videos": [
+            {
+              "id": "YG_TGrljpM4",
+              "title": "Duck Under Basics - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=YG_TGrljpM4"
+            },
+            {
+              "id": "AgHmuB9ortk",
+              "title": "Duck Under | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=AgHmuB9ortk"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hand-fighting",
+      "name": "Hand Fighting & Holds",
+      "subtitle": "Controlling the tie-up battle",
+      "slide": 2,
+      "techniques": [
+        {
+          "id": "hand-wrist-control",
+          "name": "Hand/Wrist Control",
+          "category": "hand-fighting",
+          "description": "Controlling opponent's wrists to limit their offense and set up your own attacks. Fundamental skill for all positions.",
+          "keyPoints": [
+            "Grip wrist firmly with thumb on back of hand",
+            "Use wrist control to redirect opponent's attacks",
+            "Clear wrists quickly when on bottom",
+            "Control both wrists to shut down opponent's offense"
+          ],
+          "commonMistakes": [
+            "Gripping too tightly and fatiguing forearms",
+            "Holding wrists without attacking"
+          ],
+          "related": [
+            "two-on-one",
+            "elbow-control",
+            "inside-outside-control"
+          ],
+          "videos": [
+            {
+              "id": "dCK8316H-Ao",
+              "title": "Inside Tie & Collar Tie | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=dCK8316H-Ao"
+            },
+            {
+              "id": "6D-vO5QtRsw",
+              "title": "Wrist Control Clearing Ties - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=6D-vO5QtRsw"
+            }
+          ]
+        },
+        {
+          "id": "elbow-control",
+          "name": "Elbow Control",
+          "category": "hand-fighting",
+          "description": "Controlling opponent's elbow to limit arm movement and set up attacks. Elbow control gives you leverage over their entire arm.",
+          "keyPoints": [
+            "Cup opponent's elbow from underneath",
+            "Drive elbow up or across to create openings",
+            "Use elbow control to set up dumps and duck unders",
+            "Maintain inside position for best control"
+          ],
+          "commonMistakes": [
+            "Grabbing too high on the arm",
+            "Not using the control to attack"
+          ],
+          "related": [
+            "inside-outside-control",
+            "duck-under"
+          ],
+          "videos": [
+            {
+              "id": "dCK8316H-Ao",
+              "title": "Inside Tie & Collar Tie | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=dCK8316H-Ao"
+            },
+            {
+              "id": "6D-vO5QtRsw",
+              "title": "Wrist Control Clearing Ties - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=6D-vO5QtRsw"
+            }
+          ]
+        },
+        {
+          "id": "breaking-locks",
+          "name": "Breaking Locks",
+          "category": "hand-fighting",
+          "description": "Techniques for breaking apart an opponent's locked hands, critical for escaping body locks, cradles, and riding holds.",
+          "keyPoints": [
+            "Attack the weakest point - usually the fingers or wrist",
+            "Use two hands against one to peel grips",
+            "Wrist roll: rotate opponent's wrist to break lock",
+            "Create space first, then attack the lock"
+          ],
+          "commonMistakes": [
+            "Trying to pull straight apart instead of peeling",
+            "Panicking instead of working methodically"
+          ],
+          "related": [
+            "hand-wrist-control"
+          ],
+          "videos": [
+            {
+              "id": "dCK8316H-Ao",
+              "title": "Inside Tie & Collar Tie | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=dCK8316H-Ao"
+            },
+            {
+              "id": "6D-vO5QtRsw",
+              "title": "Wrist Control Clearing Ties - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=6D-vO5QtRsw"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "takedowns-1",
+      "name": "Takedowns I",
+      "subtitle": "From standing / on your feet",
+      "slide": 3,
+      "techniques": [
+        {
+          "id": "double-leg",
+          "name": "Double Leg",
+          "category": "takedowns-1",
+          "description": "The most fundamental wrestling takedown. Level change and drive through both of opponent's legs, lifting or driving them to the mat.",
+          "keyPoints": [
+            "Clear ties and change level (bend knees, not waist)",
+            "Penetration step: lead knee hits the mat between opponent's feet",
+            "Head on the outside, arms wrap both legs at the knees",
+            "Drive through with your legs - head up, back straight",
+            "Finish by lifting, turning the corner, or running the pipe"
+          ],
+          "commonMistakes": [
+            "Shooting from too far away",
+            "Head down during the shot",
+            "Not driving through on the finish"
+          ],
+          "related": [
+            "clear-level-change",
+            "high-crotch",
+            "single-leg"
+          ],
+          "videos": [
+            {
+              "id": "JcaXFHu1kIo",
+              "title": "Double Leg Take Down Basics",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=JcaXFHu1kIo"
+            },
+            {
+              "id": "vFvl1tdr8l4",
+              "title": "Double Leg Head Drive - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=vFvl1tdr8l4"
+            }
+          ]
+        },
+        {
+          "id": "single-leg",
+          "name": "Single Leg",
+          "category": "takedowns-1",
+          "description": "Attack one of opponent's legs. Versatile takedown with many setups and finishes.",
+          "keyPoints": [
+            "Level change and drive into opponent's lead leg",
+            "Head on the inside (ear against their ribs)",
+            "Grip behind the knee and pull leg tight to your chest",
+            "Finish options: run the pipe, trip, sweep, dump, or lift"
+          ],
+          "commonMistakes": [
+            "Head on the outside (exposes back)",
+            "Standing up straight with the leg instead of staying in stance"
+          ],
+          "related": [
+            "snatch-single",
+            "high-crotch",
+            "double-leg"
+          ],
+          "videos": [
+            {
+              "id": "VQYSuO61VsA",
+              "title": "Arm Drag to Single Leg Snag - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=VQYSuO61VsA"
+            },
+            {
+              "id": "Fkj9X-bwZx4",
+              "title": "Sweep Single Penetration Step - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=Fkj9X-bwZx4"
+            }
+          ]
+        },
+        {
+          "id": "snatch-single",
+          "name": "Snatch Single",
+          "category": "takedowns-1",
+          "description": "A quick, explosive grab of opponent's lead leg without a full penetration step. Works from collar tie or hand fighting.",
+          "keyPoints": [
+            "Snap opponent's head down to get them to post their weight forward",
+            "Quick reach - grab behind the knee in one motion",
+            "Immediately elevate the leg and drive forward",
+            "Transition to standard single leg finishes"
+          ],
+          "commonMistakes": [
+            "Reaching without a setup",
+            "Bending over at the waist to grab"
+          ],
+          "related": [
+            "single-leg",
+            "snapdown",
+            "collar-tie"
+          ],
+          "videos": [
+            {
+              "id": "VQYSuO61VsA",
+              "title": "Arm Drag to Single Leg Snag - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=VQYSuO61VsA"
+            },
+            {
+              "id": "uORanSvGpAE",
+              "title": "Sweep Single Takedown - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=uORanSvGpAE"
+            }
+          ]
+        },
+        {
+          "id": "high-crotch",
+          "name": "High Crotch",
+          "category": "takedowns-1",
+          "description": "A takedown that targets the upper thigh/hip area. Versatile attack that can finish as a single, double, or lift.",
+          "keyPoints": [
+            "Level change with penetration step to the outside",
+            "Head on the inside, arm wraps high around the thigh",
+            "Drive into opponent's hip with your shoulder",
+            "Finish by turning the corner, lifting, or transitioning to a double"
+          ],
+          "commonMistakes": [
+            "Staying square instead of angling off",
+            "Not driving hips in on the finish"
+          ],
+          "related": [
+            "double-leg",
+            "single-leg",
+            "clear-level-change"
+          ],
+          "videos": [
+            {
+              "id": "P8s0fWYYCqw",
+              "title": "High Crotch Fundamentals",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=P8s0fWYYCqw"
+            },
+            {
+              "id": "HhOh7ltiTlU",
+              "title": "High Crotch Take Down Basics",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=HhOh7ltiTlU"
+            }
+          ]
+        },
+        {
+          "id": "go-behind",
+          "name": "Go Behind",
+          "category": "takedowns-1",
+          "description": "Getting behind your opponent from neutral position. Scored as a takedown. Can be achieved from arm drags, duck unders, or scrambles.",
+          "keyPoints": [
+            "Create an angle first (arm drag, duck under, or snap)",
+            "Secure a grip around opponent's waist or on their hips",
+            "Keep chest tight to their back - no space",
+            "Stay on your toes, ready to follow their movement"
+          ],
+          "commonMistakes": [
+            "Reaching around without creating an angle first",
+            "Loose grip allowing opponent to turn in"
+          ],
+          "related": [
+            "arm-drag",
+            "duck-under",
+            "snapdown"
+          ],
+          "videos": [
+            {
+              "id": "j_c5E2KtDcM",
+              "title": "The Front Headlock | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=j_c5E2KtDcM"
+            },
+            {
+              "id": "nY9pq1_-6LM",
+              "title": "Go Behind Details",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=nY9pq1_-6LM"
+            }
+          ]
+        },
+        {
+          "id": "slide-by",
+          "name": "Slide By / Throw By",
+          "category": "takedowns-1",
+          "description": "Using opponent's forward pressure against them by redirecting and sliding past to get behind.",
+          "keyPoints": [
+            "When opponent pushes into you, redirect their energy to the side",
+            "Pull their arm/head past you while stepping to the side",
+            "Stay low and circle behind as they go past",
+            "Secure waist control immediately"
+          ],
+          "commonMistakes": [
+            "Trying to slide by when opponent is pulling back",
+            "Not staying low enough"
+          ],
+          "related": [
+            "go-behind",
+            "underhook",
+            "arm-drag"
+          ],
+          "videos": [
+            {
+              "id": "Bjz9stHMYME",
+              "title": "SLIDE BY | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=Bjz9stHMYME"
+            },
+            {
+              "id": "Vk2noxmB1oY",
+              "title": "The EASIEST Wrestling Takedown - Jax Forrest",
+              "channel": "Athletes Ocean",
+              "url": "https://www.youtube.com/watch?v=Vk2noxmB1oY"
+            }
+          ]
+        },
+        {
+          "id": "ankle-pick",
+          "name": "Ankle Pick",
+          "category": "takedowns-1",
+          "description": "A quick, short-range takedown where you grab opponent's ankle while controlling their head or arm. Low risk, high reward.",
+          "keyPoints": [
+            "Control opponent's head or collar tie with one hand",
+            "Snap head down while reaching for the far or near ankle",
+            "Pull ankle toward you while driving head/shoulder down",
+            "Stay in good position to follow up"
+          ],
+          "commonMistakes": [
+            "Reaching for the ankle without snapping head first",
+            "Going to both knees"
+          ],
+          "related": [
+            "snapdown",
+            "knee-pick",
+            "collar-tie"
+          ],
+          "videos": [
+            {
+              "id": "7ixhMN7fGwA",
+              "title": "Iron Faith Wrestling Breakdown #17| Mike Ross Ankle Pick To Double Leg",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=7ixhMN7fGwA"
+            },
+            {
+              "id": "lpHtwrYh730",
+              "title": "Ankle Pick | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=lpHtwrYh730"
+            }
+          ]
+        },
+        {
+          "id": "knee-pick",
+          "name": "Knee Pick",
+          "category": "takedowns-1",
+          "description": "Similar to ankle pick but targeting the knee. Effective from tie-ups and after a misdirection fake.",
+          "keyPoints": [
+            "Control head and create downward pressure",
+            "Reach behind opponent's knee from outside",
+            "Pull knee toward you while driving with your head/shoulder",
+            "Follow through to a finish - don't stop after the pick"
+          ],
+          "commonMistakes": [
+            "Grabbing on top of the knee instead of behind it",
+            "Not controlling the head"
+          ],
+          "related": [
+            "ankle-pick",
+            "snapdown"
+          ],
+          "videos": [
+            {
+              "id": "zJbtWYUoQ4c",
+              "title": "Russian 2 on 1 Low Level Knee Pick With Foot Block",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=zJbtWYUoQ4c"
+            },
+            {
+              "id": "rXjIDVMkWGI",
+              "title": "Underhook Knee Pick",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=rXjIDVMkWGI"
+            }
+          ]
+        },
+        {
+          "id": "body-lock-throw",
+          "name": "Body Lock Throws",
+          "category": "takedowns-1",
+          "description": "Locking hands around opponent's torso and using leverage to throw or trip them to the mat. Includes hip toss, headlock, and dump variations.",
+          "keyPoints": [
+            "Secure a tight lock around opponent's body (Gable grip preferred)",
+            "Drive hips in close - chest to chest",
+            "Use hip pop + rotation for throws",
+            "Stay heavy on top after the throw"
+          ],
+          "commonMistakes": [
+            "Loose grip allowing opponent to escape",
+            "Throwing without hip contact"
+          ],
+          "related": [
+            "hip-toss",
+            "headlock-throw",
+            "underhook"
+          ],
+          "videos": [
+            {
+              "id": "g2pmmQo3poQ",
+              "title": "Zhumashbek Puts on a Bodylock Clinic @ Bill Farrell (Breakdown) (Excerpt)",
+              "channel": "DPS Breakdowns",
+              "url": "https://www.youtube.com/watch?v=g2pmmQo3poQ"
+            },
+            {
+              "id": "pyr99YgQWFQ",
+              "title": "Wrestling Offense: Body Lock Throw",
+              "channel": "DICK'S",
+              "url": "https://www.youtube.com/watch?v=pyr99YgQWFQ"
+            }
+          ]
+        },
+        {
+          "id": "hip-toss",
+          "name": "Hip Toss",
+          "category": "takedowns-1",
+          "description": "A throw where you turn into your opponent, load them onto your hip, and rotate them over to the mat.",
+          "keyPoints": [
+            "Secure underhook or bodylock position",
+            "Turn your back into opponent's chest, load onto your hip",
+            "Pull with your arms while popping your hip",
+            "Follow through to maintain top position"
+          ],
+          "commonMistakes": [
+            "Not getting hip deep enough",
+            "Throwing without pulling with the arms"
+          ],
+          "related": [
+            "body-lock-throw",
+            "headlock-throw",
+            "underhook"
+          ],
+          "videos": [
+            {
+              "id": "3cc7tyjGLx0",
+              "title": "Wrestling Moves KOLAT.COM Single Leg to Hip Toss",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=3cc7tyjGLx0"
+            },
+            {
+              "id": "DpNsM6hYP1U",
+              "title": "Single To Hip Toss",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=DpNsM6hYP1U"
+            }
+          ]
+        },
+        {
+          "id": "headlock-throw",
+          "name": "Headlock Throw",
+          "category": "takedowns-1",
+          "description": "Wrapping opponent's head and throwing them over your hip. High-risk, high-reward technique.",
+          "keyPoints": [
+            "Wrap arm around opponent's head with a tight grip",
+            "MUST include their arm to avoid an illegal headlock",
+            "Pop hip and throw in one explosive motion",
+            "Land on top - never throw without following through"
+          ],
+          "commonMistakes": [
+            "Not including the arm (illegal!)",
+            "Falling to your back on the throw"
+          ],
+          "related": [
+            "body-lock-throw",
+            "hip-toss"
+          ],
+          "videos": [
+            {
+              "id": "j_c5E2KtDcM",
+              "title": "The Front Headlock | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=j_c5E2KtDcM"
+            },
+            {
+              "id": "4Wuzl6GfUKE",
+              "title": "Tanner Cook's High-Reward Front Headlock Offense",
+              "channel": "Earn Your Gold Medal",
+              "url": "https://www.youtube.com/watch?v=4Wuzl6GfUKE"
+            }
+          ]
+        },
+        {
+          "id": "firemans-carry",
+          "name": "Fireman's Carry",
+          "category": "takedowns-1",
+          "description": "Drop to one knee, thread your arm between opponent's legs, and roll them over your shoulders to the mat. Inside and outside variations.",
+          "keyPoints": [
+            "Control opponent's arm (wrist or elbow)",
+            "Level change - drop to lead knee",
+            "Thread opposite arm between their legs",
+            "Pull arm and lift with your legs, rolling opponent across your back"
+          ],
+          "commonMistakes": [
+            "Not controlling the arm through the throw",
+            "Getting stuck on your knees"
+          ],
+          "related": [
+            "duck-under",
+            "double-leg",
+            "arm-drag"
+          ],
+          "videos": [
+            {
+              "id": "fp-vj6u_z8M",
+              "title": "Fireman's Carry | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=fp-vj6u_z8M"
+            },
+            {
+              "id": "5bahNGhuw5w",
+              "title": "Takedown Outside Step Arm Drag to fireman's Carry",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=5bahNGhuw5w"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "takedowns-2",
+      "name": "Takedowns II",
+      "subtitle": "Counter-offense",
+      "slide": 4,
+      "techniques": [
+        {
+          "id": "front-headlock",
+          "name": "Front Headlock",
+          "category": "takedowns-2",
+          "description": "Controlling opponent's head and arm from the front when they shoot or get snapped down. A powerful position with many attack options.",
+          "keyPoints": [
+            "Lock around opponent's head and far arm (Gable grip)",
+            "Keep your weight heavy on their back - chest pressure",
+            "Hips back, sprawled legs for base",
+            "Attack from here: go behind, chokes, throws"
+          ],
+          "commonMistakes": [
+            "Being too upright - need weight on them",
+            "Holding without attacking"
+          ],
+          "related": [
+            "snapdown",
+            "cement-job"
+          ],
+          "videos": [
+            {
+              "id": "j_c5E2KtDcM",
+              "title": "The Front Headlock | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=j_c5E2KtDcM"
+            },
+            {
+              "id": "73Jep8_jgXg",
+              "title": "Front Headlock Proper Position - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=73Jep8_jgXg"
+            }
+          ]
+        },
+        {
+          "id": "snap-elbow-pass",
+          "name": "Snap & Elbow Pass",
+          "category": "takedowns-2",
+          "description": "From a front headlock, snap opponent down while passing their elbow to the other side to go behind.",
+          "keyPoints": [
+            "Secure front headlock position",
+            "Snap head down sharply to get them reaching for the mat",
+            "Pass their elbow across while circling behind",
+            "Secure waist control for the go-behind"
+          ],
+          "commonMistakes": [
+            "Not snapping hard enough to create movement",
+            "Losing head control during the pass"
+          ],
+          "related": [
+            "front-headlock",
+            "go-behind",
+            "shuck"
+          ],
+          "videos": [
+            {
+              "id": "uOb6P4Eklas",
+              "title": "Elbow Snap Setup - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=uOb6P4Eklas"
+            },
+            {
+              "id": "FNzu-_KexuI",
+              "title": "Inside Elbow Throw By - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=FNzu-_KexuI"
+            }
+          ]
+        },
+        {
+          "id": "shuck",
+          "name": "Shuck",
+          "category": "takedowns-2",
+          "description": "From a front headlock or collar tie, throwing opponent past you by redirecting their momentum to the side.",
+          "keyPoints": [
+            "Use opponent's forward pressure against them",
+            "Pull head/arm to the side while stepping out of the way",
+            "Circle behind as opponent goes past",
+            "Can be done from front headlock, collar tie, or any tie-up"
+          ],
+          "commonMistakes": [
+            "Trying to shuck without opponent having forward pressure",
+            "Not circling behind quickly enough"
+          ],
+          "related": [
+            "front-headlock",
+            "go-behind",
+            "slide-by"
+          ],
+          "videos": [
+            {
+              "id": "Ts25_eRNdKA",
+              "title": "Front Headlock Shuck - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=Ts25_eRNdKA"
+            },
+            {
+              "id": "Qolz2PsNXnk",
+              "title": "Clearing A Front Headlock - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=Qolz2PsNXnk"
+            }
+          ]
+        },
+        {
+          "id": "whip-over",
+          "name": "Whip Over",
+          "category": "takedowns-2",
+          "description": "From a front headlock, using a whipping motion to roll opponent over to their back. Can also be done from an overhook.",
+          "keyPoints": [
+            "Secure tight front headlock or overhook",
+            "Create rotation by pulling their head/arm down and across",
+            "Whip your body over the top in a circular motion",
+            "Follow through to secure a pin or near-fall position"
+          ],
+          "commonMistakes": [
+            "Not having a tight enough grip",
+            "Whipping without hip involvement"
+          ],
+          "related": [
+            "front-headlock",
+            "overhook",
+            "cement-job"
+          ],
+          "videos": [
+            {
+              "id": "Qolz2PsNXnk",
+              "title": "Clearing A Front Headlock - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=Qolz2PsNXnk"
+            },
+            {
+              "id": "Ts25_eRNdKA",
+              "title": "Front Headlock Shuck - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=Ts25_eRNdKA"
+            }
+          ]
+        },
+        {
+          "id": "cement-job",
+          "name": "Cement Job / Mixer",
+          "category": "takedowns-2",
+          "description": "From a front headlock, driving opponent's head into the mat while circling to expose their back. Also called a cement mixer.",
+          "keyPoints": [
+            "Tight front headlock with Gable grip",
+            "Drive opponent's head toward the mat",
+            "Circle toward their head while keeping pressure",
+            "Roll them through to expose their back for near-fall"
+          ],
+          "commonMistakes": [
+            "Losing the grip during the roll",
+            "Not keeping enough pressure on the head"
+          ],
+          "related": [
+            "front-headlock",
+            "whip-over"
+          ],
+          "videos": [
+            {
+              "id": "U0cns7k-9f4",
+              "title": "Cement\u26a1\ufe0fJob\u26a1\ufe0fElevator\u2935\ufe0f #freestylewrestling #collegewrestling #wrestling #highschoolwrestling #mma",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=U0cns7k-9f4"
+            },
+            {
+              "id": "CxiVT15FHDk",
+              "title": "Front Headlock to Cement Job - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=CxiVT15FHDk"
+            }
+          ]
+        },
+        {
+          "id": "sprawl-go-behind",
+          "name": "Sprawl Go-Behind",
+          "category": "takedowns-2",
+          "description": "Defending a shot with a sprawl, then immediately transitioning to get behind the opponent for a takedown.",
+          "keyPoints": [
+            "Sprawl: shoot hips back, chest heavy on opponent's back",
+            "As opponent is stuffed, circle to the side",
+            "Grab around their waist or lock onto a hip",
+            "Pull them toward you while getting your hips behind theirs"
+          ],
+          "commonMistakes": [
+            "Sprawling but not attacking from the position",
+            "Getting back to your feet without following up"
+          ],
+          "related": [
+            "front-headlock",
+            "go-behind"
+          ],
+          "videos": [
+            {
+              "id": "QMVavyxjlNU",
+              "title": "Best Sprawl Position To Stop Leg Attack - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=QMVavyxjlNU"
+            },
+            {
+              "id": "Y7_MTgjVvF0",
+              "title": "Single Sprawl Go Behind",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=Y7_MTgjVvF0"
+            }
+          ]
+        },
+        {
+          "id": "bodylock-counter",
+          "name": "Body Lock Counter",
+          "category": "takedowns-2",
+          "description": "Upgrading from tie-ups to a body lock and using it to score takedowns via trips, throws, and lifts.",
+          "keyPoints": [
+            "From underhook, reach around to lock hands behind opponent's back",
+            "Gable grip preferred for strength",
+            "Pop hips in for trips and throws",
+            "Keep pressure chest-to-chest"
+          ],
+          "commonMistakes": [
+            "Locking hands too low",
+            "Not using hip pressure"
+          ],
+          "related": [
+            "body-lock-throw",
+            "underhook"
+          ],
+          "videos": [
+            {
+              "id": "g2pmmQo3poQ",
+              "title": "Zhumashbek Puts on a Bodylock Clinic @ Bill Farrell (Breakdown) (Excerpt)",
+              "channel": "DPS Breakdowns",
+              "url": "https://www.youtube.com/watch?v=g2pmmQo3poQ"
+            },
+            {
+              "id": "pyr99YgQWFQ",
+              "title": "Wrestling Offense: Body Lock Throw",
+              "channel": "DICK'S",
+              "url": "https://www.youtube.com/watch?v=pyr99YgQWFQ"
+            }
+          ]
+        },
+        {
+          "id": "crotch-lock",
+          "name": "Crotch Lock",
+          "category": "takedowns-2",
+          "description": "A counter-wrestling technique where you secure a grip around opponent's leg at the crotch level from a scramble situation.",
+          "keyPoints": [
+            "Thread arm through opponent's legs from a scramble position",
+            "Lock hands together around the upper thigh",
+            "Use leverage to turn opponent or return them to the mat",
+            "Keep tight and follow through to a finish"
+          ],
+          "commonMistakes": [
+            "Loose lock that opponent can slip out of",
+            "Not following through to a finish"
+          ],
+          "related": [
+            "scramble",
+            "high-crotch"
+          ],
+          "videos": [
+            {
+              "id": "idsLXyDiuZk",
+              "title": "Crotch Lift KOLAT.COM Wrestling Techniques Moves Instruction",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=idsLXyDiuZk"
+            },
+            {
+              "id": "KPGqMmFGtTQ",
+              "title": "Crotch Lift + Pickup - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=KPGqMmFGtTQ"
+            }
+          ]
+        },
+        {
+          "id": "scramble",
+          "name": "Scramble / Dogfight",
+          "category": "takedowns-2",
+          "description": "Dynamic exchanges where both wrestlers are fighting for position. Dogfight is a specific scramble where both wrestlers are on their knees battling for underhooks.",
+          "keyPoints": [
+            "Stay heavy and keep moving - never stop in a scramble",
+            "Fight for inside position and underhooks",
+            "In dogfight: get head up and drive into opponent",
+            "Always look to get behind or on top"
+          ],
+          "commonMistakes": [
+            "Freezing during a scramble",
+            "Giving up position instead of fighting through"
+          ],
+          "related": [
+            "underhook",
+            "go-behind"
+          ],
+          "videos": [
+            {
+              "id": "BoDgPdXSM94",
+              "title": "Dog Fight / Coyote Guard Instructional | Gi & Nogi Underhook Sweep System",
+              "channel": "Jordan Teaches Jiujitsu",
+              "url": "https://www.youtube.com/watch?v=BoDgPdXSM94"
+            },
+            {
+              "id": "p4zRBQwkmn4",
+              "title": "60 Dog Fight Under-Hook Half Guard Techniques In Just 18 Minutes by Jason Scully - BJJ Grappling",
+              "channel": "Jiu Jitsu In Minutes by Jason Scully",
+              "url": "https://www.youtube.com/watch?v=p4zRBQwkmn4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "top-position",
+      "name": "Top Position",
+      "subtitle": "Breakdowns and rides",
+      "slide": 5,
+      "techniques": [
+        {
+          "id": "tight-waist",
+          "name": "Tight Waist",
+          "category": "top-position",
+          "description": "Fundamental top control. One arm wraps tight around opponent's waist. The base position for most breakdowns and turns.",
+          "keyPoints": [
+            "Lock arm tight around opponent's waist, elbow in their hip",
+            "Drive chest pressure into their back",
+            "Other hand controls wrist, ankle, or far arm",
+            "Use hip pressure to flatten them out"
+          ],
+          "commonMistakes": [
+            "Arm too loose around waist",
+            "Weight too high on opponent's back"
+          ],
+          "related": [
+            "chop-cross-wrist",
+            "half-nelson",
+            "cradle-near"
+          ],
+          "videos": [
+            {
+              "id": "fnI_WjItbdI",
+              "title": "Wrestling Moves KOLAT.COM Wrestling Chop & Tight Waist",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=fnI_WjItbdI"
+            },
+            {
+              "id": "SjpLcAtARqI",
+              "title": "Defending Tight Waist:  Hipping Down Against Tight Waist Anchor Opponent to Mat",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=SjpLcAtARqI"
+            }
+          ]
+        },
+        {
+          "id": "chop-cross-wrist",
+          "name": "Chop / Cross Wrist",
+          "category": "top-position",
+          "description": "A breakdown where you chop opponent's elbow while pulling their far wrist across. Flattens them to the mat for turns.",
+          "keyPoints": [
+            "One hand chops inside of opponent's near elbow",
+            "Other hand reaches under to grab far wrist (cross-wrist)",
+            "Pull wrist across while driving forward with chest",
+            "Transition to half nelson, arm bar, or cradle"
+          ],
+          "commonMistakes": [
+            "Not chopping the elbow sharply enough",
+            "Losing chest pressure during the reach"
+          ],
+          "related": [
+            "tight-waist",
+            "half-nelson",
+            "arm-bar"
+          ],
+          "videos": [
+            {
+              "id": "fnI_WjItbdI",
+              "title": "Wrestling Moves KOLAT.COM Wrestling Chop & Tight Waist",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=fnI_WjItbdI"
+            },
+            {
+              "id": "6U9mZGuhJqg",
+              "title": "Top Wrestling:  Cross Wrist Threading the Needle Tilt",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=6U9mZGuhJqg"
+            }
+          ]
+        },
+        {
+          "id": "spiral-ride",
+          "name": "Spiral Ride",
+          "category": "top-position",
+          "description": "A dynamic riding technique where you control opponent's wrist and ankle on the same side, spiraling them to the mat.",
+          "keyPoints": [
+            "Grab near wrist and far ankle",
+            "Drive opponent's wrist toward the mat in a spiral motion",
+            "Pull ankle toward you to take away their base",
+            "Follow through to a breakdown or turn"
+          ],
+          "commonMistakes": [
+            "Reaching for the ankle and losing top pressure",
+            "Not spiraling - just pulling straight"
+          ],
+          "related": [
+            "tight-waist",
+            "ankle-breakdown"
+          ],
+          "videos": [
+            {
+              "id": "2aoeYRjpFLg",
+              "title": "Spiral Breakdown Proper Drive",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=2aoeYRjpFLg"
+            },
+            {
+              "id": "NJNT1JSjGtI",
+              "title": "Tricep Circle Double Leg Setup - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=NJNT1JSjGtI"
+            }
+          ]
+        },
+        {
+          "id": "ankle-breakdown",
+          "name": "Ankle Breakdown",
+          "category": "top-position",
+          "description": "From top position, pulling opponent's ankle out to flatten them to the mat and remove their base.",
+          "keyPoints": [
+            "Reach back and hook opponent's far ankle",
+            "Pull ankle toward you while driving forward with upper body",
+            "Opponent loses their base and flattens out",
+            "Transition to turns or further riding"
+          ],
+          "commonMistakes": [
+            "Reaching too far back and losing position",
+            "Not driving forward while pulling the ankle"
+          ],
+          "related": [
+            "spiral-ride",
+            "tight-waist"
+          ],
+          "videos": [
+            {
+              "id": "6_OnLcW4sh0",
+              "title": "2 on 1 Near Ankle - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=6_OnLcW4sh0"
+            },
+            {
+              "id": "pmPFkWyasZU",
+              "title": "Collar Tie Slip Ankle Pick - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=pmPFkWyasZU"
+            }
+          ]
+        },
+        {
+          "id": "mat-return",
+          "name": "Mat Return",
+          "category": "top-position",
+          "description": "Returning an opponent who is standing or getting up back down to the mat. Chair sit and waist lift are primary methods.",
+          "keyPoints": [
+            "Chair sit: lock waist and sit back, pulling opponent into your lap",
+            "Waist lift: lock waist tight and lift/rotate them back down",
+            "Keep hands locked and pressure constant",
+            "Follow up immediately with a ride or turn"
+          ],
+          "commonMistakes": [
+            "Loose hand lock that opponent breaks",
+            "Letting opponent get fully to their feet before acting"
+          ],
+          "related": [
+            "tight-waist",
+            "stand-up"
+          ],
+          "videos": [
+            {
+              "id": "hOtkAp7yLrQ",
+              "title": "Mat Return | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=hOtkAp7yLrQ"
+            },
+            {
+              "id": "8Siq4BAa8ro",
+              "title": "Front Trip Mat Return",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=8Siq4BAa8ro"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "finishers",
+      "name": "Finishers",
+      "subtitle": "Nearfall and pins",
+      "slide": 6,
+      "techniques": [
+        {
+          "id": "half-nelson",
+          "name": "Half Nelson",
+          "category": "finishers",
+          "description": "The most fundamental pinning combination. Thread arm under opponent's arm and behind their neck, driving them to their back.",
+          "keyPoints": [
+            "From top/side position, thread arm under opponent's near arm",
+            "Hand goes behind their neck - drive with palm",
+            "Keep chest heavy on their back",
+            "Walk toward their head to turn them to their back"
+          ],
+          "commonMistakes": [
+            "Arm not deep enough under opponent's arm",
+            "Not keeping chest pressure"
+          ],
+          "related": [
+            "power-half",
+            "tight-waist",
+            "chop-cross-wrist"
+          ],
+          "videos": [
+            {
+              "id": "rNv4TleJc9A",
+              "title": "Half Nelson",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=rNv4TleJc9A"
+            },
+            {
+              "id": "KYMOLUZ6G_g",
+              "title": "Arm Bar to Half Nelson - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=KYMOLUZ6G_g"
+            }
+          ]
+        },
+        {
+          "id": "power-half",
+          "name": "Power Half Nelson",
+          "category": "finishers",
+          "description": "An enhanced half nelson where you add a wrist control for extra leverage and power to turn your opponent.",
+          "keyPoints": [
+            "Standard half nelson with one arm",
+            "Other hand grabs opponent's far wrist and pulls it across",
+            "Combined leverage makes the turn much more powerful",
+            "Drive toward opponent's head to complete the turn"
+          ],
+          "commonMistakes": [
+            "Losing the wrist control during the turn",
+            "Not driving with the hips"
+          ],
+          "related": [
+            "half-nelson",
+            "chop-cross-wrist"
+          ],
+          "videos": [
+            {
+              "id": "KYMOLUZ6G_g",
+              "title": "Arm Bar to Half Nelson - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=KYMOLUZ6G_g"
+            },
+            {
+              "id": "rNv4TleJc9A",
+              "title": "Half Nelson",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=rNv4TleJc9A"
+            }
+          ]
+        },
+        {
+          "id": "three-quarter-nelson",
+          "name": "Three Quarter Nelson",
+          "category": "finishers",
+          "description": "Threading both arms through for a deeper nelson. Very powerful turning combination when you can secure it.",
+          "keyPoints": [
+            "Thread both arms under opponent's arms and behind the neck",
+            "Lock hands together behind opponent's head",
+            "Drive forward and walk toward their head",
+            "Extremely powerful turn - hard to resist"
+          ],
+          "commonMistakes": [
+            "Leaving too much space - need to stay chest-to-chest",
+            "Losing the lock"
+          ],
+          "related": [
+            "half-nelson",
+            "power-half"
+          ],
+          "videos": [
+            {
+              "id": "KYMOLUZ6G_g",
+              "title": "Arm Bar to Half Nelson - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=KYMOLUZ6G_g"
+            },
+            {
+              "id": "s9Fb-dviloY",
+              "title": "The Crossface Pancake Is The Perfect 2nd Move",
+              "channel": "Earn Your Gold Medal",
+              "url": "https://www.youtube.com/watch?v=s9Fb-dviloY"
+            }
+          ]
+        },
+        {
+          "id": "cradle-near",
+          "name": "Near Side Cradle",
+          "category": "finishers",
+          "description": "Locking opponent's head and near-side knee together. A high-percentage pinning combination from top position.",
+          "keyPoints": [
+            "From tight waist, drive opponent's head down",
+            "Reach over the neck while hooking the near knee",
+            "Lock hands together (S-grip or Gable grip)",
+            "Squeeze elbows together and drive to your hip for the pin"
+          ],
+          "commonMistakes": [
+            "Lock is too loose",
+            "Not squeezing elbows together"
+          ],
+          "related": [
+            "cradle-far",
+            "tight-waist"
+          ],
+          "videos": [
+            {
+              "id": "Vzxp5BSygSg",
+              "title": "This New Cradle Variation Is a Guaranteed Pin",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=Vzxp5BSygSg"
+            },
+            {
+              "id": "KJ_OY_7by2E",
+              "title": "Near Side Cradle",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=KJ_OY_7by2E"
+            }
+          ]
+        },
+        {
+          "id": "cradle-far",
+          "name": "Far Side Cradle",
+          "category": "finishers",
+          "description": "Locking opponent's head and far-side knee together. Requires reaching across but can be very effective.",
+          "keyPoints": [
+            "From top position, reach across to hook opponent's far knee",
+            "Other arm goes around the head",
+            "Lock hands and roll to your hip",
+            "Pull knees-to-head to tighten the cradle"
+          ],
+          "commonMistakes": [
+            "Not reaching deep enough for the far knee",
+            "Rolling the wrong direction"
+          ],
+          "related": [
+            "cradle-near",
+            "chop-cross-wrist"
+          ],
+          "videos": [
+            {
+              "id": "Vzxp5BSygSg",
+              "title": "This New Cradle Variation Is a Guaranteed Pin",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=Vzxp5BSygSg"
+            },
+            {
+              "id": "ApV20XoQANs",
+              "title": "The Cradle | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=ApV20XoQANs"
+            }
+          ]
+        },
+        {
+          "id": "arm-bar",
+          "name": "Arm Bar / Wing",
+          "category": "finishers",
+          "description": "Controlling opponent's arm and using leverage to turn them. Arm bar traps the arm against your body; wing variation hooks under.",
+          "keyPoints": [
+            "Trap opponent's arm against your body with both hands",
+            "Drive forward into them to break them down",
+            "Walk toward their head to turn them to their back",
+            "Keep constant pressure - don't let them pull the arm free"
+          ],
+          "commonMistakes": [
+            "Arm slipping out due to loose grip",
+            "Not driving with your legs"
+          ],
+          "related": [
+            "half-nelson",
+            "tight-waist",
+            "chop-cross-wrist"
+          ],
+          "videos": [
+            {
+              "id": "nuBYDQxSfXk",
+              "title": "Arm Bar Tilt",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=nuBYDQxSfXk"
+            },
+            {
+              "id": "JIs3jqGceME",
+              "title": "Arm Bar Turn - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=JIs3jqGceME"
+            }
+          ]
+        },
+        {
+          "id": "turk",
+          "name": "Turk",
+          "category": "finishers",
+          "description": "A leg-riding turn where you hook opponent's leg with your leg and use it to turn them to their back.",
+          "keyPoints": [
+            "From top position, thread your leg between opponent's legs",
+            "Hook their far leg with your foot/ankle",
+            "Use leg hook combined with upper body control to turn",
+            "Maintain the hook throughout the turn"
+          ],
+          "commonMistakes": [
+            "Losing the leg hook during the turn",
+            "Not having upper body control"
+          ],
+          "related": [
+            "spiral-ride",
+            "half-nelson"
+          ],
+          "videos": [
+            {
+              "id": "c_Ey6aAkaNQ",
+              "title": "KOLAT.COM Wrestling Techniques: Drew Headlee Turk to Low Leg Cradle",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=c_Ey6aAkaNQ"
+            },
+            {
+              "id": "MYqy6EyUSs8",
+              "title": "KOLAT.COM Wrestling Techniques: Drew Headlee Turk & Low Leg Cradle Cross Ankle to Turk",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=MYqy6EyUSs8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "defense-1",
+      "name": "Defense I",
+      "subtitle": "From standing / on your feet - HEAD HANDS HIPS",
+      "slide": 7,
+      "techniques": [
+        {
+          "id": "defend-double",
+          "name": "Defending Double Leg",
+          "category": "defense-1",
+          "description": "Techniques for stopping an opponent's double leg takedown attempt. Key phrase: HEAD HANDS HIPS.",
+          "keyPoints": [
+            "Sprawl: shoot hips back and down, chest heavy on opponent",
+            "Crossface with your forearm across their face",
+            "Whizzer (overhook) on the arm they're reaching with",
+            "Circle away from the attack to create an angle"
+          ],
+          "commonMistakes": [
+            "Not reacting quickly enough",
+            "Sprawling but staying flat instead of hip-heavy"
+          ],
+          "related": [
+            "sprawl-go-behind",
+            "front-headlock",
+            "whip-over"
+          ],
+          "videos": [
+            {
+              "id": "QMVavyxjlNU",
+              "title": "Best Sprawl Position To Stop Leg Attack - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=QMVavyxjlNU"
+            },
+            {
+              "id": "QT7dxLzt2JA",
+              "title": "Wrestling Sprawl Secrets by John Smith",
+              "channel": "FANATIC WRESTLING",
+              "url": "https://www.youtube.com/watch?v=QT7dxLzt2JA"
+            }
+          ]
+        },
+        {
+          "id": "defend-single",
+          "name": "Defending Single Leg",
+          "category": "defense-1",
+          "description": "Stopping an opponent's single leg attack. Focus on controlling their head and freeing your leg.",
+          "keyPoints": [
+            "Whizzer immediately on the same side as the attacked leg",
+            "Crossface to push their head down and away",
+            "Hop on your free leg to maintain balance",
+            "Kick your leg free or limp leg out of their grip"
+          ],
+          "commonMistakes": [
+            "Hopping backward instead of circling",
+            "Reaching down for your own leg"
+          ],
+          "related": [
+            "overhook",
+            "sprawl-go-behind"
+          ],
+          "videos": [
+            {
+              "id": "QMVavyxjlNU",
+              "title": "Best Sprawl Position To Stop Leg Attack - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=QMVavyxjlNU"
+            },
+            {
+              "id": "QT7dxLzt2JA",
+              "title": "Wrestling Sprawl Secrets by John Smith",
+              "channel": "FANATIC WRESTLING",
+              "url": "https://www.youtube.com/watch?v=QT7dxLzt2JA"
+            }
+          ]
+        },
+        {
+          "id": "defend-high-crotch",
+          "name": "Defending High Crotch",
+          "category": "defense-1",
+          "description": "Defending the high crotch attack by controlling the head and preventing the lift.",
+          "keyPoints": [
+            "Cross-face to control opponent's head position",
+            "Overhook/whizzer on the attacking arm",
+            "Drive your hips down to prevent the lift",
+            "Circle away from the attack"
+          ],
+          "commonMistakes": [
+            "Letting opponent get under your hips",
+            "Leaning too far forward"
+          ],
+          "related": [
+            "defend-double",
+            "overhook"
+          ],
+          "videos": [
+            {
+              "id": "QMVavyxjlNU",
+              "title": "Best Sprawl Position To Stop Leg Attack - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=QMVavyxjlNU"
+            },
+            {
+              "id": "QT7dxLzt2JA",
+              "title": "Wrestling Sprawl Secrets by John Smith",
+              "channel": "FANATIC WRESTLING",
+              "url": "https://www.youtube.com/watch?v=QT7dxLzt2JA"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "defense-2",
+      "name": "Defense II",
+      "subtitle": "Bottom basics - HEAD UP = GET UP",
+      "slide": 8,
+      "techniques": [
+        {
+          "id": "solid-base",
+          "name": "Solid Base",
+          "category": "defense-2",
+          "description": "The foundation of bottom wrestling. Building and maintaining a strong base position to resist breakdowns.",
+          "keyPoints": [
+            "Hands and knees position with wide base",
+            "Elbows in, head up",
+            "Fill your hands (grab opponent's wrists on your waist)",
+            "Fight pressure - don't let them flatten you"
+          ],
+          "commonMistakes": [
+            "Head down (HEAD UP = GET UP)",
+            "Elbows out, exposing yourself to breakdowns"
+          ],
+          "related": [
+            "stand-up",
+            "switch",
+            "sit-out"
+          ],
+          "videos": [
+            {
+              "id": "t3DFJsflG0s",
+              "title": "Why 99% of Beginners Get Stuck on Bottom (And How to Escape)",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=t3DFJsflG0s"
+            },
+            {
+              "id": "LAiQeoQMJ5M",
+              "title": "Defending the Tight Waist Ride to Stand-Up - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=LAiQeoQMJ5M"
+            }
+          ]
+        },
+        {
+          "id": "clear-wrists",
+          "name": "Clearing Wrists",
+          "category": "defense-2",
+          "description": "On bottom, stripping opponent's hand control so you can execute your escapes cleanly.",
+          "keyPoints": [
+            "Grab opponent's hands/wrists on your waist",
+            "Peel one hand at a time - two hands vs one",
+            "Clear to the outside and attack immediately",
+            "Don't just clear - have your next move ready"
+          ],
+          "commonMistakes": [
+            "Trying to clear both hands at once",
+            "Clearing without following up with an escape"
+          ],
+          "related": [
+            "stand-up",
+            "switch",
+            "breaking-locks"
+          ],
+          "videos": [
+            {
+              "id": "t3DFJsflG0s",
+              "title": "Why 99% of Beginners Get Stuck on Bottom (And How to Escape)",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=t3DFJsflG0s"
+            },
+            {
+              "id": "LAiQeoQMJ5M",
+              "title": "Defending the Tight Waist Ride to Stand-Up - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=LAiQeoQMJ5M"
+            }
+          ]
+        },
+        {
+          "id": "defend-half-nelson",
+          "name": "Defending Half Nelson",
+          "category": "defense-2",
+          "description": "Preventing opponent from turning you with a half nelson from top position.",
+          "keyPoints": [
+            "Keep elbow tight to your side to block the arm thread",
+            "Post your hand on the mat to create a base",
+            "Turn into the nelson - don't turn away",
+            "Grab opponent's wrist and fight the arm back out"
+          ],
+          "commonMistakes": [
+            "Elbows out allowing easy arm thread",
+            "Turning away from the nelson (helps them turn you)"
+          ],
+          "related": [
+            "half-nelson",
+            "solid-base"
+          ],
+          "videos": [
+            {
+              "id": "KYMOLUZ6G_g",
+              "title": "Arm Bar to Half Nelson - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=KYMOLUZ6G_g"
+            },
+            {
+              "id": "rNv4TleJc9A",
+              "title": "Half Nelson",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=rNv4TleJc9A"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "defense-3",
+      "name": "Defense III",
+      "subtitle": "Bottom first moves",
+      "slide": 9,
+      "techniques": [
+        {
+          "id": "sit-out",
+          "name": "Sit Out & Knee Slide",
+          "category": "defense-3",
+          "description": "From bottom, sit through by kicking legs out and turning to face opponent. Knee slide variation uses knee movement to initiate.",
+          "keyPoints": [
+            "Clear opponent's hands off your waist",
+            "Kick your legs through and sit to your hip",
+            "Turn toward opponent immediately - don't stay seated",
+            "Come up facing your opponent, ready to attack"
+          ],
+          "commonMistakes": [
+            "Sitting out without clearing hands first",
+            "Sitting and staying instead of turning back in"
+          ],
+          "related": [
+            "switch",
+            "stand-up",
+            "solid-base"
+          ],
+          "videos": [
+            {
+              "id": "t3DFJsflG0s",
+              "title": "Why 99% of Beginners Get Stuck on Bottom (And How to Escape)",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=t3DFJsflG0s"
+            },
+            {
+              "id": "GTVprp2wQJw",
+              "title": "Push Back Sit to Switch - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=GTVprp2wQJw"
+            }
+          ]
+        },
+        {
+          "id": "switch",
+          "name": "Switch",
+          "category": "defense-3",
+          "description": "From bottom, reversing position by sitting to your hip, reaching back, and switching to behind your opponent.",
+          "keyPoints": [
+            "Sit to your hip and clear the near-side hand",
+            "Reach back between opponent's legs or over their thigh",
+            "Rotate your hips 180 degrees",
+            "End up behind opponent with control"
+          ],
+          "commonMistakes": [
+            "Not sitting to the hip first",
+            "Reaching back without clearing the hand"
+          ],
+          "related": [
+            "sit-out",
+            "stand-up",
+            "solid-base"
+          ],
+          "videos": [
+            {
+              "id": "cdTZDXPWrh0",
+              "title": "Push Back Sit\ud83d\udca5Switch\ud83d\udca5\ud83e\udd29",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=cdTZDXPWrh0"
+            },
+            {
+              "id": "GTVprp2wQJw",
+              "title": "Push Back Sit to Switch - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=GTVprp2wQJw"
+            }
+          ]
+        },
+        {
+          "id": "stand-up",
+          "name": "Stand Up",
+          "category": "defense-3",
+          "description": "The most fundamental bottom escape. Clear hands, get to your feet, and peel away. HEAD UP = GET UP.",
+          "keyPoints": [
+            "Fill your hands - grab opponent's hands on your waist",
+            "Pop up to your feet in one explosive motion",
+            "Keep your back straight, head up",
+            "Clear one hand at a time and turn to face opponent"
+          ],
+          "commonMistakes": [
+            "Head down while standing (get broken back down)",
+            "Standing without clearing hands first"
+          ],
+          "related": [
+            "solid-base",
+            "clear-wrists",
+            "mat-return"
+          ],
+          "videos": [
+            {
+              "id": "t3DFJsflG0s",
+              "title": "Why 99% of Beginners Get Stuck on Bottom (And How to Escape)",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=t3DFJsflG0s"
+            },
+            {
+              "id": "XUUV6-IV5ec",
+              "title": "How To Get Off Bottom (works 99% of the time)",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=XUUV6-IV5ec"
+            }
+          ]
+        },
+        {
+          "id": "tripod-quadpod",
+          "name": "Tripod / Quadpod",
+          "category": "defense-3",
+          "description": "Heavy base positions on bottom to resist being broken down. Quadpod (all fours) and tripod (three points) give maximum stability.",
+          "keyPoints": [
+            "Quadpod: hands and feet (not knees) on the mat for maximum height",
+            "Tripod: three points of contact, heavy hips",
+            "Use as a strong starting position before executing an escape",
+            "Makes it very difficult for opponent to break you down"
+          ],
+          "commonMistakes": [
+            "Staying in the position too long without attacking",
+            "Not keeping hips heavy"
+          ],
+          "related": [
+            "solid-base",
+            "stand-up"
+          ],
+          "videos": [
+            {
+              "id": "LYKTx5Veh4A",
+              "title": "Tripod Stand Up (BEST ESCAPE)",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=LYKTx5Veh4A"
+            },
+            {
+              "id": "c7QKJ1VBnTA",
+              "title": "Quad Pod | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=c7QKJ1VBnTA"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "drills",
+      "name": "Drills",
+      "subtitle": "Bottom first move drills",
+      "slide": 10,
+      "techniques": [
+        {
+          "id": "sit-out-drill",
+          "name": "Sit Out Drill",
+          "category": "drills",
+          "description": "Repetitive practice of the sit out escape to build muscle memory. Can be done solo or with a partner.",
+          "keyPoints": [
+            "Start in referee's position on bottom",
+            "Practice sit out motion in rapid succession",
+            "Focus on speed and hip rotation",
+            "Partner provides light resistance, increasing over time"
+          ],
+          "commonMistakes": [
+            "Going through the motions without intensity",
+            "Not turning back to face partner"
+          ],
+          "related": [
+            "sit-out"
+          ],
+          "videos": [
+            {
+              "id": "t3DFJsflG0s",
+              "title": "Why 99% of Beginners Get Stuck on Bottom (And How to Escape)",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=t3DFJsflG0s"
+            },
+            {
+              "id": "GTVprp2wQJw",
+              "title": "Push Back Sit to Switch - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=GTVprp2wQJw"
+            }
+          ]
+        },
+        {
+          "id": "switch-drill",
+          "name": "Switch Drill",
+          "category": "drills",
+          "description": "Repetitive practice of the switch escape to build muscle memory.",
+          "keyPoints": [
+            "Start in referee's position",
+            "Execute switch with full hip rotation",
+            "Reset and repeat rapidly",
+            "Progress from no resistance to live"
+          ],
+          "commonMistakes": [
+            "Incomplete hip rotation",
+            "Not resetting to proper position"
+          ],
+          "related": [
+            "switch"
+          ],
+          "videos": [
+            {
+              "id": "t3DFJsflG0s",
+              "title": "Why 99% of Beginners Get Stuck on Bottom (And How to Escape)",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=t3DFJsflG0s"
+            },
+            {
+              "id": "GTVprp2wQJw",
+              "title": "Push Back Sit to Switch - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=GTVprp2wQJw"
+            }
+          ]
+        },
+        {
+          "id": "stand-up-drill",
+          "name": "Stand Up Drill",
+          "category": "drills",
+          "description": "Repetitive practice of the stand up escape to build speed and timing.",
+          "keyPoints": [
+            "Start in referee's position",
+            "Explosive stand up - clear hands and face opponent",
+            "Reset and repeat",
+            "Partner provides increasing resistance"
+          ],
+          "commonMistakes": [
+            "Standing slowly instead of explosively",
+            "Head dropping during the stand up"
+          ],
+          "related": [
+            "stand-up"
+          ],
+          "videos": [
+            {
+              "id": "t3DFJsflG0s",
+              "title": "Why 99% of Beginners Get Stuck on Bottom (And How to Escape)",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=t3DFJsflG0s"
+            },
+            {
+              "id": "LAiQeoQMJ5M",
+              "title": "Defending the Tight Waist Ride to Stand-Up - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=LAiQeoQMJ5M"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "flowcharts": [
+    {
+      "id": "underhook-series",
+      "name": "Underhook Series",
+      "slide": 12,
+      "file": "flowcharts/underhook.html",
+      "rootNode": "underhook",
+      "nodes": [
+        {
+          "id": "underhook",
+          "label": "Underhook",
+          "type": "root"
+        },
+        {
+          "id": "throw-by",
+          "label": "Throw-by",
+          "type": "action"
+        },
+        {
+          "id": "upgrade-bodylock",
+          "label": "Upgrade to Bodylock",
+          "type": "action"
+        },
+        {
+          "id": "front-headlock-uh",
+          "label": "Front Headlock",
+          "type": "action"
+        },
+        {
+          "id": "whip-over-drop",
+          "label": "Whip-Over/Drop-Whip",
+          "type": "action"
+        },
+        {
+          "id": "snatch-single-uh",
+          "label": "Snatch Single",
+          "type": "action"
+        },
+        {
+          "id": "knee-tap-uh",
+          "label": "Knee Tap",
+          "type": "action"
+        },
+        {
+          "id": "go-behind-tb",
+          "label": "Go-Behind",
+          "type": "finish"
+        },
+        {
+          "id": "bodylock-sub",
+          "label": "Bodylock",
+          "type": "finish"
+        },
+        {
+          "id": "near-snatch",
+          "label": "Near Side/Snatch Single",
+          "type": "finish"
+        },
+        {
+          "id": "go-behind-bl",
+          "label": "Go-Behind",
+          "type": "finish"
+        },
+        {
+          "id": "throw-bl",
+          "label": "Throw",
+          "type": "finish"
+        },
+        {
+          "id": "front-hl-series",
+          "label": "Front Headlock Series",
+          "type": "link"
+        },
+        {
+          "id": "whip-over-sub",
+          "label": "Whip-Over",
+          "type": "finish"
+        }
+      ],
+      "edges": [
+        {
+          "from": "underhook",
+          "to": "throw-by"
+        },
+        {
+          "from": "underhook",
+          "to": "upgrade-bodylock"
+        },
+        {
+          "from": "underhook",
+          "to": "front-headlock-uh"
+        },
+        {
+          "from": "underhook",
+          "to": "whip-over-drop"
+        },
+        {
+          "from": "underhook",
+          "to": "snatch-single-uh"
+        },
+        {
+          "from": "underhook",
+          "to": "knee-tap-uh"
+        },
+        {
+          "from": "throw-by",
+          "to": "go-behind-tb"
+        },
+        {
+          "from": "throw-by",
+          "to": "bodylock-sub"
+        },
+        {
+          "from": "throw-by",
+          "to": "near-snatch"
+        },
+        {
+          "from": "upgrade-bodylock",
+          "to": "go-behind-bl"
+        },
+        {
+          "from": "upgrade-bodylock",
+          "to": "throw-bl"
+        },
+        {
+          "from": "front-headlock-uh",
+          "to": "front-hl-series"
+        },
+        {
+          "from": "whip-over-drop",
+          "to": "whip-over-sub"
+        },
+        {
+          "from": "snatch-single-uh",
+          "to": "knee-tap-uh"
+        }
+      ]
+    },
+    {
+      "id": "collar-tie-series",
+      "name": "Collar Tie Series",
+      "slide": 13,
+      "file": "flowcharts/collar-tie.html",
+      "rootNode": "collar-tie-root",
+      "nodes": [
+        {
+          "id": "collar-tie-root",
+          "label": "Collar Tie",
+          "type": "root"
+        },
+        {
+          "id": "duck-under-ct",
+          "label": "Duck Under",
+          "type": "action"
+        },
+        {
+          "id": "slide-by-ct",
+          "label": "Slide By",
+          "type": "action"
+        },
+        {
+          "id": "snapdown-ct",
+          "label": "Snapdown",
+          "type": "action"
+        },
+        {
+          "id": "claw-ct",
+          "label": "Claw",
+          "type": "finish"
+        },
+        {
+          "id": "single-double-ct",
+          "label": "Single or Double",
+          "type": "finish"
+        },
+        {
+          "id": "go-behind-ct",
+          "label": "Go-Behind",
+          "type": "finish"
+        },
+        {
+          "id": "bodylock-ct",
+          "label": "Body-Lock",
+          "type": "finish"
+        },
+        {
+          "id": "front-hl-ct",
+          "label": "Front Headlock Series",
+          "type": "link"
+        }
+      ],
+      "edges": [
+        {
+          "from": "collar-tie-root",
+          "to": "duck-under-ct"
+        },
+        {
+          "from": "collar-tie-root",
+          "to": "slide-by-ct"
+        },
+        {
+          "from": "collar-tie-root",
+          "to": "snapdown-ct"
+        },
+        {
+          "from": "duck-under-ct",
+          "to": "claw-ct"
+        },
+        {
+          "from": "duck-under-ct",
+          "to": "single-double-ct"
+        },
+        {
+          "from": "duck-under-ct",
+          "to": "go-behind-ct"
+        },
+        {
+          "from": "slide-by-ct",
+          "to": "bodylock-ct"
+        },
+        {
+          "from": "slide-by-ct",
+          "to": "go-behind-ct"
+        },
+        {
+          "from": "snapdown-ct",
+          "to": "front-hl-ct"
+        },
+        {
+          "from": "snapdown-ct",
+          "to": "go-behind-ct"
+        }
+      ]
+    },
+    {
+      "id": "head-on-wrist-series",
+      "name": "Head on Wrist Control",
+      "slide": 14,
+      "file": "flowcharts/head-on-wrist.html",
+      "rootNode": "head-on-wrist",
+      "nodes": [
+        {
+          "id": "head-on-wrist",
+          "label": "Head on Wrist Control",
+          "type": "root"
+        },
+        {
+          "id": "single-wrist",
+          "label": "Single Wrist",
+          "type": "action"
+        },
+        {
+          "id": "two-on-one-how",
+          "label": "2 on 1",
+          "type": "action"
+        },
+        {
+          "id": "both-wrists",
+          "label": "Both Wrists",
+          "type": "action"
+        },
+        {
+          "id": "arm-drag-how",
+          "label": "Arm Drag Series",
+          "type": "link"
+        },
+        {
+          "id": "elbow-pass-how",
+          "label": "Elbow Pass",
+          "type": "finish"
+        },
+        {
+          "id": "hand-on-mat",
+          "label": "Hand on Mat",
+          "type": "action"
+        },
+        {
+          "id": "snap-how",
+          "label": "Snap",
+          "type": "action"
+        },
+        {
+          "id": "snatch-single-how",
+          "label": "Snatch Single",
+          "type": "finish"
+        },
+        {
+          "id": "go-behind-how",
+          "label": "Go-Behind",
+          "type": "finish"
+        },
+        {
+          "id": "underhook-how",
+          "label": "Underhook",
+          "type": "link"
+        },
+        {
+          "id": "duck-under-how",
+          "label": "Duck Under",
+          "type": "finish"
+        },
+        {
+          "id": "double-leg-how",
+          "label": "Double Leg",
+          "type": "finish"
+        },
+        {
+          "id": "slide-by-how",
+          "label": "Slide By",
+          "type": "finish"
+        },
+        {
+          "id": "low-single-how",
+          "label": "Low Single",
+          "type": "finish"
+        },
+        {
+          "id": "throw-by-how",
+          "label": "Throw-By",
+          "type": "finish"
+        },
+        {
+          "id": "front-hl-how",
+          "label": "Front Headlock Series",
+          "type": "link"
+        }
+      ],
+      "edges": [
+        {
+          "from": "head-on-wrist",
+          "to": "single-wrist"
+        },
+        {
+          "from": "head-on-wrist",
+          "to": "two-on-one-how"
+        },
+        {
+          "from": "head-on-wrist",
+          "to": "both-wrists"
+        },
+        {
+          "from": "single-wrist",
+          "to": "arm-drag-how"
+        },
+        {
+          "from": "single-wrist",
+          "to": "elbow-pass-how"
+        },
+        {
+          "from": "single-wrist",
+          "to": "hand-on-mat"
+        },
+        {
+          "from": "single-wrist",
+          "to": "snap-how"
+        },
+        {
+          "from": "hand-on-mat",
+          "to": "snatch-single-how"
+        },
+        {
+          "from": "hand-on-mat",
+          "to": "go-behind-how"
+        },
+        {
+          "from": "snap-how",
+          "to": "front-hl-how"
+        },
+        {
+          "from": "two-on-one-how",
+          "to": "underhook-how"
+        },
+        {
+          "from": "two-on-one-how",
+          "to": "duck-under-how"
+        },
+        {
+          "from": "two-on-one-how",
+          "to": "snatch-single-how"
+        },
+        {
+          "from": "both-wrists",
+          "to": "double-leg-how"
+        },
+        {
+          "from": "both-wrists",
+          "to": "slide-by-how"
+        },
+        {
+          "from": "both-wrists",
+          "to": "low-single-how"
+        },
+        {
+          "from": "both-wrists",
+          "to": "throw-by-how"
+        }
+      ]
+    },
+    {
+      "id": "russian-tie-series",
+      "name": "Russian Tie Series",
+      "slide": 15,
+      "file": "flowcharts/russian-tie.html",
+      "rootNode": "russian-tie-root",
+      "nodes": [
+        {
+          "id": "russian-tie-root",
+          "label": "Russian Tie",
+          "type": "root"
+        },
+        {
+          "id": "snatch-single-rt",
+          "label": "Snatch Single",
+          "type": "action"
+        },
+        {
+          "id": "double-wrist-lock",
+          "label": "Double Wrist Lock",
+          "type": "action"
+        },
+        {
+          "id": "dump-rt",
+          "label": "Dump",
+          "type": "action"
+        },
+        {
+          "id": "snap-rt",
+          "label": "Snap",
+          "type": "action"
+        },
+        {
+          "id": "foot-sweep-rt",
+          "label": "Foot Sweep or Trip",
+          "type": "action"
+        },
+        {
+          "id": "throw-rt",
+          "label": "Throw",
+          "type": "finish"
+        },
+        {
+          "id": "snap-sub-rt",
+          "label": "Snap",
+          "type": "finish"
+        },
+        {
+          "id": "go-behind-rt",
+          "label": "Go Behind",
+          "type": "finish"
+        },
+        {
+          "id": "high-c-double",
+          "label": "High C or Double",
+          "type": "finish"
+        }
+      ],
+      "edges": [
+        {
+          "from": "russian-tie-root",
+          "to": "snatch-single-rt"
+        },
+        {
+          "from": "russian-tie-root",
+          "to": "double-wrist-lock"
+        },
+        {
+          "from": "russian-tie-root",
+          "to": "dump-rt"
+        },
+        {
+          "from": "russian-tie-root",
+          "to": "snap-rt"
+        },
+        {
+          "from": "russian-tie-root",
+          "to": "foot-sweep-rt"
+        },
+        {
+          "from": "dump-rt",
+          "to": "throw-rt"
+        },
+        {
+          "from": "dump-rt",
+          "to": "snap-sub-rt"
+        },
+        {
+          "from": "snap-rt",
+          "to": "go-behind-rt"
+        },
+        {
+          "from": "snap-rt",
+          "to": "high-c-double"
+        }
+      ]
+    },
+    {
+      "id": "russian-tie-reactions",
+      "name": "Russian Tie Opponent Reactions",
+      "slide": 16,
+      "file": "flowcharts/russian-tie-reactions.html",
+      "rootNode": "rt-reactions",
+      "nodes": [
+        {
+          "id": "rt-reactions",
+          "label": "Russian Tie Opponent Reactions",
+          "type": "root"
+        },
+        {
+          "id": "opp-head-pos",
+          "label": "Opp. Head Position",
+          "type": "reaction"
+        },
+        {
+          "id": "my-head-pos",
+          "label": "My Head Position",
+          "type": "reaction"
+        },
+        {
+          "id": "pulls-arm",
+          "label": "Pulls Arm Away",
+          "type": "reaction"
+        },
+        {
+          "id": "head-post-rt",
+          "label": "Head Post",
+          "type": "reaction"
+        },
+        {
+          "id": "square-up",
+          "label": "Square Up",
+          "type": "reaction"
+        },
+        {
+          "id": "fireman-dump",
+          "label": "Fireman or Dump",
+          "type": "finish"
+        },
+        {
+          "id": "snap-shuck-rt",
+          "label": "Snap or Shuck",
+          "type": "finish"
+        },
+        {
+          "id": "foot-sweep-react",
+          "label": "Foot Sweep",
+          "type": "finish"
+        },
+        {
+          "id": "key-lock",
+          "label": "Key Lock",
+          "type": "finish"
+        },
+        {
+          "id": "throw-react",
+          "label": "Throw",
+          "type": "finish"
+        },
+        {
+          "id": "uchi-mata",
+          "label": "Uchi-Mata",
+          "type": "finish"
+        },
+        {
+          "id": "elbow-pass-rt",
+          "label": "Elbow Pass",
+          "type": "finish"
+        },
+        {
+          "id": "double-leg-rt",
+          "label": "Double Leg",
+          "type": "finish"
+        },
+        {
+          "id": "attack-far-leg",
+          "label": "Attack Far Leg",
+          "type": "finish"
+        },
+        {
+          "id": "leg-block",
+          "label": "Leg Block or Carryover",
+          "type": "finish"
+        }
+      ],
+      "edges": [
+        {
+          "from": "rt-reactions",
+          "to": "opp-head-pos"
+        },
+        {
+          "from": "rt-reactions",
+          "to": "my-head-pos"
+        },
+        {
+          "from": "rt-reactions",
+          "to": "pulls-arm"
+        },
+        {
+          "from": "rt-reactions",
+          "to": "head-post-rt"
+        },
+        {
+          "from": "rt-reactions",
+          "to": "square-up"
+        },
+        {
+          "from": "opp-head-pos",
+          "to": "fireman-dump"
+        },
+        {
+          "from": "opp-head-pos",
+          "to": "snap-shuck-rt"
+        },
+        {
+          "from": "my-head-pos",
+          "to": "foot-sweep-react"
+        },
+        {
+          "from": "my-head-pos",
+          "to": "key-lock"
+        },
+        {
+          "from": "my-head-pos",
+          "to": "throw-react"
+        },
+        {
+          "from": "my-head-pos",
+          "to": "uchi-mata"
+        },
+        {
+          "from": "pulls-arm",
+          "to": "elbow-pass-rt"
+        },
+        {
+          "from": "pulls-arm",
+          "to": "double-leg-rt"
+        },
+        {
+          "from": "head-post-rt",
+          "to": "attack-far-leg"
+        },
+        {
+          "from": "square-up",
+          "to": "leg-block"
+        }
+      ]
+    },
+    {
+      "id": "elbow-control-series",
+      "name": "Elbow Control Series",
+      "slide": 17,
+      "file": "flowcharts/elbow-control.html",
+      "rootNode": "elbow-control-root",
+      "nodes": [
+        {
+          "id": "elbow-control-root",
+          "label": "Elbow Control",
+          "type": "root"
+        },
+        {
+          "id": "inside-dump",
+          "label": "Inside Dump",
+          "type": "action"
+        },
+        {
+          "id": "outside-dump",
+          "label": "Outside Dump",
+          "type": "action"
+        },
+        {
+          "id": "duck-under-ec",
+          "label": "Duck Under",
+          "type": "action"
+        },
+        {
+          "id": "near-leg-ec",
+          "label": "Near Leg",
+          "type": "finish"
+        },
+        {
+          "id": "far-leg-ec",
+          "label": "Far Leg",
+          "type": "finish"
+        },
+        {
+          "id": "no-leg-ec",
+          "label": "No Leg",
+          "type": "finish"
+        },
+        {
+          "id": "navy-ride",
+          "label": "Navy Ride",
+          "type": "finish"
+        },
+        {
+          "id": "go-behind-ec",
+          "label": "Go-Behind",
+          "type": "finish"
+        },
+        {
+          "id": "single-double-ec",
+          "label": "Single or Double Leg",
+          "type": "finish"
+        }
+      ],
+      "edges": [
+        {
+          "from": "elbow-control-root",
+          "to": "inside-dump"
+        },
+        {
+          "from": "elbow-control-root",
+          "to": "outside-dump"
+        },
+        {
+          "from": "elbow-control-root",
+          "to": "duck-under-ec"
+        },
+        {
+          "from": "inside-dump",
+          "to": "near-leg-ec"
+        },
+        {
+          "from": "inside-dump",
+          "to": "far-leg-ec"
+        },
+        {
+          "from": "inside-dump",
+          "to": "no-leg-ec"
+        },
+        {
+          "from": "outside-dump",
+          "to": "navy-ride"
+        },
+        {
+          "from": "duck-under-ec",
+          "to": "go-behind-ec"
+        },
+        {
+          "from": "duck-under-ec",
+          "to": "single-double-ec"
+        }
+      ]
+    },
+    {
+      "id": "front-headlock-series",
+      "name": "Front Headlock Offense",
+      "slide": 18,
+      "file": "flowcharts/front-headlock.html",
+      "rootNode": "front-hl-root",
+      "nodes": [
+        {
+          "id": "front-hl-root",
+          "label": "Front Headlock (Offense)",
+          "type": "root"
+        },
+        {
+          "id": "head-in-hole",
+          "label": "Head in the Hole",
+          "type": "action"
+        },
+        {
+          "id": "bounce-fh",
+          "label": "Bounce",
+          "type": "action"
+        },
+        {
+          "id": "gator-roll-fh",
+          "label": "Gator Roll",
+          "type": "action"
+        },
+        {
+          "id": "go-behind-fh",
+          "label": "Go-Behind",
+          "type": "action"
+        },
+        {
+          "id": "cement-job-fh",
+          "label": "Cement Job",
+          "type": "action"
+        },
+        {
+          "id": "shuck-throw-fh",
+          "label": "Shuck or Throw-By",
+          "type": "action"
+        },
+        {
+          "id": "near-cradle-fh",
+          "label": "Near Side Cradle",
+          "type": "finish"
+        },
+        {
+          "id": "arm-block-fh",
+          "label": "Arm Block",
+          "type": "finish"
+        },
+        {
+          "id": "assassin-fh",
+          "label": "Assassin",
+          "type": "finish"
+        }
+      ],
+      "edges": [
+        {
+          "from": "front-hl-root",
+          "to": "head-in-hole"
+        },
+        {
+          "from": "front-hl-root",
+          "to": "bounce-fh"
+        },
+        {
+          "from": "front-hl-root",
+          "to": "gator-roll-fh"
+        },
+        {
+          "from": "front-hl-root",
+          "to": "go-behind-fh"
+        },
+        {
+          "from": "front-hl-root",
+          "to": "cement-job-fh"
+        },
+        {
+          "from": "front-hl-root",
+          "to": "shuck-throw-fh"
+        },
+        {
+          "from": "cement-job-fh",
+          "to": "near-cradle-fh"
+        },
+        {
+          "from": "shuck-throw-fh",
+          "to": "arm-block-fh"
+        },
+        {
+          "from": "go-behind-fh",
+          "to": "assassin-fh"
+        }
+      ]
+    }
+  ]
+}

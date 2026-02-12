@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coaches Area - Fowlerville Wrestling</title>
+  <link rel="stylesheet" href="../../css/styles.css">
+</head>
+<body>
+  <script>window.NAV_BASE = '../../';</script>
+  <script src="../../js/nav.js"></script>
+
+  <div class="container">
+    <a href="../index.html" class="back-link">&larr; High School</a>
+    <h1 style="color:var(--primary);margin-bottom:0.25rem;">Coaches Area</h1>
+    <p class="text-muted mb-3">Practice plans, wrestler notes, scouting reports, and forms.</p>
+
+    <!-- Navigation Cards -->
+    <div class="coaches-grid" id="nav-cards">
+      <div class="coach-nav-card" style="cursor:pointer;" onclick="showSection('plans')">
+        <div class="icon">&#128203;</div>
+        <h3>Practice Plans</h3>
+        <p>View and manage weekly practice plans.</p>
+      </div>
+      <div class="coach-nav-card" style="cursor:pointer;" onclick="showSection('notes')">
+        <div class="icon">&#128221;</div>
+        <h3>Wrestler Notes</h3>
+        <p>Individual wrestler strengths and areas to improve.</p>
+      </div>
+      <div class="coach-nav-card" style="cursor:pointer;" onclick="showSection('scouting')">
+        <div class="icon">&#128269;</div>
+        <h3>Scouting Reports</h3>
+        <p>Opponent scouting and match preparation.</p>
+      </div>
+      <div class="coach-nav-card" style="cursor:pointer;" onclick="showSection('forms')">
+        <div class="icon">&#128196;</div>
+        <h3>Forms &amp; Documents</h3>
+        <p>MHSAA forms, emergency contacts, and other documents.</p>
+      </div>
+    </div>
+
+    <!-- Practice Plans Section -->
+    <div id="section-plans" class="coach-section" style="display:none;">
+      <h2 class="section-title">Practice Plans</h2>
+      <div id="plans-content"></div>
+    </div>
+
+    <!-- Wrestler Notes Section -->
+    <div id="section-notes" class="coach-section" style="display:none;">
+      <h2 class="section-title">Wrestler Notes</h2>
+      <div id="notes-content"></div>
+    </div>
+
+    <!-- Scouting Section -->
+    <div id="section-scouting" class="coach-section" style="display:none;">
+      <h2 class="section-title">Scouting Reports</h2>
+      <div id="scouting-content"></div>
+    </div>
+
+    <!-- Forms Section -->
+    <div id="section-forms" class="coach-section" style="display:none;">
+      <h2 class="section-title">Forms &amp; Documents</h2>
+      <div id="forms-content"></div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="../../index.html">Home</a>
+      <a href="../index.html">High School</a>
+      <a href="../schedule.html">Schedule</a>
+      <a href="../../news/index.html">News</a>
+    </div>
+    <div class="footer-copy">Fowlerville Wrestling &mdash; Fowlerville, Michigan</div>
+  </footer>
+
+  <script>
+    let coachData = null;
+
+    function showSection(name) {
+      document.querySelectorAll('.coach-section').forEach(s => s.style.display = 'none');
+      const section = document.getElementById('section-' + name);
+      if (section) {
+        section.style.display = 'block';
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function renderPlans(plans) {
+      if (!plans.length) return '<p class="text-muted">No practice plans yet.</p>';
+      return plans.map(p => `
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:0.5rem;">
+            <h3>${p.title}</h3>
+            <span class="text-muted" style="font-size:0.85rem;">${p.date} &middot; ${p.duration}</span>
+          </div>
+          <p style="margin:0.5rem 0;"><strong>Focus:</strong> ${p.focus}</p>
+          <p><strong>Warm-up:</strong> ${p.warmup}</p>
+          <table class="data-table" style="margin:1rem 0;">
+            <thead><tr><th>Drill</th><th>Duration</th><th>Notes</th></tr></thead>
+            <tbody>
+              ${p.technique.map(t => `<tr><td>${t.drill}</td><td>${t.duration}</td><td>${t.notes}</td></tr>`).join('')}
+            </tbody>
+          </table>
+          <p><strong>Live Wrestling:</strong> ${p.liveWrestling}</p>
+          <p><strong>Conditioning:</strong> ${p.conditioning}</p>
+          ${p.notes ? `<p style="margin-top:0.5rem;color:var(--text-light);font-style:italic;">${p.notes}</p>` : ''}
+        </div>
+      `).join('');
+    }
+
+    function renderNotes(notes) {
+      if (!notes.length) return '<p class="text-muted">No wrestler notes yet.</p>';
+      return `
+        <table class="data-table">
+          <thead><tr><th>Name</th><th>Weight</th><th>Strengths</th><th>Areas to Improve</th><th>Notes</th></tr></thead>
+          <tbody>
+            ${notes.map(n => `<tr><td><strong>${n.name}</strong></td><td>${n.weightClass}</td><td>${n.strengths}</td><td>${n.areasToImprove}</td><td>${n.notes}</td></tr>`).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function renderScouting(reports) {
+      if (!reports.length) return '<p class="text-muted">No scouting reports yet.</p>';
+      return reports.map(r => `
+        <div class="card">
+          <h3>vs. ${r.team}</h3>
+          <p class="text-muted" style="margin-bottom:0.75rem;">${r.date}</p>
+          <table class="data-table">
+            <thead><tr><th>Weight</th><th>Name</th><th>Record</th><th>Style</th><th>Game Plan</th></tr></thead>
+            <tbody>
+              ${r.wrestlers.map(w => `<tr><td>${w.weightClass}</td><td>${w.name}</td><td>${w.record}</td><td>${w.style}</td><td>${w.notes}</td></tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+      `).join('');
+    }
+
+    function renderForms(forms) {
+      if (!forms.length) return '<p class="text-muted">No forms uploaded yet.</p>';
+      return `<div class="grid-2">${forms.map(f => `
+        <div class="card">
+          <h3>${f.title}</h3>
+          <p style="font-size:0.9rem;color:var(--text-light);margin-bottom:0.75rem;">${f.description}</p>
+          ${f.url ? `<a href="${f.url}" class="btn btn-primary btn-sm" target="_blank">Download ${f.type.toUpperCase()}</a>` : '<span class="text-muted" style="font-size:0.85rem;">Link coming soon</span>'}
+        </div>
+      `).join('')}</div>`;
+    }
+
+    fetch('coaches-data.json')
+      .then(r => r.json())
+      .then(data => {
+        coachData = data;
+        document.getElementById('plans-content').innerHTML = renderPlans(data.practicePlans || []);
+        document.getElementById('notes-content').innerHTML = renderNotes(data.wrestlerNotes || []);
+        document.getElementById('scouting-content').innerHTML = renderScouting(data.scouting || []);
+        document.getElementById('forms-content').innerHTML = renderForms(data.forms || []);
+
+        // Auto-open section from hash
+        const hash = location.hash.replace('#', '');
+        if (hash && document.getElementById('section-' + hash)) {
+          showSection(hash);
+        }
+      })
+      .catch(() => {
+        document.getElementById('nav-cards').insertAdjacentHTML('afterend',
+          '<p class="text-muted mt-2">Could not load coaches data.</p>');
+      });
+  </script>
+</body>
+</html>

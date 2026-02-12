@@ -1,0 +1,22 @@
+{
+  "posts": [
+    {
+      "id": "2025-season-kickoff",
+      "title": "2025-26 Season Kickoff - Registration Now Open",
+      "date": "2025-10-15",
+      "author": "Coach Dave",
+      "tags": ["announcement", "youth", "high-school"],
+      "image": "",
+      "body": "<p>The 2025-26 wrestling season is here! Registration is now open for both our Youth Club and High School programs.</p><h2>Youth Club Program</h2><p>Our youth program is open to wrestlers in grades K-8. Practices begin November 1st at the Fowlerville Community Center. No experience necessary - we welcome beginners and experienced wrestlers alike.</p><h2>High School Program</h2><p>High school practices begin October 28th in the Fowlerville High School wrestling room. All returning wrestlers and newcomers should attend the first practice.</p><p>Visit our program pages for full schedule details and registration information.</p>"
+    },
+    {
+      "id": "2025-preseason-update",
+      "title": "Preseason Training Camp Wrap-Up",
+      "date": "2025-10-01",
+      "author": "Coach Dave",
+      "tags": ["recap", "high-school"],
+      "image": "",
+      "body": "<p>Our preseason training camp was a great success this year. We had strong attendance from both returning wrestlers and incoming freshmen.</p><p>The coaching staff focused on fundamental positioning, chain wrestling concepts, and building a strong conditioning base for the season ahead.</p><p>Key takeaways from camp:</p><ul><li>Strong returning core at the middle weights</li><li>Several promising freshmen ready to contribute</li><li>Improved team conditioning compared to last year</li></ul><p>We're excited about the potential of this year's squad. Stay tuned for roster announcements and the full season schedule.</p>"
+    }
+  ]
+}

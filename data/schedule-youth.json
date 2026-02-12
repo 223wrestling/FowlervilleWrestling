@@ -1,0 +1,28 @@
+{
+  "events": [
+    {
+      "title": "Youth Practice",
+      "date": "2025-11-03",
+      "time": "6:00 PM - 7:30 PM",
+      "location": "Fowlerville Community Center",
+      "type": "practice",
+      "notes": "Regular Monday practice"
+    },
+    {
+      "title": "Youth Practice",
+      "date": "2025-11-05",
+      "time": "6:00 PM - 7:30 PM",
+      "location": "Fowlerville Community Center",
+      "type": "practice",
+      "notes": "Regular Wednesday practice"
+    },
+    {
+      "title": "Fowlerville Youth Tournament",
+      "date": "2025-12-06",
+      "time": "9:00 AM",
+      "location": "Fowlerville High School",
+      "type": "tournament",
+      "notes": "Home tournament - all youth wrestlers encouraged to participate"
+    }
+  ]
+}

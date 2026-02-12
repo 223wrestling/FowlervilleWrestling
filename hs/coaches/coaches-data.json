@@ -1,0 +1,58 @@
+{
+  "practicePlans": [
+    {
+      "id": "sample-plan",
+      "title": "Sample Practice Plan",
+      "date": "2025-11-03",
+      "duration": "120 min",
+      "focus": "Takedowns",
+      "warmup": "Jogging, sprawls, shots, hip heist drill - 15 min",
+      "technique": [
+        {"drill": "Double Leg Setup & Finish", "duration": "20 min", "notes": "Focus on level change and penetration step"},
+        {"drill": "Single Leg Chain Wrestling", "duration": "20 min", "notes": "Run-the-pipe, trip, dump series"},
+        {"drill": "Underhook Series Live Drill", "duration": "15 min", "notes": "Start from underhook, work options"}
+      ],
+      "liveWrestling": "3 x 3-minute periods situational from neutral - 25 min",
+      "conditioning": "Buddy carries, sprints - 10 min",
+      "notes": "Emphasis on finishing takedowns this week"
+    }
+  ],
+  "wrestlerNotes": [
+    {
+      "name": "Sample Wrestler",
+      "weightClass": "150",
+      "strengths": "Strong on feet, good conditioning",
+      "areasToImprove": "Bottom position, escapes",
+      "notes": "Working on stand-up technique and switch"
+    }
+  ],
+  "scouting": [
+    {
+      "team": "Sample Opponent",
+      "date": "2025-12-03",
+      "wrestlers": [
+        {
+          "weightClass": "150",
+          "name": "Opponent Name",
+          "record": "10-2",
+          "style": "Aggressive on feet, likes single leg",
+          "notes": "Counter with sprawl, look for front headlock"
+        }
+      ]
+    }
+  ],
+  "forms": [
+    {
+      "title": "MHSAA Physical Form",
+      "description": "Required pre-participation physical examination form",
+      "url": "",
+      "type": "pdf"
+    },
+    {
+      "title": "Emergency Contact Form",
+      "description": "Emergency contact and medical information",
+      "url": "",
+      "type": "pdf"
+    }
+  ]
+}

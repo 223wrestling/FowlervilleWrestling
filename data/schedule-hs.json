@@ -1,0 +1,36 @@
+{
+  "events": [
+    {
+      "title": "Practice",
+      "date": "2025-11-03",
+      "time": "3:30 PM - 5:30 PM",
+      "location": "FHS Wrestling Room",
+      "type": "practice",
+      "notes": "Regular practice"
+    },
+    {
+      "title": "vs. Howell",
+      "date": "2025-12-03",
+      "time": "6:00 PM",
+      "location": "Fowlerville High School",
+      "type": "match",
+      "notes": "Home dual meet"
+    },
+    {
+      "title": "Fowlerville Invitational",
+      "date": "2025-12-13",
+      "time": "9:00 AM",
+      "location": "Fowlerville High School",
+      "type": "tournament",
+      "notes": "Home invitational tournament"
+    },
+    {
+      "title": "Team Districts",
+      "date": "2026-02-04",
+      "time": "TBD",
+      "location": "TBD",
+      "type": "tournament",
+      "notes": "MHSAA Team District Tournament"
+    }
+  ]
+}

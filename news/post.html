@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News - Fowlerville Wrestling</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <script>window.NAV_BASE = '../';</script>
+  <script src="../js/nav.js"></script>
+
+  <div class="container">
+    <a href="index.html" class="back-link">&larr; All News</a>
+    <div id="post-content" class="post-content"></div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="../index.html">Home</a>
+      <a href="../youth/index.html">Youth Club</a>
+      <a href="../hs/index.html">High School</a>
+      <a href="../about.html">About</a>
+    </div>
+    <div class="footer-copy">Fowlerville Wrestling &mdash; Fowlerville, Michigan</div>
+  </footer>
+
+  <script>
+    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    function formatDate(dateStr) {
+      const d = new Date(dateStr + 'T00:00:00');
+      return MONTHS[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+    }
+
+    function loadPost() {
+      const postId = location.hash.slice(1);
+      if (!postId) {
+        location.href = 'index.html';
+        return;
+      }
+
+      fetch('posts.json')
+        .then(r => r.json())
+        .then(data => {
+          const post = data.posts.find(p => p.id === postId);
+          if (!post) {
+            document.getElementById('post-content').innerHTML = '<h1>Post Not Found</h1><p>This post does not exist.</p>';
+            return;
+          }
+
+          document.title = post.title + ' - Fowlerville Wrestling';
+
+          document.getElementById('post-content').innerHTML = `
+            <h1>${post.title}</h1>
+            <div class="post-meta">
+              ${formatDate(post.date)} &middot; ${post.author}
+              &middot; ${post.tags.map(t => `<span class="tag">${t}</span>`).join(' ')}
+            </div>
+            ${post.image ? `<img src="../${post.image}" alt="" class="post-hero">` : ''}
+            <div class="post-body">${post.body}</div>
+          `;
+        });
+    }
+
+    loadPost();
+    window.addEventListener('hashchange', loadPost);
+  </script>
+</body>
+</html>

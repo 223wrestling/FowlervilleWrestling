@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photo Galleries - Fowlerville Wrestling</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <script>window.NAV_BASE = '../';</script>
+  <script src="../js/nav.js"></script>
+
+  <div class="container">
+    <h1 class="section-title" style="margin-top:1rem;">Photo Galleries</h1>
+
+    <!-- Album listing -->
+    <div id="album-list" class="album-grid"></div>
+
+    <!-- Single album view (hidden by default) -->
+    <div id="album-view" style="display:none;">
+      <a href="#" class="back-link" id="back-to-albums">&larr; All Albums</a>
+      <h2 id="album-title" style="color:var(--primary);margin-bottom:0.25rem;"></h2>
+      <p id="album-date" class="text-muted mb-2"></p>
+      <div id="photo-grid" class="photo-grid"></div>
+    </div>
+
+    <div id="empty-msg" style="display:none;text-align:center;padding:4rem 2rem;color:var(--text-light);">
+      <p style="font-size:1.2rem;margin-bottom:0.5rem;">No photo albums yet.</p>
+      <p>Check back soon for photos from our events and practices!</p>
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close">&times;</button>
+    <button class="lightbox-nav lightbox-prev">&lsaquo;</button>
+    <img src="" alt="" id="lightbox-img">
+    <button class="lightbox-nav lightbox-next">&rsaquo;</button>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="../index.html">Home</a>
+      <a href="../youth/index.html">Youth Club</a>
+      <a href="../hs/index.html">High School</a>
+      <a href="../about.html">About</a>
+    </div>
+    <div class="footer-copy">Fowlerville Wrestling &mdash; Fowlerville, Michigan</div>
+  </footer>
+
+  <script>
+    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    let albums = [];
+    let currentPhotos = [];
+    let currentPhotoIndex = 0;
+
+    function formatDate(dateStr) {
+      const d = new Date(dateStr + 'T00:00:00');
+      return MONTHS[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+    }
+
+    function showAlbumList() {
+      document.getElementById('album-list').style.display = '';
+      document.getElementById('album-view').style.display = 'none';
+      location.hash = '';
+    }
+
+    function showAlbum(albumId) {
+      const album = albums.find(a => a.id === albumId);
+      if (!album) return;
+
+      document.getElementById('album-list').style.display = 'none';
+      document.getElementById('album-view').style.display = 'block';
+      document.getElementById('album-title').textContent = album.title;
+      document.getElementById('album-date').textContent = formatDate(album.date);
+
+      currentPhotos = album.photos || [];
+      const grid = document.getElementById('photo-grid');
+      grid.innerHTML = currentPhotos.map((photo, i) =>
+        `<img src="../${photo}" alt="" loading="lazy" onclick="openLightbox(${i})">`
+      ).join('');
+    }
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    function openLightbox(index) {
+      currentPhotoIndex = index;
+      lightboxImg.src = '../' + currentPhotos[index];
+      lightbox.classList.add('active');
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+    }
+
+    lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    lightbox.querySelector('.lightbox-prev').addEventListener('click', e => {
+      e.stopPropagation();
+      currentPhotoIndex = (currentPhotoIndex - 1 + currentPhotos.length) % currentPhotos.length;
+      lightboxImg.src = '../' + currentPhotos[currentPhotoIndex];
+    });
+
+    lightbox.querySelector('.lightbox-next').addEventListener('click', e => {
+      e.stopPropagation();
+      currentPhotoIndex = (currentPhotoIndex + 1) % currentPhotos.length;
+      lightboxImg.src = '../' + currentPhotos[currentPhotoIndex];
+    });
+
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') {
+        currentPhotoIndex = (currentPhotoIndex - 1 + currentPhotos.length) % currentPhotos.length;
+        lightboxImg.src = '../' + currentPhotos[currentPhotoIndex];
+      }
+      if (e.key === 'ArrowRight') {
+        currentPhotoIndex = (currentPhotoIndex + 1) % currentPhotos.length;
+        lightboxImg.src = '../' + currentPhotos[currentPhotoIndex];
+      }
+    });
+
+    // Back button
+    document.getElementById('back-to-albums').addEventListener('click', e => {
+      e.preventDefault();
+      showAlbumList();
+    });
+
+    // Hash routing
+    function handleRoute() {
+      const hash = location.hash.slice(1);
+      if (hash) {
+        showAlbum(hash);
+      } else {
+        showAlbumList();
+      }
+    }
+
+    // Load galleries
+    fetch('../img/galleries/galleries.json')
+      .then(r => r.json())
+      .then(data => {
+        albums = (data.albums || []).sort((a, b) => b.date.localeCompare(a.date));
+
+        if (!albums.length) {
+          document.getElementById('empty-msg').style.display = 'block';
+          return;
+        }
+
+        const container = document.getElementById('album-list');
+        container.innerHTML = albums.map(album => `
+          <a href="#${album.id}" class="album-card">
+            <img src="../${album.cover}" alt="${album.title}" loading="lazy">
+            <div class="album-info">
+              <h3>${album.title}</h3>
+              <div class="album-date">${formatDate(album.date)} &middot; ${album.photoCount || 0} photos</div>
+            </div>
+          </a>
+        `).join('');
+
+        handleRoute();
+      })
+      .catch(() => {
+        document.getElementById('empty-msg').style.display = 'block';
+      });
+
+    window.addEventListener('hashchange', handleRoute);
+  </script>
+</body>
+</html>

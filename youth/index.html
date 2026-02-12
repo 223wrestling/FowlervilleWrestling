@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Youth Club - Fowlerville Wrestling</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <script>window.NAV_BASE = '../';</script>
+  <script src="../js/nav.js"></script>
+
+  <div class="hero">
+    <h1>Youth Club Wrestling</h1>
+    <p>Grades K-8. Build confidence, learn fundamentals, and have fun on the mat. No experience necessary.</p>
+    <div class="hero-actions">
+      <a href="techniques.html" class="btn btn-accent btn-lg">Technique Library</a>
+      <a href="checklist.html" class="btn btn-outline-light btn-lg">Student Checklist</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Program Info -->
+    <h2 class="section-title">About the Program</h2>
+    <div class="card">
+      <p>The Fowlerville Youth Wrestling Club is open to all students in grades K-8. Our program focuses on teaching proper wrestling fundamentals in a safe, encouraging environment. Whether your child is brand new to wrestling or has years of experience, our coaching staff will help them develop skills and confidence.</p>
+      <p style="margin-top:1rem;">Wrestlers will learn stance and motion, takedowns, top and bottom position techniques, and the basics of chain wrestling. We emphasize sportsmanship, hard work, and having fun.</p>
+    </div>
+
+    <!-- Practice Info -->
+    <h2 class="section-title">Practice Information</h2>
+    <div class="grid-2">
+      <div class="card">
+        <h3>When</h3>
+        <p>Mondays &amp; Wednesdays<br>6:00 PM - 7:30 PM</p>
+        <p style="margin-top:0.5rem;color:var(--text-light);font-size:0.9rem;">Season runs November through February</p>
+      </div>
+      <div class="card">
+        <h3>Where</h3>
+        <p>Fowlerville Community Center</p>
+        <p style="margin-top:0.5rem;color:var(--text-light);font-size:0.9rem;">Wrestlers should bring athletic shoes, shorts, and a t-shirt</p>
+      </div>
+    </div>
+
+    <!-- What to Expect -->
+    <h2 class="section-title">What to Expect</h2>
+    <div class="grid-3">
+      <div class="card" style="text-align:center;">
+        <div style="font-size:2rem;margin-bottom:0.5rem;">1</div>
+        <h3>Warm-Up &amp; Drills</h3>
+        <p style="font-size:0.9rem;color:var(--text-light);">Each practice starts with stretching, jogging, and wrestling-specific drills to build coordination.</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:2rem;margin-bottom:0.5rem;">2</div>
+        <h3>Technique Instruction</h3>
+        <p style="font-size:0.9rem;color:var(--text-light);">Coaches demonstrate and break down moves step-by-step, then wrestlers practice with partners.</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:2rem;margin-bottom:0.5rem;">3</div>
+        <h3>Live Wrestling</h3>
+        <p style="font-size:0.9rem;color:var(--text-light);">Practice ends with situational and live wrestling so kids can apply what they learned.</p>
+      </div>
+    </div>
+
+    <!-- Resources -->
+    <h2 class="section-title">Wrestler Resources</h2>
+    <div class="grid-2">
+      <a href="techniques.html" class="program-card" style="text-decoration:none;">
+        <h3>Technique Library</h3>
+        <p>Video instruction for every technique in our curriculum, with coaching points and related moves.</p>
+      </a>
+      <a href="checklist.html" class="program-card" style="text-decoration:none;">
+        <h3>Student Checklist</h3>
+        <p>Track your progress through the curriculum. Print it out or use it on your phone.</p>
+      </a>
+    </div>
+    <div class="grid-2" style="margin-top:1.5rem;">
+      <a href="flowcharts/underhook.html" class="program-card" style="text-decoration:none;">
+        <h3>Chain Wrestling Flowcharts</h3>
+        <p>Interactive flowcharts showing how techniques connect into chains and series.</p>
+      </a>
+      <a href="schedule.html" class="program-card" style="text-decoration:none;">
+        <h3>Schedule</h3>
+        <p>View upcoming practices, tournaments, and events for the youth program.</p>
+      </a>
+    </div>
+
+    <!-- Upcoming Events -->
+    <h2 class="section-title">Upcoming Events</h2>
+    <div id="upcoming-events" class="schedule-list"></div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="../index.html">Home</a>
+      <a href="techniques.html">Techniques</a>
+      <a href="checklist.html">Checklist</a>
+      <a href="schedule.html">Schedule</a>
+      <a href="../news/index.html">News</a>
+    </div>
+    <div class="footer-copy">Fowlerville Wrestling &mdash; Fowlerville, Michigan</div>
+  </footer>
+
+  <script>
+    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    fetch('../data/schedule-youth.json')
+      .then(r => r.json())
+      .then(data => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const events = data.events
+          .filter(e => new Date(e.date + 'T00:00:00') >= today)
+          .sort((a, b) => a.date.localeCompare(b.date))
+          .slice(0, 5);
+
+        const container = document.getElementById('upcoming-events');
+        if (!events.length) {
+          container.innerHTML = '<p class="text-muted">No upcoming events scheduled.</p>';
+          return;
+        }
+        container.innerHTML = events.map(e => {
+          const d = new Date(e.date + 'T00:00:00');
+          return `
+            <div class="schedule-item">
+              <div class="schedule-date">
+                <div class="month">${MONTHS[d.getMonth()]}</div>
+                <div class="day">${d.getDate()}</div>
+              </div>
+              <div class="schedule-details">
+                <h3>${e.title}</h3>
+                <p>${e.time || ''} ${e.location ? '&middot; ' + e.location : ''}</p>
+              </div>
+              <span class="schedule-type type-${e.type}">${e.type}</span>
+            </div>
+          `;
+        }).join('');
+      })
+      .catch(() => {
+        document.getElementById('upcoming-events').innerHTML = '<p class="text-muted">No upcoming events scheduled.</p>';
+      });
+  </script>
+</body>
+</html>

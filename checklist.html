@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wrestling Technique Checklist</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .print-header {
+      display: none;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .print-header h1 { font-size: 18pt; margin-bottom: 0.25rem; }
+    .print-header p { font-size: 10pt; color: #555; }
+    .student-info {
+      display: none;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      border-bottom: 1px solid #333;
+    }
+    .student-info span {
+      display: inline-block;
+      margin-right: 2rem;
+      font-size: 10pt;
+    }
+    .student-info .blank {
+      display: inline-block;
+      width: 200px;
+      border-bottom: 1px solid #333;
+    }
+    .print-btn-bar {
+      text-align: right;
+      margin-bottom: 1rem;
+    }
+    .category-section { break-inside: avoid; }
+    @media print {
+      .print-header { display: block; }
+      .student-info { display: block; }
+      .print-btn-bar { display: none; }
+      .site-header { display: none; }
+      body { font-size: 10pt; }
+      .container { max-width: none; padding: 0; }
+      .category-header { padding: 0.4rem 0.75rem; margin-top: 0.5rem; }
+      .category-header h2 { font-size: 11pt; }
+      .checklist-table th { font-size: 9pt; padding: 0.3rem 0.5rem; }
+      .checklist-table td { font-size: 9pt; padding: 0.25rem 0.5rem; }
+      .checklist-table { margin-bottom: 0.25rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <h1>Wrestling Technique Checklist</h1>
+      <div class="subtitle">Track your progress through the curriculum</div>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="checklist.html" class="active">Checklist</a>
+      <a href="techniques.html">Techniques</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="print-header">
+      <h1>Wrestling Technique Checklist</h1>
+      <p>Complete Curriculum Progress Tracker</p>
+    </div>
+
+    <div class="student-info">
+      <span>Name: <span class="blank"></span></span>
+      <span>Date Started: <span class="blank"></span></span>
+    </div>
+
+    <div class="print-btn-bar no-print">
+      <button class="btn btn-primary" onclick="window.print()">Print Checklist</button>
+      <button class="btn btn-outline" onclick="clearAll()">Clear All</button>
+    </div>
+
+    <div id="checklist-content"></div>
+  </div>
+
+  <script>
+    const DATA_URL = 'techniques.json';
+
+    async function loadChecklist() {
+      const resp = await fetch(DATA_URL);
+      const data = await resp.json();
+      const container = document.getElementById('checklist-content');
+
+      data.categories.forEach(cat => {
+        // Skip drills category if it just mirrors defense III
+        const section = document.createElement('div');
+        section.className = 'category-section';
+
+        section.innerHTML = `
+          <div class="category-header">
+            <h2>${cat.name}</h2>
+            <span class="subtitle">${cat.subtitle || ''}</span>
+          </div>
+          <table class="checklist-table">
+            <thead>
+              <tr>
+                <th>Technique</th>
+                <th>Learned</th>
+                <th>Mastered</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${cat.techniques.map(t => `
+                <tr>
+                  <td class="technique-name">${t.name}</td>
+                  <td><input type="checkbox" data-id="${t.id}-learned" onchange="saveState(this)"></td>
+                  <td><input type="checkbox" data-id="${t.id}-mastered" onchange="saveState(this)"></td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+        container.appendChild(section);
+      });
+
+      loadSavedState();
+      updateProgress();
+    }
+
+    function saveState(cb) {
+      const key = 'wrestling-checklist';
+      const state = JSON.parse(localStorage.getItem(key) || '{}');
+      state[cb.dataset.id] = cb.checked;
+      localStorage.setItem(key, JSON.stringify(state));
+      updateProgress();
+    }
+
+    function loadSavedState() {
+      const state = JSON.parse(localStorage.getItem('wrestling-checklist') || '{}');
+      document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        if (state[cb.dataset.id]) cb.checked = true;
+      });
+    }
+
+    function clearAll() {
+      if (!confirm('Clear all checkmarks?')) return;
+      localStorage.removeItem('wrestling-checklist');
+      document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const all = document.querySelectorAll('input[data-id$="-learned"]');
+      const mastered = document.querySelectorAll('input[data-id$="-mastered"]');
+      const learnedCount = [...all].filter(cb => cb.checked).length;
+      const masteredCount = [...mastered].filter(cb => cb.checked).length;
+      const total = all.length;
+
+      let bar = document.getElementById('progress-bar');
+      if (!bar) {
+        bar = document.createElement('div');
+        bar.id = 'progress-bar';
+        bar.className = 'card no-print';
+        bar.style.marginBottom = '1rem';
+        const container = document.getElementById('checklist-content');
+        container.parentNode.insertBefore(bar, container);
+      }
+      bar.innerHTML = `
+        <strong>Progress:</strong> ${learnedCount}/${total} learned, ${masteredCount}/${total} mastered
+        <div style="background:#e0e0e0;height:8px;border-radius:4px;margin-top:0.5rem;overflow:hidden;">
+          <div style="background:var(--primary);height:100%;width:${(learnedCount/total*100).toFixed(1)}%;border-radius:4px;transition:width 0.3s;"></div>
+        </div>
+      `;
+    }
+
+    loadChecklist();
+  </script>
+</body>
+</html>

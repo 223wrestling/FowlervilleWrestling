@@ -1,0 +1,18 @@
+{
+  "season": "2025-26",
+  "wrestlers": [
+    {
+      "name": "Sample Wrestler",
+      "weightClass": "150",
+      "year": "Junior",
+      "photo": ""
+    }
+  ],
+  "coaches": [
+    {
+      "name": "Coach Dave",
+      "role": "Head Coach",
+      "bio": ""
+    }
+  ]
+}

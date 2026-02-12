@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Front Headlock Offense - Wrestling Flow Chart</title>
+  <link rel="stylesheet" href="../../css/styles.css">
+  <style>
+    .flowchart-wrapper {
+      text-align: center;
+      overflow-x: auto;
+      padding: 1rem;
+    }
+    svg { max-width: 100%; height: auto; }
+    .legend {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+      font-size: 0.85rem;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .legend-dot {
+      width: 16px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--primary);
+    }
+    .legend-dot.root { background: var(--primary); }
+    .legend-dot.action { background: #d9d9d9; }
+    .legend-dot.finish { background: #e8eef4; }
+    .legend-dot.link { background: #fff3cd; border-color: #856404; }
+    .legend-dot.reaction { background: #d4edda; border-color: #155724; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <h1>Front Headlock Offense</h1>
+      <div class="subtitle">Chain Wrestling Flow Chart</div>
+    </div>
+    <nav>
+      <a href="../../index.html">Home</a>
+      <a href="../index.html">Youth Club</a>
+      <a href="../checklist.html">Checklist</a>
+      <a href="../techniques.html">Techniques</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <a href="../index.html" class="back-link" style="display:inline-flex;align-items:center;gap:0.3rem;color:var(--primary);text-decoration:none;font-weight:500;margin-bottom:1rem;">&larr; All Flow Charts</a>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot root"></div> Starting Position</div>
+      <div class="legend-item"><div class="legend-dot action"></div> Technique / Action</div>
+      <div class="legend-item"><div class="legend-dot finish"></div> Finish</div>
+      <div class="legend-item"><div class="legend-dot link"></div> Links to Another Series</div>
+    </div>
+
+    <div class="flowchart-wrapper">
+      <svg viewBox="0 0 1130 550" width="1130" height="550" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+          </marker>
+        </defs>
+        
+    <path class="fc-edge" d="M 565.0 91.0 C 565.0 138.0, 115.0 138.0, 115.0 185.0"
+          marker-end="url(#arrowhead)"/>
+    <path class="fc-edge" d="M 565.0 91.0 C 565.0 138.0, 295.0 138.0, 295.0 185.0"
+          marker-end="url(#arrowhead)"/>
+    <path class="fc-edge" d="M 565.0 91.0 C 565.0 138.0, 475.0 138.0, 475.0 185.0"
+          marker-end="url(#arrowhead)"/>
+    <path class="fc-edge" d="M 565.0 91.0 C 565.0 138.0, 655.0 138.0, 655.0 185.0"
+          marker-end="url(#arrowhead)"/>
+    <path class="fc-edge" d="M 565.0 91.0 C 565.0 138.0, 835.0 138.0, 835.0 185.0"
+          marker-end="url(#arrowhead)"/>
+    <path class="fc-edge" d="M 565.0 91.0 C 565.0 138.0, 1015.0 138.0, 1015.0 185.0"
+          marker-end="url(#arrowhead)"/>
+    <path class="fc-edge" d="M 835.0 235.0 C 835.0 285.0, 565.0 285.0, 565.0 335.0"
+          marker-end="url(#arrowhead)"/>
+    <path class="fc-edge" d="M 1015.0 235.0 C 1015.0 285.0, 745.0 285.0, 745.0 335.0"
+          marker-end="url(#arrowhead)"/>
+    <path class="fc-edge" d="M 655.0 235.0 C 655.0 285.0, 385.0 285.0, 385.0 335.0"
+          marker-end="url(#arrowhead)"/>
+        
+    <g class="fc-node node-root" data-id="front-hl-root" onclick="showNodeInfo('front-hl-root')">
+      <ellipse cx="565.0" cy="60" rx="75.0" ry="31.0"/>
+      <text x="565.0" y="52"><tspan x="565.0" dy="0">Front Headlock</tspan>
+<tspan x="565.0" dy="16">(Offense)</tspan></text>
+    </g>
+    <g class="fc-node node-action" data-id="head-in-hole" onclick="showNodeInfo('head-in-hole')">
+      <ellipse cx="115.0" cy="210" rx="75.0" ry="25.0"/>
+      <text x="115.0" y="210"><tspan x="115.0" dy="0">Head in the Hole</tspan></text>
+    </g>
+    <g class="fc-node node-action" data-id="bounce-fh" onclick="showNodeInfo('bounce-fh')">
+      <ellipse cx="295.0" cy="210" rx="75.0" ry="25.0"/>
+      <text x="295.0" y="210"><tspan x="295.0" dy="0">Bounce</tspan></text>
+    </g>
+    <g class="fc-node node-action" data-id="gator-roll-fh" onclick="showNodeInfo('gator-roll-fh')">
+      <ellipse cx="475.0" cy="210" rx="75.0" ry="25.0"/>
+      <text x="475.0" y="210"><tspan x="475.0" dy="0">Gator Roll</tspan></text>
+    </g>
+    <g class="fc-node node-action" data-id="go-behind-fh" onclick="showNodeInfo('go-behind-fh')">
+      <ellipse cx="655.0" cy="210" rx="75.0" ry="25.0"/>
+      <text x="655.0" y="210"><tspan x="655.0" dy="0">Go-Behind</tspan></text>
+    </g>
+    <g class="fc-node node-action" data-id="cement-job-fh" onclick="showNodeInfo('cement-job-fh')">
+      <ellipse cx="835.0" cy="210" rx="75.0" ry="25.0"/>
+      <text x="835.0" y="210"><tspan x="835.0" dy="0">Cement Job</tspan></text>
+    </g>
+    <g class="fc-node node-action" data-id="shuck-throw-fh" onclick="showNodeInfo('shuck-throw-fh')">
+      <ellipse cx="1015.0" cy="210" rx="75.0" ry="25.0"/>
+      <text x="1015.0" y="210"><tspan x="1015.0" dy="0">Shuck or Throw-By</tspan></text>
+    </g>
+    <g class="fc-node node-finish" data-id="near-cradle-fh" onclick="showNodeInfo('near-cradle-fh')">
+      <ellipse cx="565.0" cy="360" rx="75.0" ry="25.0"/>
+      <text x="565.0" y="360"><tspan x="565.0" dy="0">Near Side Cradle</tspan></text>
+    </g>
+    <g class="fc-node node-finish" data-id="arm-block-fh" onclick="showNodeInfo('arm-block-fh')">
+      <ellipse cx="745.0" cy="360" rx="75.0" ry="25.0"/>
+      <text x="745.0" y="360"><tspan x="745.0" dy="0">Arm Block</tspan></text>
+    </g>
+    <g class="fc-node node-finish" data-id="assassin-fh" onclick="showNodeInfo('assassin-fh')">
+      <ellipse cx="385.0" cy="360" rx="75.0" ry="25.0"/>
+      <text x="385.0" y="360"><tspan x="385.0" dy="0">Assassin</tspan></text>
+    </g>
+      </svg>
+    </div>
+
+    <p style="text-align:center;color:var(--text-light);font-size:0.85rem;margin-top:0.5rem;">Click any node to see technique details and video links</p>
+  </div>
+
+  <!-- Popup -->
+  <div class="popup-overlay" id="popup" onclick="if(event.target===this)closePopup()">
+    <div class="popup-panel">
+      <button class="popup-close" onclick="closePopup()">&times;</button>
+      <div id="popup-content"></div>
+    </div>
+  </div>
+
+  <script>
+    const nodeData = {"front-hl-root": {"label": "Front Headlock (Offense)", "type": "root"}, "head-in-hole": {"label": "Head in the Hole", "type": "action"}, "bounce-fh": {"label": "Bounce", "type": "action"}, "gator-roll-fh": {"label": "Gator Roll", "type": "action"}, "go-behind-fh": {"label": "Go-Behind", "type": "action"}, "cement-job-fh": {"label": "Cement Job", "type": "action"}, "shuck-throw-fh": {"label": "Shuck or Throw-By", "type": "action"}, "near-cradle-fh": {"label": "Near Side Cradle", "type": "finish"}, "arm-block-fh": {"label": "Arm Block", "type": "finish"}, "assassin-fh": {"label": "Assassin", "type": "finish"}};
+    let techniquesData = null;
+
+    async function loadTechniques() {
+      try {
+        const resp = await fetch('../techniques.json');  // youth/techniques.json
+        techniquesData = await resp.json();
+      } catch(e) {
+        console.log('Could not load techniques.json for popup details');
+      }
+    }
+    loadTechniques();
+
+    function findTechnique(label) {
+      if (!techniquesData) return null;
+      const labelLower = label.toLowerCase();
+      for (const cat of techniquesData.categories) {
+        for (const t of cat.techniques) {
+          if (t.name.toLowerCase() === labelLower ||
+              labelLower.includes(t.name.toLowerCase()) ||
+              t.name.toLowerCase().includes(labelLower)) {
+            return t;
+          }
+        }
+      }
+      return null;
+    }
+
+    function showNodeInfo(nodeId) {
+      const node = nodeData[nodeId];
+      if (!node) return;
+
+      const technique = findTechnique(node.label);
+      const popup = document.getElementById('popup');
+      const content = document.getElementById('popup-content');
+
+      let html = '<h2 style="color:var(--primary);margin-bottom:0.5rem;">' + node.label + '</h2>';
+
+      if (technique) {
+        html += '<p style="margin-bottom:1rem;">' + technique.description + '</p>';
+
+        if (technique.keyPoints && technique.keyPoints.length) {
+          html += '<h3 style="color:var(--primary-light);margin-bottom:0.5rem;">Key Points</h3>';
+          html += '<ul class="key-points">' + technique.keyPoints.map(p => '<li>' + p + '</li>').join('') + '</ul>';
+        }
+
+        if (technique.videos && technique.videos.length) {
+          html += '<h3 style="color:var(--primary-light);margin:1rem 0 0.5rem;">Video</h3>';
+          const v = technique.videos[0];
+          html += '<div class="video-container"><iframe src="https://www.youtube.com/embed/' + v.id + '" allowfullscreen loading="lazy"></iframe></div>';
+          html += '<p style="font-size:0.85rem;color:var(--text-light);">' + v.title + '</p>';
+        }
+
+        html += '<div style="margin-top:1rem;"><a href="../techniques.html#' + technique.id + '" class="btn btn-primary" style="color:white;">View Full Details</a></div>';
+      } else {
+        html += '<p style="color:var(--text-light);">Click "View Full Details" for more information about this technique.</p>';
+
+        // Try to link to a search
+        const searchTerm = node.label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        html += '<div style="margin-top:1rem;"><a href="../techniques.html#' + searchTerm + '" class="btn btn-outline">Search Techniques</a></div>';
+      }
+
+      content.innerHTML = html;
+      popup.classList.add('active');
+    }
+
+    function closePopup() {
+      document.getElementById('popup').classList.remove('active');
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closePopup();
+    });
+  </script>
+</body>
+</html>

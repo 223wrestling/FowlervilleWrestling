@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wrestling Techniques</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .technique-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .technique-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: box-shadow 0.2s, transform 0.1s;
+      display: block;
+    }
+    .technique-card:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+    .technique-card .name { font-weight: 600; color: var(--primary); }
+    .technique-card .cat { font-size: 0.75rem; color: var(--text-light); }
+
+    /* Detail view */
+    .detail-view { display: none; }
+    .detail-view.active { display: block; }
+    .list-view.hidden { display: none; }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    .detail-header {
+      margin-bottom: 1.5rem;
+    }
+    .detail-header h2 {
+      font-size: 1.8rem;
+      color: var(--primary);
+      margin-bottom: 0.25rem;
+    }
+    .detail-header .category-tag {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 0.15rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+    }
+
+    .detail-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .detail-description {
+      font-size: 1.05rem;
+      margin-bottom: 1rem;
+      line-height: 1.7;
+    }
+
+    .related-section {
+      margin-top: 1.5rem;
+    }
+    .related-section h3 {
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+    .related-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .videos-section h3 {
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .video-card {
+      margin-bottom: 1rem;
+    }
+    .video-card .video-title {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 0.25rem;
+    }
+    .video-card .video-channel {
+      font-size: 0.75rem;
+      color: var(--accent);
+    }
+
+    @media (max-width: 768px) {
+      .detail-body { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <h1>Wrestling Techniques</h1>
+      <div class="subtitle">Complete technique library with videos</div>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="checklist.html">Checklist</a>
+      <a href="techniques.html" class="active">Techniques</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div id="list-view" class="list-view">
+      <div class="no-print" style="margin-bottom:1rem;">
+        <input type="text" id="search-box" placeholder="Search techniques..." style="width:100%;padding:0.6rem 1rem;border:1px solid var(--border);border-radius:var(--radius);font-size:1rem;">
+      </div>
+      <div id="category-list"></div>
+    </div>
+
+    <div id="detail-view" class="detail-view"></div>
+  </div>
+
+  <script>
+    let allData = null;
+    let allTechniques = [];
+
+    async function init() {
+      const resp = await fetch('techniques.json');
+      allData = await resp.json();
+
+      // Build flat technique lookup
+      allData.categories.forEach(cat => {
+        cat.techniques.forEach(t => {
+          t._categoryName = cat.name;
+          allTechniques.push(t);
+        });
+      });
+
+      renderList();
+      handleRoute();
+      window.addEventListener('hashchange', handleRoute);
+
+      document.getElementById('search-box').addEventListener('input', e => {
+        filterList(e.target.value);
+      });
+    }
+
+    function renderList() {
+      const container = document.getElementById('category-list');
+      container.innerHTML = allData.categories.map(cat => `
+        <div class="category-section" data-category="${cat.id}">
+          <div class="category-header">
+            <h2>${cat.name}</h2>
+            <span class="subtitle">${cat.subtitle || ''}</span>
+          </div>
+          <div class="technique-grid">
+            ${cat.techniques.map(t => `
+              <a href="#${t.id}" class="technique-card" data-name="${t.name.toLowerCase()}" data-id="${t.id}">
+                <div class="name">${t.name}</div>
+                <div class="cat">${cat.name}</div>
+              </a>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterList(query) {
+      const q = query.toLowerCase().trim();
+      document.querySelectorAll('.technique-card').forEach(card => {
+        const match = !q || card.dataset.name.includes(q);
+        card.style.display = match ? '' : 'none';
+      });
+      document.querySelectorAll('.category-section').forEach(sec => {
+        const visible = sec.querySelectorAll('.technique-card[style=""], .technique-card:not([style])');
+        sec.style.display = visible.length ? '' : 'none';
+      });
+    }
+
+    function handleRoute() {
+      const hash = location.hash.slice(1);
+      const listView = document.getElementById('list-view');
+      const detailView = document.getElementById('detail-view');
+
+      if (!hash) {
+        listView.classList.remove('hidden');
+        detailView.classList.remove('active');
+        document.title = 'Wrestling Techniques';
+        return;
+      }
+
+      const technique = allTechniques.find(t => t.id === hash);
+      if (!technique) {
+        listView.classList.remove('hidden');
+        detailView.classList.remove('active');
+        return;
+      }
+
+      listView.classList.add('hidden');
+      detailView.classList.add('active');
+      document.title = technique.name + ' - Wrestling Techniques';
+
+      const relatedTechniques = (technique.related || [])
+        .map(id => allTechniques.find(t => t.id === id))
+        .filter(Boolean);
+
+      detailView.innerHTML = `
+        <a href="#" class="back-link">&larr; All Techniques</a>
+
+        <div class="detail-header">
+          <h2>${technique.name}</h2>
+          <span class="category-tag">${technique._categoryName}</span>
+        </div>
+
+        <div class="detail-body">
+          <div>
+            <p class="detail-description">${technique.description}</p>
+
+            <div class="card">
+              <h3>Key Points</h3>
+              <ul class="key-points">
+                ${(technique.keyPoints || []).map(p => `<li>${p}</li>`).join('')}
+              </ul>
+            </div>
+
+            ${technique.commonMistakes && technique.commonMistakes.length ? `
+            <div class="card">
+              <h3>Common Mistakes</h3>
+              <ul class="mistakes">
+                ${technique.commonMistakes.map(m => `<li>${m}</li>`).join('')}
+              </ul>
+            </div>
+            ` : ''}
+
+            ${relatedTechniques.length ? `
+            <div class="related-section">
+              <h3>Related Techniques</h3>
+              <div class="related-tags">
+                ${relatedTechniques.map(rt => `<a href="#${rt.id}" class="tag">${rt.name}</a>`).join('')}
+              </div>
+            </div>
+            ` : ''}
+          </div>
+
+          <div class="videos-section">
+            <h3>Instructional Videos</h3>
+            ${(technique.videos || []).map(v => `
+              <div class="video-card">
+                <div class="video-container">
+                  <iframe src="https://www.youtube.com/embed/${v.id}" allowfullscreen loading="lazy"></iframe>
+                </div>
+                <div class="video-title">${escapeHtml(v.title)}</div>
+                <div class="video-channel">${escapeHtml(v.channel)}</div>
+              </div>
+            `).join('')}
+            ${(!technique.videos || !technique.videos.length) ? '<p style="color:var(--text-light)">No videos available yet.</p>' : ''}
+          </div>
+        </div>
+      `;
+
+      window.scrollTo(0, 0);
+    }
+
+    function escapeHtml(s) {
+      const d = document.createElement('div');
+      d.textContent = s;
+      return d.innerHTML;
+    }
+
+    init();
+  </script>
+</body>
+</html>

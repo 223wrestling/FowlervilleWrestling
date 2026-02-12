@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fowlerville Wrestling</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <script>window.NAV_BASE = '';</script>
+  <script src="js/nav.js"></script>
+
+  <div class="hero">
+    <img src="img/logo.png" alt="Fowlerville Wrestling" class="hero-logo">
+    <h1>Fowlerville Wrestling</h1>
+    <p>Building champions on and off the mat. Youth Club and High School wrestling programs for the Fowlerville community.</p>
+    <div class="hero-actions">
+      <a href="youth/index.html" class="btn btn-accent btn-lg">Youth Club</a>
+      <a href="hs/index.html" class="btn btn-outline-light btn-lg">High School</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Programs -->
+    <h2 class="section-title">Our Programs</h2>
+    <div class="grid-2">
+      <div class="program-card">
+        <h3>Youth Club Program</h3>
+        <p>Grades K-8. Learn wrestling fundamentals, build confidence, and have fun. No experience needed.</p>
+        <a href="youth/index.html" class="btn btn-primary">Learn More</a>
+      </div>
+      <div class="program-card">
+        <h3>High School Program</h3>
+        <p>Fowlerville Gladiators varsity and JV wrestling. Compete at the highest level in MHSAA.</p>
+        <a href="hs/index.html" class="btn btn-primary">Learn More</a>
+      </div>
+    </div>
+
+    <!-- Latest News -->
+    <h2 class="section-title">Latest News</h2>
+    <div id="latest-news" class="post-list"></div>
+    <div class="text-center mt-2">
+      <a href="news/index.html" class="btn btn-outline">All News</a>
+    </div>
+
+    <!-- Upcoming Events -->
+    <h2 class="section-title">Upcoming Events</h2>
+    <div id="upcoming-events" class="schedule-list"></div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="youth/index.html">Youth Club</a>
+      <a href="hs/index.html">High School</a>
+      <a href="news/index.html">News</a>
+      <a href="galleries/index.html">Galleries</a>
+      <a href="sponsors.html">Sponsors</a>
+      <a href="about.html">About & Contact</a>
+    </div>
+    <div class="footer-copy">Fowlerville Wrestling &mdash; Fowlerville, Michigan</div>
+  </footer>
+
+  <script>
+    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    function formatDate(dateStr) {
+      const d = new Date(dateStr + 'T00:00:00');
+      return MONTHS[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+    }
+
+    function parseDate(dateStr) {
+      return new Date(dateStr + 'T00:00:00');
+    }
+
+    // Load latest news
+    fetch('news/posts.json')
+      .then(r => r.json())
+      .then(data => {
+        const posts = data.posts.sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
+        const container = document.getElementById('latest-news');
+        if (!posts.length) {
+          container.innerHTML = '<p class="text-muted">No news posts yet.</p>';
+          return;
+        }
+        container.innerHTML = posts.map(p => {
+          const excerpt = p.body.replace(/<[^>]+>/g, '').slice(0, 150) + '...';
+          return `
+            <a href="news/post.html#${p.id}" class="post-card">
+              ${p.image ? `<img src="${p.image}" alt="">` : '<div style="background:var(--primary);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:2rem;font-weight:bold;min-height:150px;">FW</div>'}
+              <div class="post-info">
+                <h3>${p.title}</h3>
+                <div class="post-meta">${formatDate(p.date)} &middot; ${p.author}</div>
+                <div class="post-excerpt">${excerpt}</div>
+              </div>
+            </a>
+          `;
+        }).join('');
+      })
+      .catch(() => {
+        document.getElementById('latest-news').innerHTML = '<p class="text-muted">No news posts yet.</p>';
+      });
+
+    // Load upcoming events from both schedules
+    Promise.all([
+      fetch('data/schedule-youth.json').then(r => r.json()).catch(() => ({ events: [] })),
+      fetch('data/schedule-hs.json').then(r => r.json()).catch(() => ({ events: [] }))
+    ]).then(([youth, hs]) => {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const allEvents = [
+        ...youth.events.map(e => ({ ...e, program: 'Youth' })),
+        ...hs.events.map(e => ({ ...e, program: 'HS' }))
+      ]
+        .filter(e => parseDate(e.date) >= today)
+        .sort((a, b) => a.date.localeCompare(b.date))
+        .slice(0, 5);
+
+      const container = document.getElementById('upcoming-events');
+      if (!allEvents.length) {
+        container.innerHTML = '<p class="text-muted">No upcoming events scheduled.</p>';
+        return;
+      }
+      container.innerHTML = allEvents.map(e => {
+        const d = parseDate(e.date);
+        return `
+          <div class="schedule-item">
+            <div class="schedule-date">
+              <div class="month">${MONTHS[d.getMonth()]}</div>
+              <div class="day">${d.getDate()}</div>
+            </div>
+            <div class="schedule-details">
+              <h3>${e.title}</h3>
+              <p>${e.time || ''} ${e.location ? '&middot; ' + e.location : ''}</p>
+            </div>
+            <span class="schedule-type type-${e.type}">${e.program} &middot; ${e.type}</span>
+          </div>
+        `;
+      }).join('');
+    });
+  </script>
+</body>
+</html>

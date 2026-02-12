@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>High School - Fowlerville Wrestling</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <script>window.NAV_BASE = '../';</script>
+  <script src="../js/nav.js"></script>
+
+  <div class="hero">
+    <h1>Fowlerville Gladiators</h1>
+    <p>High School Varsity &amp; JV Wrestling. Competing at the highest level in MHSAA Division 3.</p>
+    <div class="hero-actions">
+      <a href="schedule.html" class="btn btn-accent btn-lg">Season Schedule</a>
+      <a href="coaches/index.html" class="btn btn-outline-light btn-lg">Coaches Area</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Coaching Staff -->
+    <h2 class="section-title">Coaching Staff</h2>
+    <div id="coaches" class="grid-3"></div>
+
+    <!-- Roster -->
+    <h2 class="section-title">Roster</h2>
+    <p class="section-subtitle" id="season-label"></p>
+    <div id="roster" class="roster-grid"></div>
+
+    <!-- Upcoming Events -->
+    <h2 class="section-title">Upcoming Events</h2>
+    <div id="upcoming-events" class="schedule-list"></div>
+    <div class="text-center mt-2">
+      <a href="schedule.html" class="btn btn-outline">Full Schedule</a>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="../index.html">Home</a>
+      <a href="schedule.html">Schedule</a>
+      <a href="coaches/index.html">Coaches Area</a>
+      <a href="../news/index.html">News</a>
+    </div>
+    <div class="footer-copy">Fowlerville Wrestling &mdash; Fowlerville, Michigan</div>
+  </footer>
+
+  <script>
+    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    // Load roster
+    fetch('roster.json')
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById('season-label').textContent = data.season + ' Season';
+
+        // Coaches
+        const coachesHtml = data.coaches.map(c => `
+          <div class="card" style="text-align:center;">
+            <h3>${c.name}</h3>
+            <p style="color:var(--accent-dark);font-weight:600;font-size:0.9rem;">${c.role}</p>
+            ${c.bio ? `<p style="margin-top:0.5rem;font-size:0.9rem;color:var(--text-light);">${c.bio}</p>` : ''}
+          </div>
+        `).join('');
+        document.getElementById('coaches').innerHTML = coachesHtml || '<p class="text-muted">Coaching staff to be announced.</p>';
+
+        // Wrestlers
+        const wrestlers = data.wrestlers.sort((a, b) => parseInt(a.weightClass) - parseInt(b.weightClass));
+        const rosterHtml = wrestlers.map(w => `
+          <div class="roster-card">
+            ${w.photo ? `<img src="${w.photo}" class="wrestler-photo" alt="${w.name}">` : `<div class="wrestler-photo" style="display:inline-flex;align-items:center;justify-content:center;background:var(--primary);color:white;font-weight:700;font-size:1.2rem;">${w.name.split(' ').map(n=>n[0]).join('')}</div>`}
+            <h3>${w.name}</h3>
+            <div class="weight-class">${w.weightClass} lbs</div>
+            <div class="year">${w.year}</div>
+          </div>
+        `).join('');
+        document.getElementById('roster').innerHTML = rosterHtml || '<p class="text-muted">Roster to be announced.</p>';
+      })
+      .catch(() => {
+        document.getElementById('coaches').innerHTML = '<p class="text-muted">Could not load roster data.</p>';
+      });
+
+    // Load schedule
+    fetch('../data/schedule-hs.json')
+      .then(r => r.json())
+      .then(data => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const events = data.events
+          .filter(e => new Date(e.date + 'T00:00:00') >= today)
+          .sort((a, b) => a.date.localeCompare(b.date))
+          .slice(0, 5);
+
+        const container = document.getElementById('upcoming-events');
+        if (!events.length) {
+          container.innerHTML = '<p class="text-muted">No upcoming events scheduled.</p>';
+          return;
+        }
+        container.innerHTML = events.map(e => {
+          const d = new Date(e.date + 'T00:00:00');
+          return `
+            <div class="schedule-item">
+              <div class="schedule-date">
+                <div class="month">${MONTHS[d.getMonth()]}</div>
+                <div class="day">${d.getDate()}</div>
+              </div>
+              <div class="schedule-details">
+                <h3>${e.title}</h3>
+                <p>${e.time || ''} ${e.location ? '&middot; ' + e.location : ''}</p>
+              </div>
+              <span class="schedule-type type-${e.type}">${e.type}</span>
+            </div>
+          `;
+        }).join('');
+      })
+      .catch(() => {
+        document.getElementById('upcoming-events').innerHTML = '<p class="text-muted">No upcoming events scheduled.</p>';
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Russian Tie Series - Wrestling Flow Chart</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .flowchart-wrapper {
+      text-align: center;
+      overflow-x: auto;
+      padding: 1rem;
+    }
+    svg { max-width: 100%; height: auto; }
+    .legend {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+      font-size: 0.85rem;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .legend-dot {
+      width: 16px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--primary);
+    }
+    .legend-dot.root { background: var(--primary); }
+    .legend-dot.action { background: #d9d9d9; }
+    .legend-dot.finish { background: #e8eef4; }
+    .legend-dot.link { background: #fff3cd; border-color: #856404; }
+    .legend-dot.reaction { background: #d4edda; border-color: #155724; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <h1>Russian Tie Series</h1>
+      <div class="subtitle">Chain Wrestling Flow Chart</div>
+    </div>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../checklist.html">Checklist</a>
+      <a href="../techniques.html">Techniques</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <a href="../index.html#flowcharts" class="back-link" style="display:inline-flex;align-items:center;gap:0.3rem;color:var(--primary);text-decoration:none;font-weight:500;margin-bottom:1rem;">&larr; All Flow Charts</a>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot root"></div> Starting Position</div>
+      <div class="legend-item"><div class="legend-dot action"></div> Technique / Action</div>
+      <div class="legend-item"><div class="legend-dot finish"></div> Finish</div>
+      <div class="legend-item"><div class="legend-dot link"></div> Links to Another Series</div>
+    </div>
+
+    <div class="flowchart-wrapper">
+      <svg viewBox="0 0 950 550" width="950" height="550" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+          </marker>
+        </defs>
+        
+    <path class="fc-edge" d="M 475.0 85.0 C 475.0 135.0, 115.0 135.0, 115.0 185.0"
+          marker-end="url(#arrowhead)"/>
+    <path class="fc-edge" d="M 475.0 85.0 C 475.0 135.0, 295.0 135.0, 295.0 185.0"
+          marker-end="url(#arrowhead)"/>
+    <path class="fc-edge" d="M 475.0 85.0 C 475.0 135.0, 475.0 135.0, 475.0 185.0"
+          marker-end="url(#arrowhead)"/>
+    <path class="fc-edge" d="M 475.0 85.0 C 475.0 135.0, 655.0 135.0, 655.0 185.0"
+          marker-end="url(#arrowhead)"/>
+    <path class="fc-edge" d="M 475.0 85.0 C 475.0 135.0, 835.0 135.0, 835.0 185.0"
+          marker-end="url(#arrowhead)"/>
+    <path class="fc-edge" d="M 475.0 235.0 C 475.0 285.0, 205.0 285.0, 205.0 335.0"
+          marker-end="url(#arrowhead)"/>
+    <path class="fc-edge" d="M 475.0 235.0 C 475.0 285.0, 385.0 285.0, 385.0 335.0"
+          marker-end="url(#arrowhead)"/>
+    <path class="fc-edge" d="M 655.0 235.0 C 655.0 285.0, 565.0 285.0, 565.0 335.0"
+          marker-end="url(#arrowhead)"/>
+    <path class="fc-edge" d="M 655.0 235.0 C 655.0 285.0, 745.0 285.0, 745.0 335.0"
+          marker-end="url(#arrowhead)"/>
+        
+    <g class="fc-node node-root" data-id="russian-tie-root" onclick="showNodeInfo('russian-tie-root')">
+      <ellipse cx="475.0" cy="60" rx="75.0" ry="25.0"/>
+      <text x="475.0" y="60"><tspan x="475.0" dy="0">Russian Tie</tspan></text>
+    </g>
+    <g class="fc-node node-action" data-id="snatch-single-rt" onclick="showNodeInfo('snatch-single-rt')">
+      <ellipse cx="115.0" cy="210" rx="75.0" ry="25.0"/>
+      <text x="115.0" y="210"><tspan x="115.0" dy="0">Snatch Single</tspan></text>
+    </g>
+    <g class="fc-node node-action" data-id="double-wrist-lock" onclick="showNodeInfo('double-wrist-lock')">
+      <ellipse cx="295.0" cy="210" rx="75.0" ry="25.0"/>
+      <text x="295.0" y="210"><tspan x="295.0" dy="0">Double Wrist Lock</tspan></text>
+    </g>
+    <g class="fc-node node-action" data-id="dump-rt" onclick="showNodeInfo('dump-rt')">
+      <ellipse cx="475.0" cy="210" rx="75.0" ry="25.0"/>
+      <text x="475.0" y="210"><tspan x="475.0" dy="0">Dump</tspan></text>
+    </g>
+    <g class="fc-node node-action" data-id="snap-rt" onclick="showNodeInfo('snap-rt')">
+      <ellipse cx="655.0" cy="210" rx="75.0" ry="25.0"/>
+      <text x="655.0" y="210"><tspan x="655.0" dy="0">Snap</tspan></text>
+    </g>
+    <g class="fc-node node-action" data-id="foot-sweep-rt" onclick="showNodeInfo('foot-sweep-rt')">
+      <ellipse cx="835.0" cy="210" rx="75.0" ry="25.0"/>
+      <text x="835.0" y="210"><tspan x="835.0" dy="0">Foot Sweep or Trip</tspan></text>
+    </g>
+    <g class="fc-node node-finish" data-id="throw-rt" onclick="showNodeInfo('throw-rt')">
+      <ellipse cx="205.0" cy="360" rx="75.0" ry="25.0"/>
+      <text x="205.0" y="360"><tspan x="205.0" dy="0">Throw</tspan></text>
+    </g>
+    <g class="fc-node node-finish" data-id="snap-sub-rt" onclick="showNodeInfo('snap-sub-rt')">
+      <ellipse cx="385.0" cy="360" rx="75.0" ry="25.0"/>
+      <text x="385.0" y="360"><tspan x="385.0" dy="0">Snap</tspan></text>
+    </g>
+    <g class="fc-node node-finish" data-id="go-behind-rt" onclick="showNodeInfo('go-behind-rt')">
+      <ellipse cx="565.0" cy="360" rx="75.0" ry="25.0"/>
+      <text x="565.0" y="360"><tspan x="565.0" dy="0">Go Behind</tspan></text>
+    </g>
+    <g class="fc-node node-finish" data-id="high-c-double" onclick="showNodeInfo('high-c-double')">
+      <ellipse cx="745.0" cy="360" rx="75.0" ry="25.0"/>
+      <text x="745.0" y="360"><tspan x="745.0" dy="0">High C or Double</tspan></text>
+    </g>
+      </svg>
+    </div>
+
+    <p style="text-align:center;color:var(--text-light);font-size:0.85rem;margin-top:0.5rem;">Click any node to see technique details and video links</p>
+  </div>
+
+  <!-- Popup -->
+  <div class="popup-overlay" id="popup" onclick="if(event.target===this)closePopup()">
+    <div class="popup-panel">
+      <button class="popup-close" onclick="closePopup()">&times;</button>
+      <div id="popup-content"></div>
+    </div>
+  </div>
+
+  <script>
+    const nodeData = {"russian-tie-root": {"label": "Russian Tie", "type": "root"}, "snatch-single-rt": {"label": "Snatch Single", "type": "action"}, "double-wrist-lock": {"label": "Double Wrist Lock", "type": "action"}, "dump-rt": {"label": "Dump", "type": "action"}, "snap-rt": {"label": "Snap", "type": "action"}, "foot-sweep-rt": {"label": "Foot Sweep or Trip", "type": "action"}, "throw-rt": {"label": "Throw", "type": "finish"}, "snap-sub-rt": {"label": "Snap", "type": "finish"}, "go-behind-rt": {"label": "Go Behind", "type": "finish"}, "high-c-double": {"label": "High C or Double", "type": "finish"}};
+    let techniquesData = null;
+
+    async function loadTechniques() {
+      try {
+        const resp = await fetch('../techniques.json');
+        techniquesData = await resp.json();
+      } catch(e) {
+        console.log('Could not load techniques.json for popup details');
+      }
+    }
+    loadTechniques();
+
+    function findTechnique(label) {
+      if (!techniquesData) return null;
+      const labelLower = label.toLowerCase();
+      for (const cat of techniquesData.categories) {
+        for (const t of cat.techniques) {
+          if (t.name.toLowerCase() === labelLower ||
+              labelLower.includes(t.name.toLowerCase()) ||
+              t.name.toLowerCase().includes(labelLower)) {
+            return t;
+          }
+        }
+      }
+      return null;
+    }
+
+    function showNodeInfo(nodeId) {
+      const node = nodeData[nodeId];
+      if (!node) return;
+
+      const technique = findTechnique(node.label);
+      const popup = document.getElementById('popup');
+      const content = document.getElementById('popup-content');
+
+      let html = '<h2 style="color:var(--primary);margin-bottom:0.5rem;">' + node.label + '</h2>';
+
+      if (technique) {
+        html += '<p style="margin-bottom:1rem;">' + technique.description + '</p>';
+
+        if (technique.keyPoints && technique.keyPoints.length) {
+          html += '<h3 style="color:var(--primary-light);margin-bottom:0.5rem;">Key Points</h3>';
+          html += '<ul class="key-points">' + technique.keyPoints.map(p => '<li>' + p + '</li>').join('') + '</ul>';
+        }
+
+        if (technique.videos && technique.videos.length) {
+          html += '<h3 style="color:var(--primary-light);margin:1rem 0 0.5rem;">Video</h3>';
+          const v = technique.videos[0];
+          html += '<div class="video-container"><iframe src="https://www.youtube.com/embed/' + v.id + '" allowfullscreen loading="lazy"></iframe></div>';
+          html += '<p style="font-size:0.85rem;color:var(--text-light);">' + v.title + '</p>';
+        }
+
+        html += '<div style="margin-top:1rem;"><a href="../techniques.html#' + technique.id + '" class="btn btn-primary" style="color:white;">View Full Details</a></div>';
+      } else {
+        html += '<p style="color:var(--text-light);">Click "View Full Details" for more information about this technique.</p>';
+
+        // Try to link to a search
+        const searchTerm = node.label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        html += '<div style="margin-top:1rem;"><a href="../techniques.html#' + searchTerm + '" class="btn btn-outline">Search Techniques</a></div>';
+      }
+
+      content.innerHTML = html;
+      popup.classList.add('active');
+    }
+
+    function closePopup() {
+      document.getElementById('popup').classList.remove('active');
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closePopup();
+    });
+  </script>
+</body>
+</html>
