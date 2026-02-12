@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flowchart Builder - Fowlerville Wrestling</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    body { overflow: hidden; display: flex; flex-direction: column; height: 100vh; }
+    .site-nav { flex-shrink: 0; }
+
+    .builder-toolbar {
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+    .builder-toolbar .tb-group {
+      display: flex;
+      gap: 0.3rem;
+      align-items: center;
+    }
+    .builder-toolbar .tb-sep {
+      width: 1px;
+      height: 24px;
+      background: var(--border);
+      margin: 0 0.4rem;
+    }
+    .tb-btn {
+      padding: 0.35rem 0.7rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: white;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+    .tb-btn:hover { background: #f0f0f0; }
+    .tb-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .tb-btn.node-root-btn { border-left: 3px solid var(--primary); }
+    .tb-btn.node-action-btn { border-left: 3px solid #999; }
+    .tb-btn.node-finish-btn { border-left: 3px solid #6a8eae; }
+    .tb-btn.node-link-btn { border-left: 3px solid #856404; }
+
+    .builder-legend {
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 0.4rem 1rem;
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+    .legend-item { display: flex; align-items: center; gap: 0.4rem; }
+    .legend-dot {
+      width: 14px; height: 10px; border-radius: 50%;
+      border: 2px solid var(--primary);
+    }
+    .legend-dot.root { background: var(--primary); }
+    .legend-dot.action { background: #d9d9d9; }
+    .legend-dot.finish { background: #e8eef4; }
+    .legend-dot.link { background: #fff3cd; border-color: #856404; }
+
+    .canvas-wrap {
+      flex: 1;
+      overflow: auto;
+      background: #f9f9f6;
+      position: relative;
+      cursor: crosshair;
+    }
+    .canvas-wrap.mode-move { cursor: default; }
+    .canvas-wrap.mode-connect { cursor: crosshair; }
+    .canvas-wrap.mode-delete { cursor: not-allowed; }
+
+    #canvas {
+      display: block;
+    }
+
+    /* Reuse flowchart node styles from shared CSS */
+    .fc-node { cursor: grab; }
+    .fc-node.dragging { cursor: grabbing; }
+    .fc-node.connect-source ellipse { stroke-width: 3; stroke: var(--accent); }
+    .fc-node.delete-hover ellipse { stroke: #c00; stroke-width: 3; }
+    .fc-edge.delete-hover path { stroke: #c00; stroke-width: 3; }
+
+    .node-label-input {
+      position: absolute;
+      border: 2px solid var(--primary);
+      border-radius: 4px;
+      padding: 0.3rem 0.5rem;
+      font-size: 13px;
+      font-family: inherit;
+      text-align: center;
+      outline: none;
+      z-index: 10;
+      min-width: 120px;
+    }
+
+    .status-msg {
+      position: fixed;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      color: white;
+      padding: 0.5rem 1.2rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      z-index: 20;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .status-msg.show { opacity: 1; }
+
+    @media print {
+      .site-nav, .builder-toolbar, .builder-legend, .status-msg { display: none !important; }
+      body { overflow: visible; height: auto; }
+      .canvas-wrap { overflow: visible; cursor: default; }
+      #canvas { max-width: 100%; height: auto; }
+    }
+
+    @media (max-width: 768px) {
+      .builder-toolbar { padding: 0.4rem 0.5rem; gap: 0.3rem; }
+      .tb-btn { padding: 0.25rem 0.5rem; font-size: 0.75rem; }
+      .tb-sep { margin: 0 0.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <script>window.NAV_BASE = '../';</script>
+  <script src="../js/nav.js"></script>
+
+  <div class="builder-toolbar" id="toolbar">
+    <div class="tb-group">
+      <button class="tb-btn node-root-btn" data-add="root" title="Add starting position node">Starting Position</button>
+      <button class="tb-btn node-action-btn" data-add="action" title="Add technique/action node">Technique</button>
+      <button class="tb-btn node-finish-btn" data-add="finish" title="Add finish node">Finish</button>
+      <button class="tb-btn node-link-btn" data-add="link" title="Add link to another series">Link</button>
+    </div>
+    <div class="tb-sep"></div>
+    <div class="tb-group">
+      <button class="tb-btn" id="btn-connect" title="Connect two nodes">Connect</button>
+      <button class="tb-btn" id="btn-delete" title="Delete a node or edge">Delete</button>
+    </div>
+    <div class="tb-sep"></div>
+    <div class="tb-group">
+      <button class="tb-btn" id="btn-save" title="Save to browser storage">Save</button>
+      <button class="tb-btn" id="btn-load" title="Load from browser storage">Load</button>
+      <button class="tb-btn" id="btn-clear" title="Clear canvas">Clear</button>
+      <button class="tb-btn" id="btn-print" title="Print flowchart">Print</button>
+    </div>
+  </div>
+
+  <div class="builder-legend">
+    <div class="legend-item"><div class="legend-dot root"></div> Starting Position</div>
+    <div class="legend-item"><div class="legend-dot action"></div> Technique / Action</div>
+    <div class="legend-item"><div class="legend-dot finish"></div> Finish</div>
+    <div class="legend-item"><div class="legend-dot link"></div> Links to Another Series</div>
+  </div>
+
+  <div class="canvas-wrap" id="canvas-wrap">
+    <svg id="canvas" xmlns="http://www.w3.org/2000/svg" width="2000" height="1500">
+      <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+        </marker>
+      </defs>
+      <g id="edges-layer"></g>
+      <g id="nodes-layer"></g>
+    </svg>
+  </div>
+
+  <div class="status-msg" id="status"></div>
+
+  <script>
+  (function() {
+    // --- Data Model ---
+    let nodes = [];
+    let edges = [];
+    let nextId = 1;
+
+    const NODE_RX = 75;
+    const NODE_RY = 25;
+
+    // --- Mode state ---
+    let mode = 'add';       // 'add' | 'connect' | 'delete'
+    let addType = null;     // node type to place on click
+    let connectFrom = null; // source node id during connect
+
+    // --- DOM refs ---
+    const svg = document.getElementById('canvas');
+    const nodesLayer = document.getElementById('nodes-layer');
+    const edgesLayer = document.getElementById('edges-layer');
+    const wrap = document.getElementById('canvas-wrap');
+    const statusEl = document.getElementById('status');
+
+    // --- SVG helpers ---
+    function svgPoint(e) {
+      const rect = svg.getBoundingClientRect();
+      return {
+        x: e.clientX - rect.left + wrap.scrollLeft,
+        y: e.clientY - rect.top + wrap.scrollTop
+      };
+    }
+
+    function showStatus(msg) {
+      statusEl.textContent = msg;
+      statusEl.classList.add('show');
+      clearTimeout(statusEl._t);
+      statusEl._t = setTimeout(() => statusEl.classList.remove('show'), 2000);
+    }
+
+    // --- Rendering ---
+    function render() {
+      // Clear
+      nodesLayer.innerHTML = '';
+      edgesLayer.innerHTML = '';
+
+      // Draw edges
+      edges.forEach((edge, idx) => {
+        const from = nodes.find(n => n.id === edge.from);
+        const to = nodes.find(n => n.id === edge.to);
+        if (!from || !to) return;
+
+        const dx = to.x - from.x;
+        const dy = to.y - from.y;
+        const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+
+        // Adjust for ellipse borders
+        const fromRy = NODE_RY;
+        const toRy = NODE_RY;
+        const angle = Math.atan2(dy, dx);
+
+        const x1 = from.x + NODE_RX * Math.cos(angle) * 0.8;
+        const y1 = from.y + fromRy * Math.sin(angle) * 1.2;
+        const x2 = to.x - NODE_RX * Math.cos(angle) * 0.8;
+        const y2 = to.y - toRy * Math.sin(angle) * 1.2;
+
+        const midX = (x1 + x2) / 2;
+        const midY = (y1 + y2) / 2;
+
+        // Perpendicular offset for curve
+        const perpX = -(y2 - y1) * 0.1;
+        const perpY = (x2 - x1) * 0.1;
+
+        const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        g.classList.add('fc-edge');
+        g.dataset.idx = idx;
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', `M ${x1} ${y1} Q ${midX + perpX} ${midY + perpY}, ${x2} ${y2}`);
+        path.setAttribute('marker-end', 'url(#arrowhead)');
+        path.style.strokeWidth = '2';
+        path.style.stroke = '#666';
+        path.style.fill = 'none';
+
+        // Wider invisible hit area for clicking
+        const hitPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        hitPath.setAttribute('d', `M ${x1} ${y1} Q ${midX + perpX} ${midY + perpY}, ${x2} ${y2}`);
+        hitPath.style.stroke = 'transparent';
+        hitPath.style.strokeWidth = '12';
+        hitPath.style.fill = 'none';
+        hitPath.style.cursor = mode === 'delete' ? 'not-allowed' : 'default';
+
+        g.appendChild(hitPath);
+        g.appendChild(path);
+
+        if (mode === 'delete') {
+          g.addEventListener('mouseenter', () => g.classList.add('delete-hover'));
+          g.addEventListener('mouseleave', () => g.classList.remove('delete-hover'));
+          g.addEventListener('click', (e) => {
+            e.stopPropagation();
+            edges.splice(idx, 1);
+            render();
+            showStatus('Edge deleted');
+          });
+        }
+
+        edgesLayer.appendChild(g);
+      });
+
+      // Draw nodes
+      nodes.forEach(node => {
+        const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        g.classList.add('fc-node', 'node-' + node.type);
+        g.dataset.id = node.id;
+
+        const ellipse = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+        ellipse.setAttribute('cx', node.x);
+        ellipse.setAttribute('cy', node.y);
+        ellipse.setAttribute('rx', NODE_RX);
+        ellipse.setAttribute('ry', NODE_RY);
+        g.appendChild(ellipse);
+
+        // Multi-line text
+        const lines = wrapText(node.label, 18);
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', node.x);
+        text.setAttribute('y', node.y - (lines.length - 1) * 8);
+
+        lines.forEach((line, i) => {
+          const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+          tspan.setAttribute('x', node.x);
+          if (i > 0) tspan.setAttribute('dy', '16');
+          tspan.textContent = line;
+          text.appendChild(tspan);
+        });
+        g.appendChild(text);
+
+        // Interactions
+        setupNodeInteractions(g, node);
+        nodesLayer.appendChild(g);
+      });
+
+      // Expand SVG if nodes are near edges
+      expandCanvas();
+    }
+
+    function wrapText(label, maxLen) {
+      if (label.length <= maxLen) return [label];
+      const words = label.split(' ');
+      const lines = [];
+      let line = '';
+      words.forEach(w => {
+        if ((line + ' ' + w).trim().length > maxLen && line) {
+          lines.push(line);
+          line = w;
+        } else {
+          line = (line + ' ' + w).trim();
+        }
+      });
+      if (line) lines.push(line);
+      return lines;
+    }
+
+    function expandCanvas() {
+      let maxX = 2000, maxY = 1500;
+      nodes.forEach(n => {
+        if (n.x + NODE_RX + 100 > maxX) maxX = n.x + NODE_RX + 100;
+        if (n.y + NODE_RY + 100 > maxY) maxY = n.y + NODE_RY + 100;
+      });
+      svg.setAttribute('width', maxX);
+      svg.setAttribute('height', maxY);
+    }
+
+    // --- Node Interactions ---
+    function setupNodeInteractions(g, node) {
+      let dragState = null;
+
+      g.addEventListener('mousedown', (e) => {
+        if (mode === 'connect' || mode === 'delete') return;
+        e.preventDefault();
+        const pt = svgPoint(e);
+        dragState = { startX: pt.x, startY: pt.y, nodeX: node.x, nodeY: node.y, moved: false };
+
+        function onMove(me) {
+          const mp = svgPoint(me);
+          const dx = mp.x - dragState.startX;
+          const dy = mp.y - dragState.startY;
+          if (Math.abs(dx) > 3 || Math.abs(dy) > 3) dragState.moved = true;
+          if (dragState.moved) {
+            node.x = Math.max(NODE_RX, dragState.nodeX + dx);
+            node.y = Math.max(NODE_RY, dragState.nodeY + dy);
+            render();
+          }
+        }
+
+        function onUp() {
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+          dragState = null;
+        }
+
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      });
+
+      g.addEventListener('click', (e) => {
+        e.stopPropagation();
+
+        if (mode === 'connect') {
+          if (!connectFrom) {
+            connectFrom = node.id;
+            g.classList.add('connect-source');
+            showStatus('Now click the target node');
+          } else if (connectFrom !== node.id) {
+            // Check for duplicate edge
+            const exists = edges.some(ed => ed.from === connectFrom && ed.to === node.id);
+            if (!exists) {
+              edges.push({ from: connectFrom, to: node.id });
+              showStatus('Edge created');
+            } else {
+              showStatus('Edge already exists');
+            }
+            connectFrom = null;
+            render();
+          }
+          return;
+        }
+
+        if (mode === 'delete') {
+          // Remove node and its edges
+          edges = edges.filter(ed => ed.from !== node.id && ed.to !== node.id);
+          nodes = nodes.filter(n => n.id !== node.id);
+          render();
+          showStatus('Node deleted');
+          return;
+        }
+      });
+
+      // Double-click to edit label
+      g.addEventListener('dblclick', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        editNodeLabel(node);
+      });
+
+      if (mode === 'delete') {
+        g.addEventListener('mouseenter', () => g.classList.add('delete-hover'));
+        g.addEventListener('mouseleave', () => g.classList.remove('delete-hover'));
+      }
+    }
+
+    function editNodeLabel(node) {
+      const rect = svg.getBoundingClientRect();
+      const scrollL = wrap.scrollLeft;
+      const scrollT = wrap.scrollTop;
+
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'node-label-input';
+      input.value = node.label;
+      input.style.left = (node.x - 60 + rect.left - wrap.getBoundingClientRect().left + scrollL) + 'px';
+      input.style.top = (node.y - 12 + rect.top - wrap.getBoundingClientRect().top + scrollT) + 'px';
+
+      wrap.appendChild(input);
+      input.focus();
+      input.select();
+
+      function finish() {
+        const val = input.value.trim();
+        if (val) node.label = val;
+        input.remove();
+        render();
+      }
+
+      input.addEventListener('blur', finish);
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
+        if (e.key === 'Escape') { input.value = node.label; input.blur(); }
+      });
+    }
+
+    // --- Canvas click (add node) ---
+    wrap.addEventListener('click', (e) => {
+      if (e.target.closest('.fc-node') || e.target.closest('.fc-edge')) return;
+      if (mode !== 'add' || !addType) return;
+
+      const pt = svgPoint(e);
+      nodes.push({
+        id: 'n' + nextId++,
+        label: addType === 'root' ? 'Starting Position' :
+               addType === 'finish' ? 'Finish' :
+               addType === 'link' ? 'Link' : 'Technique',
+        type: addType,
+        x: pt.x,
+        y: pt.y
+      });
+      render();
+      showStatus('Node added - double-click to rename');
+    });
+
+    // --- Toolbar buttons ---
+    const toolbar = document.getElementById('toolbar');
+
+    // Node type add buttons
+    toolbar.querySelectorAll('[data-add]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setMode('add');
+        addType = btn.dataset.add;
+        clearActiveButtons();
+        btn.classList.add('active');
+        showStatus('Click on canvas to place node');
+      });
+    });
+
+    document.getElementById('btn-connect').addEventListener('click', () => {
+      if (mode === 'connect') { setMode('add'); return; }
+      setMode('connect');
+      document.getElementById('btn-connect').classList.add('active');
+      showStatus('Click source node, then target node');
+    });
+
+    document.getElementById('btn-delete').addEventListener('click', () => {
+      if (mode === 'delete') { setMode('add'); return; }
+      setMode('delete');
+      document.getElementById('btn-delete').classList.add('active');
+      showStatus('Click a node or edge to delete it');
+    });
+
+    document.getElementById('btn-save').addEventListener('click', () => {
+      const data = JSON.stringify({ nodes, edges, nextId });
+      localStorage.setItem('fc-builder', data);
+      showStatus('Flowchart saved');
+    });
+
+    document.getElementById('btn-load').addEventListener('click', () => {
+      const data = localStorage.getItem('fc-builder');
+      if (!data) { showStatus('No saved flowchart found'); return; }
+      try {
+        const parsed = JSON.parse(data);
+        nodes = parsed.nodes || [];
+        edges = parsed.edges || [];
+        nextId = parsed.nextId || nodes.length + 1;
+        render();
+        showStatus('Flowchart loaded');
+      } catch(e) {
+        showStatus('Error loading saved data');
+      }
+    });
+
+    document.getElementById('btn-clear').addEventListener('click', () => {
+      if (nodes.length === 0 && edges.length === 0) return;
+      if (!confirm('Clear the entire flowchart?')) return;
+      nodes = [];
+      edges = [];
+      nextId = 1;
+      render();
+      showStatus('Canvas cleared');
+    });
+
+    document.getElementById('btn-print').addEventListener('click', () => {
+      // Fit SVG to content before printing
+      if (nodes.length > 0) {
+        let minX = Infinity, minY = Infinity, maxX = 0, maxY = 0;
+        nodes.forEach(n => {
+          minX = Math.min(minX, n.x - NODE_RX - 20);
+          minY = Math.min(minY, n.y - NODE_RY - 20);
+          maxX = Math.max(maxX, n.x + NODE_RX + 20);
+          maxY = Math.max(maxY, n.y + NODE_RY + 20);
+        });
+        svg.setAttribute('viewBox', `${minX} ${minY} ${maxX - minX} ${maxY - minY}`);
+        svg.setAttribute('width', maxX - minX);
+        svg.setAttribute('height', maxY - minY);
+      }
+      window.print();
+      // Restore after print
+      expandCanvas();
+      svg.removeAttribute('viewBox');
+    });
+
+    function setMode(m) {
+      mode = m;
+      connectFrom = null;
+      addType = null;
+      clearActiveButtons();
+      wrap.className = 'canvas-wrap' + (m === 'connect' ? ' mode-connect' : m === 'delete' ? ' mode-delete' : ' mode-move');
+      if (m === 'add') wrap.className = 'canvas-wrap';
+      render();
+    }
+
+    function clearActiveButtons() {
+      toolbar.querySelectorAll('.tb-btn').forEach(b => b.classList.remove('active'));
+    }
+
+    // Escape to exit modes
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setMode('add');
+    });
+
+    // Touch support for mobile
+    let touchNode = null;
+    let touchStart = null;
+
+    svg.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0];
+      const target = document.elementFromPoint(touch.clientX, touch.clientY);
+      const nodeG = target && target.closest('.fc-node');
+      if (!nodeG) return;
+
+      const nodeId = nodeG.dataset.id;
+      const node = nodes.find(n => n.id === nodeId);
+      if (!node) return;
+
+      if (mode === 'connect' || mode === 'delete') return;
+
+      e.preventDefault();
+      const pt = svgPoint(touch);
+      touchNode = node;
+      touchStart = { x: pt.x, y: pt.y, nodeX: node.x, nodeY: node.y };
+    }, { passive: false });
+
+    svg.addEventListener('touchmove', (e) => {
+      if (!touchNode || !touchStart) return;
+      e.preventDefault();
+      const pt = svgPoint(e.touches[0]);
+      touchNode.x = Math.max(NODE_RX, touchStart.nodeX + (pt.x - touchStart.x));
+      touchNode.y = Math.max(NODE_RY, touchStart.nodeY + (pt.y - touchStart.y));
+      render();
+    }, { passive: false });
+
+    svg.addEventListener('touchend', () => {
+      touchNode = null;
+      touchStart = null;
+    });
+
+    // Initial render
+    render();
+  })();
+  </script>
+</body>
+</html>

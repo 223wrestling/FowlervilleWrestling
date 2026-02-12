@@ -215,7 +215,7 @@ def generate_flowchart_html(fc):
   </header>
 
   <div class="container">
-    <a href="../index.html#flowcharts" class="back-link" style="display:inline-flex;align-items:center;gap:0.3rem;color:var(--primary);text-decoration:none;font-weight:500;margin-bottom:1rem;">&larr; All Flow Charts</a>
+    <a href="index.html" class="back-link" style="display:inline-flex;align-items:center;gap:0.3rem;color:var(--primary);text-decoration:none;font-weight:500;margin-bottom:1rem;">&larr; All Flow Charts</a>
 
     <div class="legend">
       <div class="legend-item"><div class="legend-dot root"></div> Starting Position</div>

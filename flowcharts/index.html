@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flowcharts - Fowlerville Wrestling</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .fc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .fc-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      text-align: center;
+      border-top: 4px solid var(--accent);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: var(--text);
+      display: block;
+    }
+    .fc-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    .fc-card h3 {
+      color: var(--primary);
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+    .fc-card .fc-meta {
+      color: var(--text-light);
+      font-size: 0.85rem;
+    }
+    .fc-card .fc-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .fc-card.builder-card {
+      border-top-color: var(--primary);
+      background: linear-gradient(135deg, #f8f6ff 0%, #fff 100%);
+    }
+    .fc-card.builder-card h3 {
+      color: var(--primary-light);
+    }
+  </style>
+</head>
+<body>
+  <script>window.NAV_BASE = '../';</script>
+  <script src="../js/nav.js"></script>
+
+  <div class="hero">
+    <h1>Chain Wrestling Flowcharts</h1>
+    <p>Interactive diagrams showing how techniques connect. Click any node to see details, key points, and video.</p>
+  </div>
+
+  <div class="container">
+    <div class="fc-grid" id="fc-grid"></div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="../youth/index.html">Youth Club</a>
+      <a href="../hs/index.html">High School</a>
+      <a href="../youth/techniques.html">Techniques</a>
+      <a href="../youth/checklist.html">Checklist</a>
+    </div>
+    <div class="footer-copy">Fowlerville Wrestling &mdash; Fowlerville, Michigan</div>
+  </footer>
+
+  <script>
+    const FILE_MAP = {
+      'underhook-series': 'underhook.html',
+      'collar-tie-series': 'collar-tie.html',
+      'head-on-wrist-series': 'head-on-wrist.html',
+      'russian-tie-series': 'russian-tie.html',
+      'russian-tie-reactions': 'russian-tie-reactions.html',
+      'elbow-control-series': 'elbow-control.html',
+      'front-headlock-series': 'front-headlock.html'
+    };
+
+    fetch('../techniques.json')
+      .then(r => r.json())
+      .then(data => {
+        const grid = document.getElementById('fc-grid');
+        const flowcharts = data.flowcharts || [];
+
+        flowcharts.forEach(fc => {
+          const file = FILE_MAP[fc.id] || fc.id + '.html';
+          const nodeCount = fc.nodes ? fc.nodes.length : 0;
+          const edgeCount = fc.edges ? fc.edges.length : 0;
+
+          const card = document.createElement('a');
+          card.href = file;
+          card.className = 'fc-card';
+          card.innerHTML = `
+            <div class="fc-icon">&#9741;</div>
+            <h3>${fc.name}</h3>
+            <div class="fc-meta">${nodeCount} techniques &middot; ${edgeCount} connections</div>
+          `;
+          grid.appendChild(card);
+        });
+
+        // Add "Create Your Own" card
+        const builder = document.createElement('a');
+        builder.href = 'builder.html';
+        builder.className = 'fc-card builder-card';
+        builder.innerHTML = `
+          <div class="fc-icon">&#10010;</div>
+          <h3>Create Your Own</h3>
+          <div class="fc-meta">Build a custom flowchart &middot; Save &amp; print</div>
+        `;
+        grid.appendChild(builder);
+      })
+      .catch(() => {
+        document.getElementById('fc-grid').innerHTML = '<p class="text-muted">Could not load flowchart data.</p>';
+      });
+  </script>
+</body>
+</html>

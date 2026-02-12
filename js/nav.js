@@ -21,6 +21,7 @@
           <li><a href="${base}youth/index.html">Program Info</a></li>
           <li><a href="${base}youth/techniques.html">Technique Library</a></li>
           <li><a href="${base}youth/checklist.html">Checklist</a></li>
+          <li><a href="${base}flowcharts/index.html">Flowcharts</a></li>
           <li><a href="${base}youth/schedule.html">Schedule</a></li>
         </ul>
       </li>
