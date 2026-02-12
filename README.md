@@ -18,7 +18,7 @@ Open `http://localhost:8000` in your browser.
 ├── index.html               Hub page linking to everything
 ├── checklist.html           Printable student checklist
 ├── techniques.html          Technique viewer (hash-routed single-page app)
-├── gen_flowcharts.py        Script to regenerate flowchart HTML from JSON
+├── gen_flowcharts.py        Legacy script (static flowcharts, no longer needed)
 ├── CNAME                    Custom domain for GitHub Pages
 ├── wrangler.toml            Cloudflare Worker config
 ├── workers/
@@ -27,13 +27,12 @@ Open `http://localhost:8000` in your browser.
 ├── css/
 │   └── styles.css           Shared stylesheet
 ├── flowcharts/
-│   ├── underhook.html
-│   ├── collar-tie.html
-│   ├── head-on-wrist.html
-│   ├── russian-tie.html
-│   ├── russian-tie-reactions.html
-│   ├── elbow-control.html
-│   └── front-headlock.html
+│   ├── chart.html           Dynamic flowchart viewer (renders from techniques.json)
+│   ├── builder.html         Visual flowchart builder/editor
+│   ├── index.html           Flowchart listing page
+│   └── *.html               Legacy static flowcharts (kept for reference)
+├── hs/coaches/
+│   └── index.html           Coaches area (includes Flowchart Editor section)
 └── cards.pptx               Original PowerPoint source material
 ```
 
@@ -72,21 +71,39 @@ When searching for videos, prioritize these channels:
 
 ## Editing Flow Charts
 
-Flow chart data is in the `"flowcharts"` section at the bottom of `techniques.json`. Each flowchart has nodes and edges:
+Flowcharts are rendered dynamically from `techniques.json` — no build step or Python script needed. Edit visually with the builder, or edit the JSON directly on GitHub.
+
+### Visual Editor (Recommended)
+
+1. Go to the **Coaches Area** → **Flowchart Editor** and pick a chart
+   - Or open `flowcharts/builder.html?chart=<id>` directly
+2. Drag nodes to reposition, double-click to rename (with technique autocomplete), use toolbar to add/remove nodes and connections
+3. Click **Preview** to test popups with technique details and videos
+4. Click **Export JSON** — downloads a `techniques.json`-ready block
+5. Open `techniques.json` on GitHub, find the matching flowchart entry, and paste the exported block over it
+6. Commit — the live site picks up the change immediately
+
+### Creating a New Flowchart
+
+1. Open the builder at `flowcharts/builder.html` (blank canvas)
+2. Add a **Starting Position** node first (this becomes the root)
+3. Build out the chart with Technique, Finish, and Link nodes
+4. Click **Export JSON**
+5. Add `id`, `name`, and `file` fields to the exported block:
 
 ```json
 {
-  "id": "underhook-series",
-  "name": "Underhook Series",
-  "rootNode": "underhook",
-  "nodes": [
-    {"id": "throw-by", "label": "Throw-by", "type": "action"}
-  ],
-  "edges": [
-    {"from": "underhook", "to": "throw-by"}
-  ]
+  "id": "my-new-series",
+  "name": "My New Series",
+  "file": "flowcharts/chart.html?chart=my-new-series",
+  "rootNode": "n1",
+  "nodes": [ ... ],
+  "edges": [ ... ]
 }
 ```
+
+6. Add the block to the `"flowcharts"` array in `techniques.json`
+7. The index page and dynamic viewer pick it up automatically
 
 ### Node Types
 
@@ -96,33 +113,19 @@ Flow chart data is in the `"flowcharts"` section at the bottom of `techniques.js
 | `action`   | Gray        | Technique or option              |
 | `finish`   | Light blue  | End technique                    |
 | `link`     | Yellow      | Links to another series          |
-| `reaction` | Green       | Opponent reaction (used in Russian Tie Reactions) |
+| `reaction` | Green       | Opponent reaction (Russian Tie Reactions) |
 
-### Adding a Node
+### Editing JSON Directly
 
-Add an object to the `nodes` array with a unique `id`, a display `label`, and a `type` from the table above.
+You can also edit the `"flowcharts"` section of `techniques.json` by hand on GitHub:
 
-### Adding a Connection
-
-Add `{"from": "parent-id", "to": "child-id"}` to the `edges` array.
-
-### Removing a Node
-
-Delete the node from `nodes` and remove any edges that reference its `id`.
-
-### Regenerating After Edits
-
-After editing flowchart data in `techniques.json`, regenerate the HTML files:
-
-```bash
-python3 gen_flowcharts.py
-```
-
-Then refresh the browser.
+- **Add a node** — Add `{"id": "unique-id", "label": "Display Name", "type": "action"}` to the `nodes` array
+- **Add a connection** — Add `{"from": "parent-id", "to": "child-id"}` to the `edges` array
+- **Remove a node** — Delete it from `nodes` and remove any edges that reference its `id`
 
 ### Popup Links
 
-When you click a flowchart node, it looks up the node's label in `techniques.json` to show a popup with description and video. For this to work, the node `label` should match (or be a substring of) a technique `name` in the categories section. If there's no match, the popup shows a generic message instead.
+When you click a flowchart node, it looks up the node's label in `techniques.json` to show a popup with description and video. For this to work, the node `label` should match (or be a substring of) a technique `name` in the categories section. The builder's label autocomplete suggests matching technique names to make this easy.
 
 ## Editing Techniques
 
