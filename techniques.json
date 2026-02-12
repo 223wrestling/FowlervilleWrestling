@@ -2187,142 +2187,133 @@
   ],
   "flowcharts": [
     {
-      "id": "underhook-series",
-      "name": "Underhook Series",
-      "slide": 12,
-      "file": "flowcharts/underhook.html",
-      "rootNode": "underhook",
-      "nodes": [
-        {
-          "id": "underhook",
-          "label": "Underhook",
-          "type": "root"
-        },
-        {
-          "id": "throw-by",
-          "label": "Throw-by",
-          "type": "action"
-        },
-        {
-          "id": "upgrade-bodylock",
-          "label": "Upgrade to Bodylock",
-          "type": "action"
-        },
-        {
-          "id": "front-headlock-uh",
-          "label": "Front Headlock",
-          "type": "action"
-        },
-        {
-          "id": "whip-over-drop",
-          "label": "Whip-Over/Drop-Whip",
-          "type": "action"
-        },
-        {
-          "id": "snatch-single-uh",
-          "label": "Snatch Single",
-          "type": "action"
-        },
-        {
-          "id": "knee-tap-uh",
-          "label": "Knee Tap",
-          "type": "action"
-        },
-        {
-          "id": "go-behind-tb",
-          "label": "Go-Behind",
-          "type": "finish"
-        },
-        {
-          "id": "bodylock-sub",
-          "label": "Bodylock",
-          "type": "finish"
-        },
-        {
-          "id": "near-snatch",
-          "label": "Near Side/Snatch Single",
-          "type": "finish"
-        },
-        {
-          "id": "go-behind-bl",
-          "label": "Go-Behind",
-          "type": "finish"
-        },
-        {
-          "id": "throw-bl",
-          "label": "Throw",
-          "type": "finish"
-        },
-        {
-          "id": "front-hl-series",
-          "label": "Front Headlock Series",
-          "type": "link"
-        },
-        {
-          "id": "whip-over-sub",
-          "label": "Whip-Over",
-          "type": "finish"
-        }
-      ],
-      "edges": [
-        {
-          "from": "underhook",
-          "to": "throw-by"
-        },
-        {
-          "from": "underhook",
-          "to": "upgrade-bodylock"
-        },
-        {
-          "from": "underhook",
-          "to": "front-headlock-uh"
-        },
-        {
-          "from": "underhook",
-          "to": "whip-over-drop"
-        },
-        {
-          "from": "underhook",
-          "to": "snatch-single-uh"
-        },
-        {
-          "from": "underhook",
-          "to": "knee-tap-uh"
-        },
-        {
-          "from": "throw-by",
-          "to": "go-behind-tb"
-        },
-        {
-          "from": "throw-by",
-          "to": "bodylock-sub"
-        },
-        {
-          "from": "throw-by",
-          "to": "near-snatch"
-        },
-        {
-          "from": "upgrade-bodylock",
-          "to": "go-behind-bl"
-        },
-        {
-          "from": "upgrade-bodylock",
-          "to": "throw-bl"
-        },
-        {
-          "from": "front-headlock-uh",
-          "to": "front-hl-series"
-        },
-        {
-          "from": "whip-over-drop",
-          "to": "whip-over-sub"
-        },
-        {
-          "from": "snatch-single-uh",
-          "to": "knee-tap-uh"
-        }
-      ]
+  "id": "underhook-series",
+  "name": "Underhook Series",
+  "slide": 12,
+  "file": "flowcharts/underhook.html",
+  "rootNode": "underhook",
+  "nodes": [
+    {
+      "id": "underhook",
+      "label": "Underhook",
+      "type": "root"
     },
+    {
+      "id": "throw-by",
+      "label": "Throw-by",
+      "type": "action"
+    },
+    {
+      "id": "upgrade-bodylock",
+      "label": "Upgrade to Bodylock",
+      "type": "action"
+    },
+    {
+      "id": "front-headlock-uh",
+      "label": "Front Headlock",
+      "type": "action"
+    },
+    {
+      "id": "whip-over-drop",
+      "label": "Whip-Over/Drop-Whip",
+      "type": "action"
+    },
+    {
+      "id": "snatch-single-uh",
+      "label": "Snatch Single",
+      "type": "action"
+    },
+    {
+      "id": "knee-tap-uh",
+      "label": "Knee Tap",
+      "type": "action"
+    },
+    {
+      "id": "go-behind-tb",
+      "label": "Go-Behind",
+      "type": "finish"
+    },
+    {
+      "id": "bodylock-sub",
+      "label": "Bodylock",
+      "type": "finish"
+    },
+    {
+      "id": "near-snatch",
+      "label": "Near Side/Snatch Single",
+      "type": "finish"
+    },
+    {
+      "id": "go-behind-bl",
+      "label": "Go-Behind",
+      "type": "finish"
+    },
+    {
+      "id": "throw-bl",
+      "label": "Throw",
+      "type": "finish"
+    },
+    {
+      "id": "front-hl-series",
+      "label": "Front Headlock Series",
+      "type": "link"
+    }
+  ],
+  "edges": [
+    {
+      "from": "underhook",
+      "to": "throw-by"
+    },
+    {
+      "from": "underhook",
+      "to": "upgrade-bodylock"
+    },
+    {
+      "from": "underhook",
+      "to": "front-headlock-uh"
+    },
+    {
+      "from": "underhook",
+      "to": "whip-over-drop"
+    },
+    {
+      "from": "underhook",
+      "to": "snatch-single-uh"
+    },
+    {
+      "from": "underhook",
+      "to": "knee-tap-uh"
+    },
+    {
+      "from": "throw-by",
+      "to": "go-behind-tb"
+    },
+    {
+      "from": "throw-by",
+      "to": "bodylock-sub"
+    },
+    {
+      "from": "throw-by",
+      "to": "near-snatch"
+    },
+    {
+      "from": "upgrade-bodylock",
+      "to": "go-behind-bl"
+    },
+    {
+      "from": "upgrade-bodylock",
+      "to": "throw-bl"
+    },
+    {
+      "from": "front-headlock-uh",
+      "to": "front-hl-series"
+    },
+    {
+      "from": "bodylock-sub",
+      "to": "upgrade-bodylock"
+    }
+  ]
+},
     {
       "id": "collar-tie-series",
       "name": "Collar Tie Series",
