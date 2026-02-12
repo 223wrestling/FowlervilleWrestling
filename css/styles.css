@@ -1233,6 +1233,56 @@ body {
   .site-footer { display: none; }
 }
 
+/* ========== CALENDAR TABS ========== */
+.cal-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 0;
+}
+
+.cal-tab {
+  padding: 0.6rem 1.2rem;
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-light);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.cal-tab:hover { color: var(--primary); }
+
+.cal-tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--accent);
+}
+
+.cal-embed {
+  display: none;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  background: white;
+}
+
+.cal-embed.active { display: block; }
+
+.cal-embed iframe {
+  width: 100%;
+  height: 600px;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .cal-embed iframe { height: 450px; }
+  .cal-tab { padding: 0.5rem 0.8rem; font-size: 0.8rem; }
+}
+
 /* ========== UTILITY ========== */
 .text-center { text-align: center; }
 .text-muted { color: var(--text-light); }

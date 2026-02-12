@@ -28,6 +28,18 @@
 
     <h2 class="section-title">Past Events</h2>
     <div id="past" class="schedule-list"></div>
+
+    <h2 class="section-title">Full Calendar</h2>
+    <div class="cal-tabs">
+      <button class="cal-tab active" data-cal="hs">High School</button>
+      <button class="cal-tab" data-cal="ms">Middle School</button>
+    </div>
+    <div class="cal-embed active" data-cal="hs">
+      <iframe src="https://calendar.google.com/calendar/embed?src=9f55d626e24928f89eb8094a54352ecdfbc555548fd551dbe1d9d259fbe8cf28%40group.calendar.google.com&ctz=America%2FDetroit&showTitle=0&showNav=1&showPrint=0&showTabs=0&showCalendars=0" loading="lazy"></iframe>
+    </div>
+    <div class="cal-embed" data-cal="ms">
+      <iframe src="https://calendar.google.com/calendar/embed?src=55a13336f44cac27c02c150420d279655fc4e9e2e55b4221966fc408222e84e1%40group.calendar.google.com&ctz=America%2FDetroit&showTitle=0&showNav=1&showPrint=0&showTabs=0&showCalendars=0" loading="lazy"></iframe>
+    </div>
   </div>
 
   <footer class="site-footer">
@@ -105,6 +117,16 @@
       .catch(() => {
         document.getElementById('upcoming').innerHTML = '<p class="text-muted">Could not load schedule.</p>';
       });
+
+    // Calendar tabs
+    document.querySelector('.cal-tabs').addEventListener('click', e => {
+      if (!e.target.classList.contains('cal-tab')) return;
+      const cal = e.target.dataset.cal;
+      document.querySelectorAll('.cal-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.cal-embed').forEach(t => t.classList.remove('active'));
+      e.target.classList.add('active');
+      document.querySelector(`.cal-embed[data-cal="${cal}"]`).classList.add('active');
+    });
   </script>
 </body>
 </html>

@@ -28,6 +28,22 @@
 
     <h2 class="section-title">Past Events</h2>
     <div id="past" class="schedule-list"></div>
+
+    <h2 class="section-title">Full Calendar</h2>
+    <div class="cal-tabs">
+      <button class="cal-tab active" data-cal="k3">K-3</button>
+      <button class="cal-tab" data-cal="48">4-8</button>
+      <button class="cal-tab" data-cal="gold">Gold</button>
+    </div>
+    <div class="cal-embed active" data-cal="k3">
+      <iframe src="https://calendar.google.com/calendar/embed?src=1b03eda3c06083f738cc1b9bbe5b110d38c23e626cf9f891b75eda5fe840a913%40group.calendar.google.com&ctz=America%2FDetroit&showTitle=0&showNav=1&showPrint=0&showTabs=0&showCalendars=0" loading="lazy"></iframe>
+    </div>
+    <div class="cal-embed" data-cal="48">
+      <iframe src="https://calendar.google.com/calendar/embed?src=30e733c9abcffd8506881817b18c2f21239d78a7e0af6e32cc1d0b386c6e05d0%40group.calendar.google.com&ctz=America%2FDetroit&showTitle=0&showNav=1&showPrint=0&showTabs=0&showCalendars=0" loading="lazy"></iframe>
+    </div>
+    <div class="cal-embed" data-cal="gold">
+      <iframe src="https://calendar.google.com/calendar/embed?src=0e73a02e0d56fd6493c4372439b6b750923614110a6acd3db5a2e79f67644782%40group.calendar.google.com&ctz=America%2FDetroit&showTitle=0&showNav=1&showPrint=0&showTabs=0&showCalendars=0" loading="lazy"></iframe>
+    </div>
   </div>
 
   <footer class="site-footer">
@@ -106,6 +122,16 @@
       .catch(() => {
         document.getElementById('upcoming').innerHTML = '<p class="text-muted">Could not load schedule.</p>';
       });
+
+    // Calendar tabs
+    document.querySelector('.cal-tabs').addEventListener('click', e => {
+      if (!e.target.classList.contains('cal-tab')) return;
+      const cal = e.target.dataset.cal;
+      document.querySelectorAll('.cal-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.cal-embed').forEach(t => t.classList.remove('active'));
+      e.target.classList.add('active');
+      document.querySelector(`.cal-embed[data-cal="${cal}"]`).classList.add('active');
+    });
   </script>
 </body>
 </html>
