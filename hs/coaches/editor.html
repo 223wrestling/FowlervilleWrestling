@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technique Editor - Fowlerville Wrestling</title>
+  <link rel="stylesheet" href="../../css/styles.css">
+  <style>
+    * { box-sizing: border-box; }
+
+    .editor-wrap {
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - var(--nav-height));
+      overflow: hidden;
+    }
+
+    /* ===== TOOLBAR ===== */
+    .editor-toolbar {
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+      z-index: 10;
+    }
+    .tb-group { display: flex; gap: 0.3rem; align-items: center; }
+    .tb-sep { width: 1px; height: 24px; background: var(--border); margin: 0 0.4rem; }
+    .tb-input {
+      padding: 0.35rem 0.6rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 0.85rem;
+      width: 180px;
+    }
+    .tb-input:focus { outline: none; border-color: var(--primary); }
+    .tb-select {
+      padding: 0.35rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 0.85rem;
+      background: white;
+    }
+    .tb-btn {
+      padding: 0.35rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: white;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .tb-btn:hover { background: #f0f0f0; }
+    .tb-btn-primary {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .tb-btn-primary:hover { background: var(--primary-light); }
+    .tb-btn-accent {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+    .tb-btn-accent:hover { background: var(--accent-light); }
+    .tb-btn-danger {
+      background: #dc3545;
+      color: white;
+      border-color: #dc3545;
+    }
+    .tb-btn-danger:hover { background: #c82333; }
+    .dirty-dot {
+      display: none;
+      width: 8px; height: 8px;
+      background: #dc3545;
+      border-radius: 50%;
+      margin-left: -4px;
+    }
+    .dirty-dot.show { display: inline-block; }
+    .tb-status {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      margin-left: auto;
+    }
+    .tb-status.success { color: #28a745; }
+    .tb-status.error { color: #dc3545; }
+
+    /* ===== TWO-PANEL LAYOUT ===== */
+    .editor-panels {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* Left: Table */
+    .table-panel {
+      flex: 1;
+      overflow-y: auto;
+      min-width: 0;
+    }
+
+    /* Right: Detail */
+    .detail-panel {
+      width: 480px;
+      min-width: 380px;
+      border-left: 1px solid var(--border);
+      background: var(--card-bg);
+      overflow-y: auto;
+      display: none;
+      flex-shrink: 0;
+    }
+    .detail-panel.open { display: flex; flex-direction: column; }
+
+    /* ===== TABLE ===== */
+    .cat-header {
+      background: var(--primary);
+      color: white;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      user-select: none;
+    }
+    .cat-header:hover { background: var(--primary-light); }
+    .cat-header h3 { margin: 0; font-size: 0.95rem; color: white; }
+    .cat-header .cat-subtitle { font-size: 0.8rem; opacity: 0.8; margin-left: 0.5rem; }
+    .cat-header .cat-count { font-size: 0.75rem; opacity: 0.7; }
+    .cat-header-actions {
+      display: flex; gap: 0.3rem; align-items: center;
+    }
+    .cat-header-actions button {
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: white;
+      padding: 0.2rem 0.5rem;
+      border-radius: 3px;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+    .cat-header-actions button:hover { background: rgba(255,255,255,0.3); }
+
+    .tech-row {
+      display: grid;
+      grid-template-columns: 1fr 50px 50px 50px 50px;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+      transition: background 0.1s;
+      font-size: 0.85rem;
+    }
+    .tech-row:hover { background: #f0f4f8; }
+    .tech-row.selected { background: #e8eef4; border-left: 3px solid var(--primary); padding-left: calc(1rem - 3px); }
+    .tech-row .tech-name { font-weight: 500; color: var(--primary); }
+    .tech-row .tech-desc {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 400px;
+    }
+    .tech-row .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: #e8eef4;
+      color: var(--primary);
+    }
+    .tech-row .badge.zero { background: #f0f0f0; color: #bbb; }
+    .no-results {
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    /* ===== DETAIL PANEL ===== */
+    .detail-header {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .detail-header h3 { margin: 0; font-size: 1rem; color: var(--primary); }
+    .detail-body {
+      padding: 1rem;
+      flex: 1;
+      overflow-y: auto;
+    }
+    .detail-footer {
+      padding: 0.75rem 1rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+      flex-shrink: 0;
+    }
+
+    .form-group { margin-bottom: 1rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-light);
+      margin-bottom: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.4rem 0.6rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-family: inherit;
+    }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(43,27,107,0.1);
+    }
+    .form-group .hint {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      margin-top: 0.2rem;
+    }
+    .form-group .field-error {
+      font-size: 0.75rem;
+      color: #dc3545;
+      margin-top: 0.2rem;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    /* Array editor */
+    .array-editor { margin-bottom: 1rem; }
+    .array-editor label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-light);
+      margin-bottom: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .array-editor .add-btn {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.4rem;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: white;
+      cursor: pointer;
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 500;
+    }
+    .array-editor .add-btn:hover { background: #f0f0f0; }
+    .array-items { display: flex; flex-direction: column; gap: 0.3rem; }
+    .array-item {
+      display: flex;
+      gap: 0.3rem;
+      align-items: center;
+    }
+    .array-item input {
+      flex: 1;
+      padding: 0.35rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+    .array-item input:focus { outline: none; border-color: var(--primary); }
+    .array-item .move-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .array-item .move-btns button,
+    .array-item .remove-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 0.65rem;
+      padding: 0 0.25rem;
+      line-height: 1.2;
+      color: var(--text-light);
+    }
+    .array-item .remove-btn { color: #dc3545; font-size: 0.8rem; padding: 0.15rem 0.35rem; }
+    .array-item .move-btns button:hover,
+    .array-item .remove-btn:hover { background: #f0f0f0; }
+    .array-empty {
+      font-size: 0.8rem;
+      color: #bbb;
+      padding: 0.3rem 0;
+      font-style: italic;
+    }
+
+    /* Related autocomplete */
+    .autocomplete-wrap { position: relative; }
+    .autocomplete-list {
+      position: absolute;
+      top: 100%;
+      left: 0; right: 0;
+      background: white;
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+      max-height: 150px;
+      overflow-y: auto;
+      z-index: 20;
+      display: none;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .autocomplete-list.show { display: block; }
+    .autocomplete-option {
+      padding: 0.35rem 0.5rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    .autocomplete-option:hover,
+    .autocomplete-option.highlighted { background: #e8eef4; }
+
+    /* Video editor */
+    .video-cards { display: flex; flex-direction: column; gap: 0.5rem; }
+    .video-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.75rem;
+      background: #fafafa;
+    }
+    .video-card .video-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
+      border-radius: 4px;
+      margin-bottom: 0.5rem;
+      object-fit: cover;
+    }
+    .video-card .video-fields { display: flex; flex-direction: column; gap: 0.3rem; }
+    .video-card input {
+      width: 100%;
+      padding: 0.3rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      font-size: 0.8rem;
+    }
+    .video-card input:focus { outline: none; border-color: var(--primary); }
+    .video-card .video-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.3rem;
+    }
+    .video-card .video-url {
+      font-size: 0.7rem;
+      color: var(--text-light);
+      word-break: break-all;
+    }
+    .video-card .video-url a { color: var(--primary); }
+
+    /* ===== MODALS ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      max-width: 700px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    .modal h2 { color: var(--primary); margin-bottom: 1rem; font-size: 1.2rem; }
+    .modal-footer {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Diff view */
+    .diff-view {
+      font-family: 'SF Mono', 'Consolas', 'Liberation Mono', monospace;
+      font-size: 0.75rem;
+      line-height: 1.5;
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 1rem;
+      border-radius: 4px;
+      max-height: 400px;
+      overflow: auto;
+      white-space: pre;
+    }
+    .diff-view .diff-add { color: #4ec9b0; background: rgba(78,201,176,0.1); }
+    .diff-view .diff-del { color: #f14c4c; background: rgba(241,76,76,0.1); }
+    .diff-view .diff-ctx { color: #888; }
+    .diff-view .diff-sep { color: #569cd6; }
+
+    /* Settings */
+    .settings-grid { display: grid; grid-template-columns: 120px 1fr; gap: 0.5rem 1rem; align-items: center; }
+    .settings-grid label { font-size: 0.85rem; font-weight: 500; text-align: right; }
+    .settings-grid input {
+      padding: 0.4rem 0.6rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+    .settings-grid input:focus { outline: none; border-color: var(--primary); }
+    .settings-note { font-size: 0.78rem; color: var(--text-light); grid-column: 1/-1; margin-top: 0.5rem; }
+
+    /* Validation errors */
+    .validation-list {
+      list-style: none;
+      padding: 0;
+    }
+    .validation-list li {
+      padding: 0.3rem 0;
+      font-size: 0.85rem;
+      color: #dc3545;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .validation-list li:last-child { border: none; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .editor-panels { flex-direction: column; }
+      .detail-panel {
+        width: 100%;
+        min-width: 0;
+        border-left: none;
+        border-top: 1px solid var(--border);
+        max-height: 50vh;
+      }
+      .tech-row { grid-template-columns: 1fr 40px 40px 40px 40px; font-size: 0.8rem; }
+      .tech-row .tech-desc { display: none; }
+      .tb-input { width: 130px; }
+    }
+  </style>
+</head>
+<body>
+  <script>window.NAV_BASE = '../../';</script>
+  <script src="../../js/nav.js"></script>
+
+  <div class="editor-wrap">
+    <!-- Toolbar -->
+    <div class="editor-toolbar">
+      <div class="tb-group">
+        <input type="text" class="tb-input" id="search-input" placeholder="Search techniques...">
+      </div>
+      <div class="tb-group">
+        <select class="tb-select" id="category-filter">
+          <option value="">All Categories</option>
+        </select>
+      </div>
+      <div class="tb-sep"></div>
+      <div class="tb-group">
+        <button class="tb-btn" id="btn-add-technique" title="Add Technique">+ Technique</button>
+        <button class="tb-btn" id="btn-add-category" title="Add Category">+ Category</button>
+      </div>
+      <div class="tb-sep"></div>
+      <div class="tb-group">
+        <button class="tb-btn tb-btn-primary" id="btn-save">Save to GitHub</button>
+        <span class="dirty-dot" id="dirty-dot" title="Unsaved changes"></span>
+        <button class="tb-btn" id="btn-export">Export JSON</button>
+        <button class="tb-btn" id="btn-settings">Settings</button>
+      </div>
+      <span class="tb-status" id="status-msg"></span>
+    </div>
+
+    <!-- Panels -->
+    <div class="editor-panels">
+      <!-- Left: Table -->
+      <div class="table-panel" id="table-panel"></div>
+
+      <!-- Right: Detail -->
+      <div class="detail-panel" id="detail-panel">
+        <div class="detail-header">
+          <h3 id="detail-title">Edit Technique</h3>
+          <button class="tb-btn" id="btn-close-detail" title="Close">&times;</button>
+        </div>
+        <div class="detail-body" id="detail-body"></div>
+        <div class="detail-footer">
+          <button class="tb-btn" id="btn-delete-technique" style="margin-right:auto;color:#dc3545;">Delete</button>
+          <button class="tb-btn" id="btn-cancel-detail">Cancel</button>
+          <button class="tb-btn tb-btn-primary" id="btn-apply-detail">Apply Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settings-modal">
+    <div class="modal">
+      <h2>GitHub Settings</h2>
+      <div class="settings-grid">
+        <label>Owner/Repo</label>
+        <input type="text" id="set-repo" placeholder="user/repo">
+        <label>Branch</label>
+        <input type="text" id="set-branch" placeholder="main" value="main">
+        <label>File Path</label>
+        <input type="text" id="set-path" placeholder="techniques.json" value="techniques.json">
+        <label>Access Token</label>
+        <input type="password" id="set-token" placeholder="ghp_...">
+        <p class="settings-note">Token is stored in your browser only and sent exclusively to api.github.com. Requires <strong>Contents</strong> read/write permission.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="tb-btn" onclick="closeModal('settings-modal')">Cancel</button>
+        <button class="tb-btn tb-btn-primary" id="btn-save-settings">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category Modal -->
+  <div class="modal-overlay" id="category-modal">
+    <div class="modal">
+      <h2 id="category-modal-title">Add Category</h2>
+      <div class="form-group">
+        <label>Category ID</label>
+        <input type="text" id="cat-id" placeholder="e.g. escapes">
+        <div class="hint">Lowercase, hyphens only. Used internally.</div>
+      </div>
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" id="cat-name" placeholder="e.g. Escapes & Reversals">
+      </div>
+      <div class="form-group">
+        <label>Subtitle</label>
+        <input type="text" id="cat-subtitle" placeholder="e.g. Getting out from bottom">
+      </div>
+      <div class="modal-footer">
+        <button class="tb-btn" onclick="closeModal('category-modal')">Cancel</button>
+        <button class="tb-btn tb-btn-danger" id="btn-delete-category" style="display:none;">Delete Category</button>
+        <button class="tb-btn tb-btn-primary" id="btn-save-category">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Diff Preview Modal -->
+  <div class="modal-overlay" id="diff-modal">
+    <div class="modal" style="max-width:850px;">
+      <h2>Review Changes</h2>
+      <div class="form-group">
+        <label>Commit Message</label>
+        <input type="text" id="commit-msg" value="">
+      </div>
+      <div class="diff-view" id="diff-view"></div>
+      <div class="modal-footer">
+        <button class="tb-btn" onclick="closeModal('diff-modal')">Cancel</button>
+        <button class="tb-btn tb-btn-primary" id="btn-confirm-save">Commit to GitHub</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Validation Modal -->
+  <div class="modal-overlay" id="validation-modal">
+    <div class="modal">
+      <h2 style="color:#dc3545;">Validation Errors</h2>
+      <p style="margin-bottom:0.75rem;font-size:0.9rem;">Please fix these issues before saving:</p>
+      <ul class="validation-list" id="validation-list"></ul>
+      <div class="modal-footer">
+        <button class="tb-btn tb-btn-primary" onclick="closeModal('validation-modal')">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==================== STATE ====================
+    let data = null;           // The full techniques.json object
+    let originalJson = '';     // JSON string at load time (for dirty detection + diff)
+    let fileSha = null;        // GitHub file SHA for conflict detection
+    let selectedTech = null;   // { catIdx, techIdx } of currently selected technique
+    let editingCategory = null; // category index being edited, or null for new
+    let dirty = false;
+
+    const PREFERRED_CHANNELS = [
+      'Cary Kolat', '@KOLATCOM',
+      'Iron Faith Wrestling', '@ironfaithwrestling',
+      'Earn Your Gold', '@earnyourgold',
+      'Wrestling Rabbit Hole', '@WrestlingRabbitHole'
+    ];
+
+    // ==================== INIT ====================
+    async function init() {
+      loadSettings();
+      try {
+        const resp = await fetch('../../techniques.json');
+        data = await resp.json();
+        originalJson = JSON.stringify(data, null, 2);
+        renderTable();
+        populateCategoryFilter();
+        setStatus('Loaded ' + countTechniques() + ' techniques', 'success');
+      } catch (e) {
+        setStatus('Failed to load techniques.json: ' + e.message, 'error');
+      }
+    }
+
+    function countTechniques() {
+      return data.categories.reduce((sum, c) => sum + c.techniques.length, 0);
+    }
+
+    function getAllTechniqueIds() {
+      const ids = [];
+      for (const cat of data.categories) {
+        for (const t of cat.techniques) {
+          ids.push(t.id);
+        }
+      }
+      return ids;
+    }
+
+    // ==================== RENDER TABLE ====================
+    function renderTable() {
+      const panel = document.getElementById('table-panel');
+      const search = document.getElementById('search-input').value.toLowerCase();
+      const catFilter = document.getElementById('category-filter').value;
+      let html = '';
+      let anyResults = false;
+
+      data.categories.forEach((cat, ci) => {
+        if (catFilter && cat.id !== catFilter) return;
+
+        const matchingTechs = cat.techniques.filter(t => {
+          if (!search) return true;
+          return t.name.toLowerCase().includes(search) ||
+                 t.id.toLowerCase().includes(search) ||
+                 (t.description || '').toLowerCase().includes(search);
+        });
+
+        if (catFilter || !search || matchingTechs.length > 0) {
+          html += `<div class="cat-header" onclick="toggleCategory(this)">
+            <div>
+              <h3 style="display:inline;">${esc(cat.name)}</h3>
+              <span class="cat-subtitle">${esc(cat.subtitle || '')}</span>
+              <span class="cat-count">(${cat.techniques.length})</span>
+            </div>
+            <div class="cat-header-actions">
+              <button onclick="event.stopPropagation();editCategory(${ci})" title="Edit category">Edit</button>
+            </div>
+          </div>`;
+
+          const techs = search ? matchingTechs : cat.techniques;
+          techs.forEach(t => {
+            const ti = cat.techniques.indexOf(t);
+            const sel = selectedTech && selectedTech.catIdx === ci && selectedTech.techIdx === ti;
+            anyResults = true;
+            html += `<div class="tech-row${sel ? ' selected' : ''}" onclick="selectTechnique(${ci},${ti})">
+              <div>
+                <span class="tech-name">${esc(t.name)}</span>
+                <div class="tech-desc">${esc(t.description || '')}</div>
+              </div>
+              <span class="badge${badgeCls(t.keyPoints)}" title="Key Points">${(t.keyPoints||[]).length}</span>
+              <span class="badge${badgeCls(t.commonMistakes)}" title="Common Mistakes">${(t.commonMistakes||[]).length}</span>
+              <span class="badge${badgeCls(t.videos)}" title="Videos">${(t.videos||[]).length}</span>
+              <span class="badge${badgeCls(t.related)}" title="Related">${(t.related||[]).length}</span>
+            </div>`;
+          });
+
+          if (search && matchingTechs.length === 0) {
+            // Category header shown but no results -- skip (already filtered above)
+          }
+        }
+      });
+
+      if (!anyResults && search) {
+        html += '<div class="no-results">No techniques match your search.</div>';
+      }
+
+      panel.innerHTML = html;
+    }
+
+    function badgeCls(arr) {
+      return (!arr || arr.length === 0) ? ' zero' : '';
+    }
+
+    function toggleCategory(el) {
+      let next = el.nextElementSibling;
+      while (next && !next.classList.contains('cat-header')) {
+        next.style.display = next.style.display === 'none' ? '' : 'none';
+        next = next.nextElementSibling;
+      }
+    }
+
+    function populateCategoryFilter() {
+      const sel = document.getElementById('category-filter');
+      sel.innerHTML = '<option value="">All Categories</option>';
+      data.categories.forEach(c => {
+        sel.innerHTML += `<option value="${esc(c.id)}">${esc(c.name)}</option>`;
+      });
+    }
+
+    // ==================== DETAIL PANEL ====================
+    function selectTechnique(catIdx, techIdx) {
+      selectedTech = { catIdx, techIdx };
+      const t = data.categories[catIdx].techniques[techIdx];
+      document.getElementById('detail-title').textContent = 'Edit: ' + t.name;
+      renderDetailForm(t, catIdx);
+      document.getElementById('detail-panel').classList.add('open');
+      renderTable(); // update selected highlight
+    }
+
+    function renderDetailForm(t, catIdx) {
+      const cats = data.categories;
+      const body = document.getElementById('detail-body');
+      body.innerHTML = `
+        <div class="form-row">
+          <div class="form-group">
+            <label>ID</label>
+            <input type="text" id="f-id" value="${esc(t.id)}">
+            <div class="hint">Lowercase, hyphens, used in URLs</div>
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <select id="f-category">
+              ${cats.map(c => `<option value="${esc(c.id)}"${c.id === t.category ? ' selected' : ''}>${esc(c.name)}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" id="f-name" value="${esc(t.name)}">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="f-desc">${esc(t.description || '')}</textarea>
+        </div>
+
+        <div class="array-editor" id="ae-keyPoints">
+          <label>Key Points <button class="add-btn" onclick="addArrayItem('keyPoints')">+ Add</button></label>
+          <div class="array-items" id="items-keyPoints"></div>
+        </div>
+
+        <div class="array-editor" id="ae-commonMistakes">
+          <label>Common Mistakes <button class="add-btn" onclick="addArrayItem('commonMistakes')">+ Add</button></label>
+          <div class="array-items" id="items-commonMistakes"></div>
+        </div>
+
+        <div class="array-editor" id="ae-related">
+          <label>Related Techniques <button class="add-btn" onclick="addRelatedItem()">+ Add</button></label>
+          <div class="array-items" id="items-related"></div>
+        </div>
+
+        <div class="array-editor" id="ae-videos">
+          <label>Videos <button class="add-btn" onclick="addVideoItem()">+ Add</button></label>
+          <div class="video-cards" id="items-videos"></div>
+        </div>
+      `;
+
+      renderArrayItems('keyPoints', t.keyPoints || []);
+      renderArrayItems('commonMistakes', t.commonMistakes || []);
+      renderRelatedItems(t.related || []);
+      renderVideoItems(t.videos || []);
+    }
+
+    function renderArrayItems(field, items) {
+      const container = document.getElementById('items-' + field);
+      if (!items.length) {
+        container.innerHTML = '<div class="array-empty">None</div>';
+        return;
+      }
+      container.innerHTML = items.map((item, i) => `
+        <div class="array-item">
+          <div class="move-btns">
+            <button onclick="moveArrayItem('${field}',${i},-1)" ${i===0?'disabled':''} title="Move up">&uarr;</button>
+            <button onclick="moveArrayItem('${field}',${i},1)" ${i===items.length-1?'disabled':''} title="Move down">&darr;</button>
+          </div>
+          <input type="text" value="${esc(item)}" onchange="updateArrayItem('${field}',${i},this.value)">
+          <button class="remove-btn" onclick="removeArrayItem('${field}',${i})" title="Remove">&times;</button>
+        </div>
+      `).join('');
+    }
+
+    function renderRelatedItems(items) {
+      const container = document.getElementById('items-related');
+      if (!items.length) {
+        container.innerHTML = '<div class="array-empty">None</div>';
+        return;
+      }
+      container.innerHTML = items.map((item, i) => `
+        <div class="array-item">
+          <div class="move-btns">
+            <button onclick="moveRelatedItem(${i},-1)" ${i===0?'disabled':''} title="Move up">&uarr;</button>
+            <button onclick="moveRelatedItem(${i},1)" ${i===items.length-1?'disabled':''} title="Move down">&darr;</button>
+          </div>
+          <div class="autocomplete-wrap" style="flex:1;">
+            <input type="text" value="${esc(item)}" onfocus="showRelatedAC(this,${i})" oninput="filterRelatedAC(this,${i})" onblur="setTimeout(()=>hideRelatedAC(${i}),200)">
+            <div class="autocomplete-list" id="ac-related-${i}"></div>
+          </div>
+          <button class="remove-btn" onclick="removeRelatedItem(${i})" title="Remove">&times;</button>
+        </div>
+      `).join('');
+    }
+
+    function renderVideoItems(videos) {
+      const container = document.getElementById('items-videos');
+      if (!videos.length) {
+        container.innerHTML = '<div class="array-empty">No videos</div>';
+        return;
+      }
+      container.innerHTML = videos.map((v, i) => `
+        <div class="video-card">
+          <img class="video-thumb" src="https://img.youtube.com/vi/${esc(v.id)}/mqdefault.jpg" alt="Thumbnail" onerror="this.style.display='none'">
+          <div class="video-fields">
+            <input type="text" placeholder="Video ID" value="${esc(v.id)}" onchange="updateVideo(${i},'id',this.value)" data-vidx="${i}" data-field="id">
+            <input type="text" placeholder="Title" value="${esc(v.title || '')}" onchange="updateVideo(${i},'title',this.value)">
+            <div class="autocomplete-wrap">
+              <input type="text" placeholder="Channel" value="${esc(v.channel || '')}" onfocus="showChannelAC(this,${i})" oninput="filterChannelAC(this,${i})" onblur="setTimeout(()=>hideChannelAC(${i}),200)" onchange="updateVideo(${i},'channel',this.value)">
+              <div class="autocomplete-list" id="ac-channel-${i}"></div>
+            </div>
+          </div>
+          <div class="video-actions">
+            <span class="video-url">${v.id ? `<a href="https://www.youtube.com/watch?v=${esc(v.id)}" target="_blank">youtube.com/watch?v=${esc(v.id)}</a>` : ''}</span>
+            <button class="remove-btn" onclick="removeVideo(${i})" title="Remove video">&times;</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ==================== ARRAY OPERATIONS ====================
+    function getEditingTechnique() {
+      if (!selectedTech) return null;
+      return data.categories[selectedTech.catIdx].techniques[selectedTech.techIdx];
+    }
+
+    function addArrayItem(field) {
+      const t = getEditingTechnique();
+      if (!t) return;
+      if (!t[field]) t[field] = [];
+      t[field].push('');
+      renderArrayItems(field, t[field]);
+      markDirty();
+      // Focus the new input
+      const container = document.getElementById('items-' + field);
+      const inputs = container.querySelectorAll('input');
+      if (inputs.length) inputs[inputs.length - 1].focus();
+    }
+
+    function updateArrayItem(field, idx, value) {
+      const t = getEditingTechnique();
+      if (!t || !t[field]) return;
+      t[field][idx] = value;
+      markDirty();
+    }
+
+    function removeArrayItem(field, idx) {
+      const t = getEditingTechnique();
+      if (!t || !t[field]) return;
+      t[field].splice(idx, 1);
+      renderArrayItems(field, t[field]);
+      markDirty();
+    }
+
+    function moveArrayItem(field, idx, dir) {
+      const t = getEditingTechnique();
+      if (!t || !t[field]) return;
+      const arr = t[field];
+      const newIdx = idx + dir;
+      if (newIdx < 0 || newIdx >= arr.length) return;
+      [arr[idx], arr[newIdx]] = [arr[newIdx], arr[idx]];
+      renderArrayItems(field, arr);
+      markDirty();
+    }
+
+    // Related techniques
+    function addRelatedItem() {
+      const t = getEditingTechnique();
+      if (!t) return;
+      if (!t.related) t.related = [];
+      t.related.push('');
+      renderRelatedItems(t.related);
+      markDirty();
+      const container = document.getElementById('items-related');
+      const inputs = container.querySelectorAll('input');
+      if (inputs.length) inputs[inputs.length - 1].focus();
+    }
+
+    function removeRelatedItem(idx) {
+      const t = getEditingTechnique();
+      if (!t || !t.related) return;
+      t.related.splice(idx, 1);
+      renderRelatedItems(t.related);
+      markDirty();
+    }
+
+    function moveRelatedItem(idx, dir) {
+      const t = getEditingTechnique();
+      if (!t || !t.related) return;
+      const newIdx = idx + dir;
+      if (newIdx < 0 || newIdx >= t.related.length) return;
+      [t.related[idx], t.related[newIdx]] = [t.related[newIdx], t.related[idx]];
+      renderRelatedItems(t.related);
+      markDirty();
+    }
+
+    function showRelatedAC(input, idx) {
+      filterRelatedAC(input, idx);
+    }
+
+    function filterRelatedAC(input, idx) {
+      const val = input.value.toLowerCase();
+      const allIds = getAllTechniqueIds();
+      const t = getEditingTechnique();
+      const currentRelated = t ? (t.related || []) : [];
+      const matches = allIds.filter(id =>
+        id.includes(val) && !currentRelated.includes(id)
+      ).slice(0, 10);
+
+      const list = document.getElementById('ac-related-' + idx);
+      if (!matches.length) { list.classList.remove('show'); return; }
+      list.innerHTML = matches.map(id => `<div class="autocomplete-option" onmousedown="pickRelated(${idx},'${esc(id)}')">${esc(id)}</div>`).join('');
+      list.classList.add('show');
+    }
+
+    function hideRelatedAC(idx) {
+      const list = document.getElementById('ac-related-' + idx);
+      if (list) list.classList.remove('show');
+      // Also save the current value
+      const t = getEditingTechnique();
+      if (!t) return;
+      const container = document.getElementById('items-related');
+      const inputs = container.querySelectorAll('input');
+      if (inputs[idx]) {
+        t.related[idx] = inputs[idx].value;
+        markDirty();
+      }
+    }
+
+    function pickRelated(idx, id) {
+      const t = getEditingTechnique();
+      if (!t) return;
+      t.related[idx] = id;
+      renderRelatedItems(t.related);
+      markDirty();
+    }
+
+    // Videos
+    function addVideoItem() {
+      const t = getEditingTechnique();
+      if (!t) return;
+      if (!t.videos) t.videos = [];
+      t.videos.push({ id: '', title: '', channel: '', url: '' });
+      renderVideoItems(t.videos);
+      markDirty();
+    }
+
+    function updateVideo(idx, field, value) {
+      const t = getEditingTechnique();
+      if (!t || !t.videos) return;
+      t.videos[idx][field] = value;
+      if (field === 'id') {
+        t.videos[idx].url = value ? 'https://www.youtube.com/watch?v=' + value : '';
+      }
+      // Re-render to update thumbnail/URL
+      if (field === 'id') renderVideoItems(t.videos);
+      markDirty();
+    }
+
+    function removeVideo(idx) {
+      const t = getEditingTechnique();
+      if (!t || !t.videos) return;
+      t.videos.splice(idx, 1);
+      renderVideoItems(t.videos);
+      markDirty();
+    }
+
+    const CHANNEL_NAMES = ['Cary Kolat', 'Iron Faith Wrestling', 'Earn Your Gold', 'Wrestling Rabbit Hole'];
+
+    function showChannelAC(input, idx) {
+      filterChannelAC(input, idx);
+    }
+
+    function filterChannelAC(input, idx) {
+      const val = input.value.toLowerCase();
+      const matches = CHANNEL_NAMES.filter(c => c.toLowerCase().includes(val));
+      const list = document.getElementById('ac-channel-' + idx);
+      if (!matches.length) { list.classList.remove('show'); return; }
+      list.innerHTML = matches.map(c => `<div class="autocomplete-option" onmousedown="pickChannel(${idx},'${esc(c)}')">${esc(c)}</div>`).join('');
+      list.classList.add('show');
+    }
+
+    function hideChannelAC(idx) {
+      const list = document.getElementById('ac-channel-' + idx);
+      if (list) list.classList.remove('show');
+    }
+
+    function pickChannel(idx, name) {
+      const t = getEditingTechnique();
+      if (!t || !t.videos) return;
+      t.videos[idx].channel = name;
+      renderVideoItems(t.videos);
+      markDirty();
+    }
+
+    // ==================== APPLY / CANCEL ====================
+    function applyDetail() {
+      if (!selectedTech) return;
+      const t = data.categories[selectedTech.catIdx].techniques[selectedTech.techIdx];
+
+      const newId = document.getElementById('f-id').value.trim();
+      const newName = document.getElementById('f-name').value.trim();
+      const newCat = document.getElementById('f-category').value;
+      const newDesc = document.getElementById('f-desc').value.trim();
+
+      if (!newId || !newName) {
+        alert('ID and Name are required.');
+        return;
+      }
+
+      // Check for duplicate ID
+      const allIds = getAllTechniqueIds();
+      const dupIdx = allIds.indexOf(newId);
+      if (dupIdx !== -1 && newId !== t.id) {
+        alert('A technique with ID "' + newId + '" already exists.');
+        return;
+      }
+
+      // Update the technique object
+      const oldId = t.id;
+      t.id = newId;
+      t.name = newName;
+      t.description = newDesc;
+
+      // If category changed, move the technique
+      if (newCat !== t.category) {
+        // Remove from old category
+        data.categories[selectedTech.catIdx].techniques.splice(selectedTech.techIdx, 1);
+        // Add to new category
+        const newCatIdx = data.categories.findIndex(c => c.id === newCat);
+        if (newCatIdx !== -1) {
+          t.category = newCat;
+          data.categories[newCatIdx].techniques.push(t);
+          selectedTech = { catIdx: newCatIdx, techIdx: data.categories[newCatIdx].techniques.length - 1 };
+        }
+      }
+
+      // If ID changed, update related references across all techniques
+      if (oldId !== newId) {
+        for (const cat of data.categories) {
+          for (const tech of cat.techniques) {
+            if (tech.related) {
+              tech.related = tech.related.map(r => r === oldId ? newId : r);
+            }
+          }
+        }
+      }
+
+      markDirty();
+      renderTable();
+      document.getElementById('detail-title').textContent = 'Edit: ' + t.name;
+      setStatus('Changes applied to "' + t.name + '"', 'success');
+    }
+
+    function cancelDetail() {
+      // Reload from original JSON for this technique? No — we apply inline.
+      // Just close the panel without reverting.
+      closeDetail();
+    }
+
+    function closeDetail() {
+      selectedTech = null;
+      document.getElementById('detail-panel').classList.remove('open');
+      renderTable();
+    }
+
+    function deleteTechnique() {
+      if (!selectedTech) return;
+      const t = data.categories[selectedTech.catIdx].techniques[selectedTech.techIdx];
+      if (!confirm('Delete "' + t.name + '"? This can be undone by reloading the page (if unsaved).')) return;
+
+      // Remove related references
+      for (const cat of data.categories) {
+        for (const tech of cat.techniques) {
+          if (tech.related) {
+            tech.related = tech.related.filter(r => r !== t.id);
+          }
+        }
+      }
+
+      data.categories[selectedTech.catIdx].techniques.splice(selectedTech.techIdx, 1);
+      closeDetail();
+      markDirty();
+      renderTable();
+      setStatus('Deleted "' + t.name + '"', 'success');
+    }
+
+    // ==================== ADD TECHNIQUE ====================
+    function addTechnique() {
+      if (!data || !data.categories.length) return;
+      const catIdx = 0; // Add to first category by default
+      const newTech = {
+        id: 'new-technique-' + Date.now(),
+        name: 'New Technique',
+        category: data.categories[catIdx].id,
+        description: '',
+        keyPoints: [],
+        commonMistakes: [],
+        related: [],
+        videos: []
+      };
+      data.categories[catIdx].techniques.push(newTech);
+      markDirty();
+      renderTable();
+      selectTechnique(catIdx, data.categories[catIdx].techniques.length - 1);
+      // Focus name field
+      setTimeout(() => {
+        const nameInput = document.getElementById('f-name');
+        if (nameInput) { nameInput.select(); nameInput.focus(); }
+      }, 50);
+    }
+
+    // ==================== CATEGORY MANAGEMENT ====================
+    function editCategory(catIdx) {
+      editingCategory = catIdx;
+      const cat = data.categories[catIdx];
+      document.getElementById('category-modal-title').textContent = 'Edit Category';
+      document.getElementById('cat-id').value = cat.id;
+      document.getElementById('cat-name').value = cat.name;
+      document.getElementById('cat-subtitle').value = cat.subtitle || '';
+      document.getElementById('cat-id').disabled = true;
+      const delBtn = document.getElementById('btn-delete-category');
+      delBtn.style.display = cat.techniques.length === 0 ? '' : 'none';
+      openModal('category-modal');
+    }
+
+    function addCategory() {
+      editingCategory = null;
+      document.getElementById('category-modal-title').textContent = 'Add Category';
+      document.getElementById('cat-id').value = '';
+      document.getElementById('cat-name').value = '';
+      document.getElementById('cat-subtitle').value = '';
+      document.getElementById('cat-id').disabled = false;
+      document.getElementById('btn-delete-category').style.display = 'none';
+      openModal('category-modal');
+    }
+
+    function saveCategory() {
+      const id = document.getElementById('cat-id').value.trim();
+      const name = document.getElementById('cat-name').value.trim();
+      const subtitle = document.getElementById('cat-subtitle').value.trim();
+
+      if (!id || !name) { alert('ID and Name are required.'); return; }
+
+      if (editingCategory !== null) {
+        // Edit existing
+        const cat = data.categories[editingCategory];
+        cat.name = name;
+        cat.subtitle = subtitle;
+      } else {
+        // Check duplicate
+        if (data.categories.find(c => c.id === id)) {
+          alert('A category with ID "' + id + '" already exists.');
+          return;
+        }
+        data.categories.push({ id, name, subtitle, techniques: [] });
+      }
+
+      markDirty();
+      renderTable();
+      populateCategoryFilter();
+      closeModal('category-modal');
+      setStatus(editingCategory !== null ? 'Category updated' : 'Category added', 'success');
+    }
+
+    function deleteCategory() {
+      if (editingCategory === null) return;
+      const cat = data.categories[editingCategory];
+      if (cat.techniques.length > 0) {
+        alert('Cannot delete a category that still has techniques. Move or delete them first.');
+        return;
+      }
+      if (!confirm('Delete category "' + cat.name + '"?')) return;
+      data.categories.splice(editingCategory, 1);
+      editingCategory = null;
+      markDirty();
+      renderTable();
+      populateCategoryFilter();
+      closeModal('category-modal');
+      setStatus('Category deleted', 'success');
+    }
+
+    // ==================== VALIDATION ====================
+    function validate() {
+      const errors = [];
+      const seenIds = new Set();
+      const allIds = getAllTechniqueIds();
+
+      for (const cat of data.categories) {
+        if (!cat.id || !cat.name) {
+          errors.push('Category missing id or name');
+        }
+        for (const t of cat.techniques) {
+          if (!t.id) errors.push(`Technique in "${cat.name}" has no ID`);
+          if (!t.name) errors.push(`Technique "${t.id}" has no name`);
+          if (seenIds.has(t.id)) errors.push(`Duplicate technique ID: "${t.id}"`);
+          seenIds.add(t.id);
+
+          if (t.category !== cat.id) {
+            errors.push(`"${t.id}" has category "${t.category}" but is in "${cat.id}"`);
+          }
+
+          if (t.related) {
+            for (const r of t.related) {
+              if (r && !allIds.includes(r)) {
+                errors.push(`"${t.id}" references unknown related technique "${r}"`);
+              }
+            }
+          }
+
+          if (t.videos) {
+            for (const v of t.videos) {
+              if (!v.id) errors.push(`"${t.id}" has a video with no Video ID`);
+            }
+          }
+        }
+      }
+
+      return errors;
+    }
+
+    // ==================== EXPORT JSON ====================
+    function exportJson() {
+      const json = JSON.stringify(data, null, 2);
+      const blob = new Blob([json + '\n'], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'techniques.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      setStatus('Exported techniques.json', 'success');
+    }
+
+    // ==================== GITHUB SAVE ====================
+    function loadSettings() {
+      const s = JSON.parse(localStorage.getItem('te-settings') || '{}');
+      document.getElementById('set-repo').value = s.repo || '';
+      document.getElementById('set-branch').value = s.branch || 'main';
+      document.getElementById('set-path').value = s.path || 'techniques.json';
+      document.getElementById('set-token').value = s.token || '';
+    }
+
+    function saveSettings() {
+      const s = {
+        repo: document.getElementById('set-repo').value.trim(),
+        branch: document.getElementById('set-branch').value.trim() || 'main',
+        path: document.getElementById('set-path').value.trim() || 'techniques.json',
+        token: document.getElementById('set-token').value.trim()
+      };
+      localStorage.setItem('te-settings', JSON.stringify(s));
+      closeModal('settings-modal');
+      setStatus('Settings saved', 'success');
+    }
+
+    function getSettings() {
+      return JSON.parse(localStorage.getItem('te-settings') || '{}');
+    }
+
+    async function fetchFileSha() {
+      const s = getSettings();
+      if (!s.repo || !s.token) return null;
+      try {
+        const resp = await fetch(`https://api.github.com/repos/${s.repo}/contents/${s.path}?ref=${s.branch || 'main'}`, {
+          headers: { 'Authorization': 'token ' + s.token, 'Accept': 'application/vnd.github.v3+json' }
+        });
+        if (!resp.ok) return null;
+        const d = await resp.json();
+        return d.sha;
+      } catch { return null; }
+    }
+
+    async function saveToGitHub() {
+      // Validate first
+      const errors = validate();
+      if (errors.length) {
+        document.getElementById('validation-list').innerHTML = errors.map(e => `<li>${esc(e)}</li>`).join('');
+        openModal('validation-modal');
+        return;
+      }
+
+      const s = getSettings();
+      if (!s.repo || !s.token) {
+        openModal('settings-modal');
+        setStatus('Configure GitHub settings first', 'error');
+        return;
+      }
+
+      setStatus('Fetching current file SHA...', '');
+
+      // Get current SHA for conflict detection
+      const currentSha = await fetchFileSha();
+      if (!currentSha) {
+        setStatus('Could not fetch file SHA. Check settings.', 'error');
+        return;
+      }
+
+      // If we already have a SHA and it changed, warn about conflict
+      if (fileSha && currentSha !== fileSha) {
+        alert('Conflict detected! The file has been modified on GitHub since you loaded it. Please reload the page and re-apply your changes.');
+        setStatus('Conflict detected - reload needed', 'error');
+        return;
+      }
+
+      fileSha = currentSha;
+
+      // Generate diff
+      const newJson = JSON.stringify(data, null, 2);
+      const diff = generateDiff(originalJson, newJson);
+      document.getElementById('diff-view').innerHTML = diff;
+
+      // Auto-generate commit message
+      document.getElementById('commit-msg').value = generateCommitMessage();
+
+      openModal('diff-modal');
+    }
+
+    async function confirmSave() {
+      const s = getSettings();
+      const msg = document.getElementById('commit-msg').value.trim() || 'Update techniques.json';
+      const newJson = JSON.stringify(data, null, 2) + '\n';
+      const content = btoa(unescape(encodeURIComponent(newJson)));
+
+      closeModal('diff-modal');
+      setStatus('Saving to GitHub...', '');
+
+      try {
+        const resp = await fetch(`https://api.github.com/repos/${s.repo}/contents/${s.path}`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': 'token ' + s.token,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: msg,
+            content: content,
+            sha: fileSha,
+            branch: s.branch || 'main'
+          })
+        });
+
+        if (!resp.ok) {
+          const err = await resp.json();
+          if (resp.status === 409) {
+            setStatus('Conflict! File was modified. Reload page.', 'error');
+          } else {
+            setStatus('Save failed: ' + (err.message || resp.status), 'error');
+          }
+          return;
+        }
+
+        const result = await resp.json();
+        fileSha = result.content.sha;
+        originalJson = JSON.stringify(data, null, 2);
+        dirty = false;
+        updateDirtyIndicator();
+        setStatus('Saved! Commit: ' + result.commit.sha.substring(0, 7), 'success');
+      } catch (e) {
+        setStatus('Network error: ' + e.message, 'error');
+      }
+    }
+
+    function generateCommitMessage() {
+      const newJson = JSON.stringify(data, null, 2);
+      if (originalJson === newJson) return 'No changes';
+
+      // Try to summarize
+      let orig, curr;
+      try { orig = JSON.parse(originalJson); } catch { return 'Update techniques.json'; }
+      curr = data;
+
+      const origIds = new Set();
+      for (const c of orig.categories) for (const t of c.techniques) origIds.add(t.id);
+      const currIds = new Set();
+      for (const c of curr.categories) for (const t of c.techniques) currIds.add(t.id);
+
+      const added = [...currIds].filter(id => !origIds.has(id));
+      const removed = [...origIds].filter(id => !currIds.has(id));
+
+      const parts = [];
+      if (added.length) parts.push('add ' + added.join(', '));
+      if (removed.length) parts.push('remove ' + removed.join(', '));
+      if (!parts.length) parts.push('update techniques');
+
+      return 'Update techniques.json: ' + parts.join('; ');
+    }
+
+    // ==================== DIFF ====================
+    function generateDiff(oldStr, newStr) {
+      const oldLines = oldStr.split('\n');
+      const newLines = newStr.split('\n');
+
+      // Simple line-by-line diff
+      const maxLen = Math.max(oldLines.length, newLines.length);
+      let html = '';
+      let contextBefore = 3;
+      let contextAfter = 3;
+
+      // Find changed ranges
+      const changes = [];
+      for (let i = 0; i < maxLen; i++) {
+        if ((oldLines[i] || '') !== (newLines[i] || '')) {
+          changes.push(i);
+        }
+      }
+
+      if (!changes.length) {
+        return '<span class="diff-ctx">No changes detected.</span>';
+      }
+
+      // Build ranges with context
+      const ranges = [];
+      let start = Math.max(0, changes[0] - contextBefore);
+      let end = Math.min(maxLen - 1, changes[0] + contextAfter);
+
+      for (let c = 1; c < changes.length; c++) {
+        if (changes[c] <= end + contextBefore + 1) {
+          end = Math.min(maxLen - 1, changes[c] + contextAfter);
+        } else {
+          ranges.push([start, end]);
+          start = Math.max(0, changes[c] - contextBefore);
+          end = Math.min(maxLen - 1, changes[c] + contextAfter);
+        }
+      }
+      ranges.push([start, end]);
+
+      for (let r = 0; r < ranges.length; r++) {
+        const [s, e] = ranges[r];
+        if (r > 0) html += '<span class="diff-sep">...</span>\n';
+        for (let i = s; i <= e; i++) {
+          const ol = oldLines[i] || '';
+          const nl = newLines[i] || '';
+          if (ol === nl) {
+            html += `<span class="diff-ctx"> ${escHtml(ol)}</span>\n`;
+          } else {
+            if (ol) html += `<span class="diff-del">-${escHtml(ol)}</span>\n`;
+            if (nl) html += `<span class="diff-add">+${escHtml(nl)}</span>\n`;
+          }
+        }
+      }
+
+      return html;
+    }
+
+    // ==================== DIRTY / STATUS ====================
+    function markDirty() {
+      dirty = true;
+      updateDirtyIndicator();
+    }
+
+    function updateDirtyIndicator() {
+      document.getElementById('dirty-dot').classList.toggle('show', dirty);
+      document.title = (dirty ? '* ' : '') + 'Technique Editor - Fowlerville Wrestling';
+    }
+
+    function setStatus(msg, type) {
+      const el = document.getElementById('status-msg');
+      el.textContent = msg;
+      el.className = 'tb-status' + (type ? ' ' + type : '');
+      if (type) setTimeout(() => { if (el.textContent === msg) el.textContent = ''; }, 5000);
+    }
+
+    // ==================== MODALS ====================
+    function openModal(id) {
+      document.getElementById(id).classList.add('active');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+
+    // Close modal on overlay click
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', e => {
+        if (e.target === overlay) overlay.classList.remove('active');
+      });
+    });
+
+    // ==================== HELPERS ====================
+    function esc(s) {
+      if (s == null) return '';
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    function escHtml(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    // ==================== EVENT LISTENERS ====================
+    document.getElementById('search-input').addEventListener('input', renderTable);
+    document.getElementById('category-filter').addEventListener('change', renderTable);
+    document.getElementById('btn-add-technique').addEventListener('click', addTechnique);
+    document.getElementById('btn-add-category').addEventListener('click', addCategory);
+    document.getElementById('btn-save').addEventListener('click', saveToGitHub);
+    document.getElementById('btn-export').addEventListener('click', exportJson);
+    document.getElementById('btn-settings').addEventListener('click', () => openModal('settings-modal'));
+    document.getElementById('btn-save-settings').addEventListener('click', saveSettings);
+    document.getElementById('btn-save-category').addEventListener('click', saveCategory);
+    document.getElementById('btn-delete-category').addEventListener('click', deleteCategory);
+    document.getElementById('btn-close-detail').addEventListener('click', closeDetail);
+    document.getElementById('btn-cancel-detail').addEventListener('click', cancelDetail);
+    document.getElementById('btn-apply-detail').addEventListener('click', applyDetail);
+    document.getElementById('btn-delete-technique').addEventListener('click', deleteTechnique);
+    document.getElementById('btn-confirm-save').addEventListener('click', confirmSave);
+
+    // Beforeunload warning
+    window.addEventListener('beforeunload', e => {
+      if (dirty) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', e => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        saveToGitHub();
+      }
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
+        if (document.getElementById('detail-panel').classList.contains('open') &&
+            !document.querySelector('.modal-overlay.active')) {
+          closeDetail();
+        }
+      }
+    });
+
+    // ==================== BOOT ====================
+    init();
+  </script>
+</body>
+</html>
