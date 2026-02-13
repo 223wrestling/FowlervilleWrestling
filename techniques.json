@@ -34,10 +34,10 @@
               "url": "https://www.youtube.com/watch?v=dCK8316H-Ao"
             },
             {
-              "id": "TdQPBKnEPBY",
-              "title": "Wrestling Moves KOLAT.COM Clearing Collar Tie",
-              "channel": "Cary Kolat",
-              "url": "https://www.youtube.com/watch?v=TdQPBKnEPBY"
+              "id": "zxstwIzcb-U",
+              "title": "Constantly Pull and Snap the Opponent - Shayne Van Ness",
+              "channel": "Wrestling Rabbit Hole",
+              "url": "https://www.youtube.com/watch?v=zxstwIzcb-U"
             }
           ]
         },
@@ -64,7 +64,7 @@
           "videos": [
             {
               "id": "QD08BC03woQ",
-              "title": "Collar Tie\ud83d\udca5Rip Defense\ud83d\ude09\ud83d\udca5",
+              "title": "Collar Tie💥Rip Defense😉💥",
               "channel": "Cary Kolat",
               "url": "https://www.youtube.com/watch?v=QD08BC03woQ"
             },
@@ -99,7 +99,7 @@
           "videos": [
             {
               "id": "VeqVx1Hvcb4",
-              "title": "Snapping\ud83d\udca51 Hand Post\ud83d\udca5#highschoolwrestling #collegewrestling #freestylewrestling #mma #bjj #wrestling",
+              "title": "Snapping💥1 Hand Post💥#highschoolwrestling #collegewrestling #freestylewrestling #mma #bjj #wrestling",
               "channel": "Cary Kolat",
               "url": "https://www.youtube.com/watch?v=VeqVx1Hvcb4"
             },
@@ -209,7 +209,7 @@
             {
               "id": "Kk0Th7DEX48",
               "title": "Single Leg Defense Basics - The power of the Whizzer (Overhook)",
-              "channel": "WrestlingTournaments\u2024com",
+              "channel": "WrestlingTournaments․com",
               "url": "https://www.youtube.com/watch?v=Kk0Th7DEX48"
             }
           ]
@@ -1129,7 +1129,7 @@
           "videos": [
             {
               "id": "U0cns7k-9f4",
-              "title": "Cement\u26a1\ufe0fJob\u26a1\ufe0fElevator\u2935\ufe0f #freestylewrestling #collegewrestling #wrestling #highschoolwrestling #mma",
+              "title": "Cement⚡️Job⚡️Elevator⤵️ #freestylewrestling #collegewrestling #wrestling #highschoolwrestling #mma",
               "channel": "Cary Kolat",
               "url": "https://www.youtube.com/watch?v=U0cns7k-9f4"
             },
@@ -1994,7 +1994,7 @@
           "videos": [
             {
               "id": "cdTZDXPWrh0",
-              "title": "Push Back Sit\ud83d\udca5Switch\ud83d\udca5\ud83e\udd29",
+              "title": "Push Back Sit💥Switch💥🤩",
               "channel": "Cary Kolat",
               "url": "https://www.youtube.com/watch?v=cdTZDXPWrh0"
             },
@@ -2187,133 +2187,133 @@
   ],
   "flowcharts": [
     {
-  "id": "underhook-series",
-  "name": "Underhook Series",
-  "slide": 12,
-  "file": "flowcharts/underhook.html",
-  "rootNode": "underhook",
-  "nodes": [
-    {
-      "id": "underhook",
-      "label": "Underhook",
-      "type": "root"
+      "id": "underhook-series",
+      "name": "Underhook Series",
+      "slide": 12,
+      "file": "flowcharts/underhook.html",
+      "rootNode": "underhook",
+      "nodes": [
+        {
+          "id": "underhook",
+          "label": "Underhook",
+          "type": "root"
+        },
+        {
+          "id": "throw-by",
+          "label": "Throw-by",
+          "type": "action"
+        },
+        {
+          "id": "upgrade-bodylock",
+          "label": "Upgrade to Bodylock",
+          "type": "action"
+        },
+        {
+          "id": "front-headlock-uh",
+          "label": "Front Headlock",
+          "type": "action"
+        },
+        {
+          "id": "whip-over-drop",
+          "label": "Whip-Over/Drop-Whip",
+          "type": "action"
+        },
+        {
+          "id": "snatch-single-uh",
+          "label": "Snatch Single",
+          "type": "action"
+        },
+        {
+          "id": "knee-tap-uh",
+          "label": "Knee Tap",
+          "type": "action"
+        },
+        {
+          "id": "go-behind-tb",
+          "label": "Go-Behind",
+          "type": "finish"
+        },
+        {
+          "id": "bodylock-sub",
+          "label": "Bodylock",
+          "type": "finish"
+        },
+        {
+          "id": "near-snatch",
+          "label": "Near Side/Snatch Single",
+          "type": "finish"
+        },
+        {
+          "id": "go-behind-bl",
+          "label": "Go-Behind",
+          "type": "finish"
+        },
+        {
+          "id": "throw-bl",
+          "label": "Throw",
+          "type": "finish"
+        },
+        {
+          "id": "front-hl-series",
+          "label": "Front Headlock Series",
+          "type": "link"
+        }
+      ],
+      "edges": [
+        {
+          "from": "underhook",
+          "to": "throw-by"
+        },
+        {
+          "from": "underhook",
+          "to": "upgrade-bodylock"
+        },
+        {
+          "from": "underhook",
+          "to": "front-headlock-uh"
+        },
+        {
+          "from": "underhook",
+          "to": "whip-over-drop"
+        },
+        {
+          "from": "underhook",
+          "to": "snatch-single-uh"
+        },
+        {
+          "from": "underhook",
+          "to": "knee-tap-uh"
+        },
+        {
+          "from": "throw-by",
+          "to": "go-behind-tb"
+        },
+        {
+          "from": "throw-by",
+          "to": "bodylock-sub"
+        },
+        {
+          "from": "throw-by",
+          "to": "near-snatch"
+        },
+        {
+          "from": "upgrade-bodylock",
+          "to": "go-behind-bl"
+        },
+        {
+          "from": "upgrade-bodylock",
+          "to": "throw-bl"
+        },
+        {
+          "from": "front-headlock-uh",
+          "to": "front-hl-series"
+        },
+        {
+          "from": "bodylock-sub",
+          "to": "upgrade-bodylock"
+        }
+      ]
     },
-    {
-      "id": "throw-by",
-      "label": "Throw-by",
-      "type": "action"
-    },
-    {
-      "id": "upgrade-bodylock",
-      "label": "Upgrade to Bodylock",
-      "type": "action"
-    },
-    {
-      "id": "front-headlock-uh",
-      "label": "Front Headlock",
-      "type": "action"
-    },
-    {
-      "id": "whip-over-drop",
-      "label": "Whip-Over/Drop-Whip",
-      "type": "action"
-    },
-    {
-      "id": "snatch-single-uh",
-      "label": "Snatch Single",
-      "type": "action"
-    },
-    {
-      "id": "knee-tap-uh",
-      "label": "Knee Tap",
-      "type": "action"
-    },
-    {
-      "id": "go-behind-tb",
-      "label": "Go-Behind",
-      "type": "finish"
-    },
-    {
-      "id": "bodylock-sub",
-      "label": "Bodylock",
-      "type": "finish"
-    },
-    {
-      "id": "near-snatch",
-      "label": "Near Side/Snatch Single",
-      "type": "finish"
-    },
-    {
-      "id": "go-behind-bl",
-      "label": "Go-Behind",
-      "type": "finish"
-    },
-    {
-      "id": "throw-bl",
-      "label": "Throw",
-      "type": "finish"
-    },
-    {
-      "id": "front-hl-series",
-      "label": "Front Headlock Series",
-      "type": "link"
-    }
-  ],
-  "edges": [
-    {
-      "from": "underhook",
-      "to": "throw-by"
-    },
-    {
-      "from": "underhook",
-      "to": "upgrade-bodylock"
-    },
-    {
-      "from": "underhook",
-      "to": "front-headlock-uh"
-    },
-    {
-      "from": "underhook",
-      "to": "whip-over-drop"
-    },
-    {
-      "from": "underhook",
-      "to": "snatch-single-uh"
-    },
-    {
-      "from": "underhook",
-      "to": "knee-tap-uh"
-    },
-    {
-      "from": "throw-by",
-      "to": "go-behind-tb"
-    },
-    {
-      "from": "throw-by",
-      "to": "bodylock-sub"
-    },
-    {
-      "from": "throw-by",
-      "to": "near-snatch"
-    },
-    {
-      "from": "upgrade-bodylock",
-      "to": "go-behind-bl"
-    },
-    {
-      "from": "upgrade-bodylock",
-      "to": "throw-bl"
-    },
-    {
-      "from": "front-headlock-uh",
-      "to": "front-hl-series"
-    },
-    {
-      "from": "bodylock-sub",
-      "to": "upgrade-bodylock"
-    }
-  ]
-},
     {
       "id": "collar-tie-series",
       "name": "Collar Tie Series",
@@ -2919,102 +2919,102 @@
         }
       ]
     },
-{
-  "id": "front-headlock-series",
-  "name": "Front Headlock Offense",
-  "slide": 18,
-  "file": "flowcharts/front-headlock.html",
-  "rootNode": "front-hl-root",
-  "nodes": [
     {
-      "id": "front-hl-root",
-      "label": "Front Headlock (Offense)",
-      "type": "root"
-    },
-    {
-      "id": "head-in-hole",
-      "label": "Head in the Hole",
-      "type": "action"
-    },
-    {
-      "id": "bounce-fh",
-      "label": "Bounce",
-      "type": "action"
-    },
-    {
-      "id": "gator-roll-fh",
-      "label": "Gator Roll",
-      "type": "action"
-    },
-    {
-      "id": "go-behind-fh",
-      "label": "Go-Behind",
-      "type": "action"
-    },
-    {
-      "id": "cement-job-fh",
-      "label": "Cement Job",
-      "type": "action"
-    },
-    {
-      "id": "shuck-throw-fh",
-      "label": "Shuck or Throw-By",
-      "type": "action"
-    },
-    {
-      "id": "near-cradle-fh",
-      "label": "Near Side Cradle",
-      "type": "finish"
-    },
-    {
-      "id": "arm-block-fh",
-      "label": "Arm Block",
-      "type": "finish"
-    },
-    {
-      "id": "assassin-fh",
-      "label": "Assassin",
-      "type": "finish"
+      "id": "front-headlock-series",
+      "name": "Front Headlock Offense",
+      "slide": 18,
+      "file": "flowcharts/front-headlock.html",
+      "rootNode": "front-hl-root",
+      "nodes": [
+        {
+          "id": "front-hl-root",
+          "label": "Front Headlock (Offense)",
+          "type": "root"
+        },
+        {
+          "id": "head-in-hole",
+          "label": "Head in the Hole",
+          "type": "action"
+        },
+        {
+          "id": "bounce-fh",
+          "label": "Bounce",
+          "type": "action"
+        },
+        {
+          "id": "gator-roll-fh",
+          "label": "Gator Roll",
+          "type": "action"
+        },
+        {
+          "id": "go-behind-fh",
+          "label": "Go-Behind",
+          "type": "action"
+        },
+        {
+          "id": "cement-job-fh",
+          "label": "Cement Job",
+          "type": "action"
+        },
+        {
+          "id": "shuck-throw-fh",
+          "label": "Shuck or Throw-By",
+          "type": "action"
+        },
+        {
+          "id": "near-cradle-fh",
+          "label": "Near Side Cradle",
+          "type": "finish"
+        },
+        {
+          "id": "arm-block-fh",
+          "label": "Arm Block",
+          "type": "finish"
+        },
+        {
+          "id": "assassin-fh",
+          "label": "Assassin",
+          "type": "finish"
+        }
+      ],
+      "edges": [
+        {
+          "from": "front-hl-root",
+          "to": "head-in-hole"
+        },
+        {
+          "from": "front-hl-root",
+          "to": "bounce-fh"
+        },
+        {
+          "from": "front-hl-root",
+          "to": "gator-roll-fh"
+        },
+        {
+          "from": "front-hl-root",
+          "to": "go-behind-fh"
+        },
+        {
+          "from": "front-hl-root",
+          "to": "cement-job-fh"
+        },
+        {
+          "from": "front-hl-root",
+          "to": "shuck-throw-fh"
+        },
+        {
+          "from": "cement-job-fh",
+          "to": "near-cradle-fh"
+        },
+        {
+          "from": "shuck-throw-fh",
+          "to": "arm-block-fh"
+        },
+        {
+          "from": "gator-roll-fh",
+          "to": "assassin-fh"
+        }
+      ]
     }
-  ],
-  "edges": [
-    {
-      "from": "front-hl-root",
-      "to": "head-in-hole"
-    },
-    {
-      "from": "front-hl-root",
-      "to": "bounce-fh"
-    },
-    {
-      "from": "front-hl-root",
-      "to": "gator-roll-fh"
-    },
-    {
-      "from": "front-hl-root",
-      "to": "go-behind-fh"
-    },
-    {
-      "from": "front-hl-root",
-      "to": "cement-job-fh"
-    },
-    {
-      "from": "front-hl-root",
-      "to": "shuck-throw-fh"
-    },
-    {
-      "from": "cement-job-fh",
-      "to": "near-cradle-fh"
-    },
-    {
-      "from": "shuck-throw-fh",
-      "to": "arm-block-fh"
-    },
-    {
-      "from": "gator-roll-fh",
-      "to": "assassin-fh"
-    }
-  ]
-}
   ]
 }
