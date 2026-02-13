@@ -13,7 +13,8 @@ A self-contained wrestling curriculum website for Fowlerville Wrestling Club. Pu
 - `flowcharts/builder.html` - Visual flowchart builder/editor with preview mode
 - `flowcharts/index.html` - Flowchart listing page with links to dynamic viewer
 - `flowcharts/*.html` - Legacy static flowcharts (kept for reference, no longer linked)
-- `hs/coaches/index.html` - Coaches area with Flowchart Editor section
+- `hs/coaches/index.html` - Coaches area with Flowchart Editor and Technique Editor sections
+- `hs/coaches/editor.html` - Technique editor with table view, form editing, GitHub API save
 - `workers/coaches-auth.js` - Cloudflare Worker for basic auth on `/hs/coaches/*`
 - `wrangler.toml` - Cloudflare Worker config
 - `gen_flowcharts.py` - Legacy Python generator (no longer needed, kept for reference)
@@ -54,6 +55,7 @@ Search these channels first when looking for technique videos:
 - `flowcharts/builder.html` is the visual editor with: drag to reposition, technique name autocomplete, Export/Import JSON, Preview mode with technique popups
 - YouTube videos searched via `curl` to YouTube search results, parsed with Python JSON extraction
 - Technique descriptions written as coaching points (starting position, key steps, common mistakes)
+- `hs/coaches/editor.html` is a self-contained technique editor with: two-panel table+form layout, array editors for keyPoints/commonMistakes/related/videos, GitHub API save with SHA conflict detection and diff preview, export JSON fallback, validation, and settings stored in localStorage
 
 ## Flowchart Editing Workflow
 1. **Coaches Area** → **Flowchart Editor** → pick a chart (or `builder.html?chart=<id>`)
@@ -77,6 +79,14 @@ Search these channels first when looking for technique videos:
    }
    ```
 4. Add the block to the `"flowcharts"` array in `techniques.json`
+
+## Technique Editing Workflow
+1. **Coaches Area** → **Technique Editor** (or `hs/coaches/editor.html` directly)
+2. Search/filter techniques, click a row to open the detail panel
+3. Edit fields, array items (keyPoints, commonMistakes, related, videos), manage categories
+4. "Apply Changes" writes to in-memory data; "Save to GitHub" commits via API with conflict detection
+5. Requires a GitHub fine-grained personal access token with Contents read/write on the repo
+6. Settings (repo, branch, token) stored in browser localStorage only
 
 ## Video Search Method
 YouTube videos are found by curling YouTube search results and parsing the `ytInitialData` JSON. Preferred channels (Kolat, Iron Faith, Earn Your Gold, Wrestling Rabbit Hole) are prioritized in results.

@@ -32,7 +32,8 @@ Open `http://localhost:8000` in your browser.
 │   ├── index.html           Flowchart listing page
 │   └── *.html               Legacy static flowcharts (kept for reference)
 ├── hs/coaches/
-│   └── index.html           Coaches area (includes Flowchart Editor section)
+│   ├── index.html           Coaches area (Flowchart Editor + Technique Editor)
+│   └── editor.html          Technique editor with GitHub API save
 └── cards.pptx               Original PowerPoint source material
 ```
 
@@ -128,6 +129,24 @@ You can also edit the `"flowcharts"` section of `techniques.json` by hand on Git
 When you click a flowchart node, it looks up the node's label in `techniques.json` to show a popup with description and video. For this to work, the node `label` should match (or be a substring of) a technique `name` in the categories section. The builder's label autocomplete suggests matching technique names to make this easy.
 
 ## Editing Techniques
+
+### Technique Editor (Recommended)
+
+1. Go to the **Coaches Area** → **Technique Editor** (or open `hs/coaches/editor.html` directly)
+2. Browse all techniques in the table view — search by name/description, filter by category
+3. Click a technique row to open the detail panel with form fields for all data
+4. Edit key points, common mistakes, related techniques (with autocomplete), and videos (with YouTube thumbnail preview)
+5. Click **Apply Changes** to save to in-memory data, then **Save to GitHub** to commit
+6. The save uses GitHub's API with SHA-based conflict detection — if someone else edited the file since you loaded it, you'll be warned
+
+**First-time setup:** Click **Settings** in the toolbar and enter:
+- **Owner/Repo**: `223wrestling/FowlervilleWrestling`
+- **Branch**: `main`
+- **Access Token**: A GitHub fine-grained personal access token with **Contents** read/write permission on the repo
+
+You can also use **Export JSON** to download the file and commit manually.
+
+### Editing JSON Directly
 
 Technique data is in the `"categories"` section of `techniques.json`. Each technique has:
 
