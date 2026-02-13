@@ -13,9 +13,13 @@ A self-contained wrestling curriculum website for Fowlerville Wrestling Club. Pu
 - `flowcharts/builder.html` - Visual flowchart builder/editor with preview mode
 - `flowcharts/index.html` - Flowchart listing page with links to dynamic viewer
 - `flowcharts/*.html` - Legacy static flowcharts (kept for reference, no longer linked)
-- `hs/coaches/index.html` - Coaches area with Flowchart Editor and Technique Editor sections
+- `hs/roster.json` - Roster data: wrestlers (name, weight, year, photo) and coaches/staff
+- `hs/coaches/coaches-data.json` - Practice plans, wrestler notes, scouting reports, forms
+- `hs/coaches/index.html` - Coaches area app: editable roster, plans, notes, scouting, forms with Worker API save
 - `hs/coaches/editor.html` - Technique editor with table view, form editing, GitHub API save
-- `workers/coaches-auth.js` - Cloudflare Worker for basic auth on `/hs/coaches/*`
+- `hs/photos/` - Wrestler and coach photos (uploaded via roster editor)
+- `hs/coaches/docs/` - Uploaded PDFs, practice plans, forms, documents
+- `workers/coaches-auth.js` - Cloudflare Worker: basic auth + API proxy (save JSON, upload/delete files via GitHub API)
 - `wrangler.toml` - Cloudflare Worker config
 - `gen_flowcharts.py` - Legacy Python generator (no longer needed, kept for reference)
 - `CNAME` - Custom domain for GitHub Pages
@@ -45,8 +49,8 @@ Search these channels first when looking for technique videos:
 ## Hosting
 - **GitHub Pages** serves the static site from the `main` branch
 - **Cloudflare** handles DNS for `fowlervillewrestling.com` and runs the auth Worker
-- **Cloudflare Worker** (`workers/coaches-auth.js`) protects `/hs/coaches/*` with HTTP basic auth
-- Auth credentials (`AUTH_USER`, `AUTH_PASS`) stored as Cloudflare Worker secrets, not in source
+- **Cloudflare Worker** (`workers/coaches-auth.js`) protects `/hs/coaches/*` with HTTP basic auth and proxies GitHub API writes
+- Worker secrets: `AUTH_USER`, `AUTH_PASS` (basic auth), `GITHUB_TOKEN` (fine-grained PAT), `GITHUB_REPO` (e.g. `user/repo`)
 
 ## Key Design Decisions
 - Single `techniques.html` with hash routing (not one file per technique)
@@ -87,6 +91,22 @@ Search these channels first when looking for technique videos:
 4. "Apply Changes" writes to in-memory data; "Save to GitHub" commits via API with conflict detection
 5. Requires a GitHub fine-grained personal access token with Contents read/write on the repo
 6. Settings (repo, branch, token) stored in browser localStorage only
+
+## Coaches Area Workflow
+The coaches area (`hs/coaches/index.html`) is a full editing app behind Cloudflare basic auth:
+
+1. **Roster** — Add/edit/delete wrestlers and coaches, upload photos, CSV import/export
+2. **Practice Plans** — Create plans with drill arrays, upload PDF attachments
+3. **Wrestler Notes** — Table with roster autocomplete for name/weight
+4. **Scouting Reports** — Opponent data with CSV import/export per report
+5. **Forms & Documents** — Upload PDFs/docs to `hs/coaches/docs/`, auto-delete on remove
+
+**Save flow:** Coach edits data → clicks "Save to GitHub" → `POST /hs/coaches/api/save` → Worker (already authenticated via basic auth) uses `GITHUB_TOKEN` to commit via GitHub API → returns success/error. No browser-side API tokens needed.
+
+**Worker API endpoints:**
+- `POST /hs/coaches/api/save` — Save JSON file (`hs/roster.json` or `hs/coaches/coaches-data.json`)
+- `POST /hs/coaches/api/upload` — Upload file to `hs/photos/*` or `hs/coaches/docs/*`
+- `DELETE /hs/coaches/api/file` — Delete uploaded file from repo
 
 ## Video Search Method
 YouTube videos are found by curling YouTube search results and parsing the `ytInitialData` JSON. Preferred channels (Kolat, Iron Faith, Earn Your Gold, Wrestling Rabbit Hole) are prioritized in results.

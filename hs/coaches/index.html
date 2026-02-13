@@ -5,6 +5,262 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Coaches Area - Fowlerville Wrestling</title>
   <link rel="stylesheet" href="../../css/styles.css">
+  <style>
+    /* Coaches area app styles */
+    .section-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .section-bar .btn-group { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 100;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 2rem;
+      overflow-y: auto;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-panel {
+      background: white;
+      border-radius: var(--radius);
+      width: 100%;
+      max-width: 700px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      margin: auto;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-header h3 { color: var(--primary); margin: 0; }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-light);
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+    }
+    .modal-close:hover { background: #eee; }
+    .modal-body { padding: 1.5rem; max-height: 70vh; overflow-y: auto; }
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+    }
+
+    /* Form fields */
+    .form-group { margin-bottom: 1rem; }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 0.3rem;
+      color: var(--text);
+    }
+    .form-control {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-family: inherit;
+    }
+    .form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(43,27,107,0.1); }
+    textarea.form-control { resize: vertical; min-height: 60px; }
+    select.form-control { background: white; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+
+    /* Array editor */
+    .array-editor { margin-top: 0.5rem; }
+    .array-item {
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      background: #f8f9fa;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+    .array-item .array-fields { flex: 1; display: flex; flex-direction: column; gap: 0.4rem; }
+    .array-item .array-fields .form-row { margin-bottom: 0; }
+    .array-item input, .array-item textarea { font-size: 0.85rem; padding: 0.4rem 0.6rem; }
+    .array-remove {
+      background: none;
+      border: none;
+      color: #dc3545;
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 0.2rem;
+      flex-shrink: 0;
+    }
+    .array-remove:hover { color: #a71d2a; }
+    .array-add {
+      font-size: 0.8rem;
+      padding: 0.3rem 0.8rem;
+      background: white;
+      border: 1px dashed var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+      color: var(--primary);
+    }
+    .array-add:hover { border-color: var(--primary); background: #f0f4f8; }
+
+    /* File upload */
+    .file-upload-area {
+      border: 2px dashed var(--border);
+      border-radius: 4px;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      transition: border-color 0.2s;
+    }
+    .file-upload-area:hover { border-color: var(--primary); }
+    .file-upload-area.has-file { border-color: var(--accent); color: var(--text); }
+    .file-upload-area input[type="file"] { display: none; }
+
+    /* Status toast */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius);
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 500;
+      z-index: 200;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { background: #28a745; }
+    .toast.error { background: #dc3545; }
+
+    /* Card actions */
+    .card-actions {
+      display: flex;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+    }
+    .btn-edit, .btn-delete {
+      padding: 0.25rem 0.6rem;
+      font-size: 0.75rem;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: white;
+      font-weight: 500;
+    }
+    .btn-edit:hover { background: #e8eef4; color: var(--primary); }
+    .btn-delete { color: #dc3545; }
+    .btn-delete:hover { background: #f8d7da; border-color: #dc3545; }
+
+    /* Photo preview */
+    .photo-preview {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #e8eef4;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .photo-placeholder {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: #e8eef4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--text-light);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Inline roster cards */
+    .roster-card-edit {
+      position: relative;
+    }
+    .roster-card-edit .card-actions {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      margin: 0;
+    }
+
+    /* Scouting wrestler rows in modal */
+    .scout-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 80px 1fr 1fr;
+      gap: 0.4rem;
+      align-items: center;
+      margin-bottom: 0.4rem;
+    }
+    .scout-row input { font-size: 0.8rem; padding: 0.35rem 0.5rem; }
+    @media (max-width: 700px) {
+      .scout-row { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* Attachment list */
+    .attachment-list { list-style: none; padding: 0; margin: 0.5rem 0; }
+    .attachment-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.3rem 0;
+      font-size: 0.85rem;
+    }
+    .attachment-list li a { color: var(--primary); }
+    .attachment-remove {
+      background: none;
+      border: none;
+      color: #dc3545;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    /* Loading spinner */
+    .spinner {
+      display: inline-block;
+      width: 16px; height: 16px;
+      border: 2px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      vertical-align: middle;
+      margin-right: 0.3rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Confirm dialog */
+    .confirm-text { font-size: 0.95rem; line-height: 1.6; }
+    .btn-danger { background: #dc3545; color: white; border: none; }
+    .btn-danger:hover { background: #c82333; }
+    .btn-secondary { background: #6c757d; color: white; border: none; }
+    .btn-secondary:hover { background: #5a6268; }
+  </style>
 </head>
 <body>
   <script>window.NAV_BASE = '../../';</script>
@@ -13,14 +269,19 @@
   <div class="container">
     <a href="../index.html" class="back-link">&larr; High School</a>
     <h1 style="color:var(--primary);margin-bottom:0.25rem;">Coaches Area</h1>
-    <p class="text-muted mb-3">Practice plans, wrestler notes, scouting reports, and forms.</p>
+    <p class="text-muted mb-3">Manage roster, practice plans, wrestler notes, scouting reports, and forms.</p>
 
     <!-- Navigation Cards -->
     <div class="coaches-grid" id="nav-cards">
+      <div class="coach-nav-card" style="cursor:pointer;" onclick="showSection('roster')">
+        <div class="icon">&#128101;</div>
+        <h3>Roster</h3>
+        <p>Manage wrestlers and coaching staff.</p>
+      </div>
       <div class="coach-nav-card" style="cursor:pointer;" onclick="showSection('plans')">
         <div class="icon">&#128203;</div>
         <h3>Practice Plans</h3>
-        <p>View and manage weekly practice plans.</p>
+        <p>Create and manage practice plans.</p>
       </div>
       <div class="coach-nav-card" style="cursor:pointer;" onclick="showSection('notes')">
         <div class="icon">&#128221;</div>
@@ -49,37 +310,90 @@
       </a>
     </div>
 
+    <!-- Roster Section -->
+    <div id="section-roster" class="coach-section" style="display:none;">
+      <div class="section-bar">
+        <h2 class="section-title" style="margin:0;border:none;padding:0;">Roster</h2>
+        <div class="btn-group">
+          <button class="btn btn-sm btn-primary" onclick="openRosterModal('wrestler')">+ Wrestler</button>
+          <button class="btn btn-sm btn-primary" onclick="openRosterModal('coach')">+ Coach</button>
+          <button class="btn btn-sm btn-outline" onclick="exportRosterCSV()">Export CSV</button>
+          <label class="btn btn-sm btn-outline" style="margin:0;">Import CSV<input type="file" accept=".csv" style="display:none;" onchange="importRosterCSV(this)"></label>
+        </div>
+      </div>
+      <div id="roster-season" style="margin-bottom:1rem;"></div>
+      <h3 style="color:var(--primary);margin-bottom:0.75rem;">Wrestlers</h3>
+      <div id="roster-wrestlers" class="roster-grid"></div>
+      <h3 style="color:var(--primary);margin:1.5rem 0 0.75rem;">Coaches &amp; Staff</h3>
+      <div id="roster-coaches" class="roster-grid"></div>
+    </div>
+
     <!-- Practice Plans Section -->
     <div id="section-plans" class="coach-section" style="display:none;">
-      <h2 class="section-title">Practice Plans</h2>
+      <div class="section-bar">
+        <h2 class="section-title" style="margin:0;border:none;padding:0;">Practice Plans</h2>
+        <div class="btn-group">
+          <button class="btn btn-sm btn-primary" onclick="openPlanModal()">+ Add Plan</button>
+        </div>
+      </div>
       <div id="plans-content"></div>
     </div>
 
     <!-- Wrestler Notes Section -->
     <div id="section-notes" class="coach-section" style="display:none;">
-      <h2 class="section-title">Wrestler Notes</h2>
+      <div class="section-bar">
+        <h2 class="section-title" style="margin:0;border:none;padding:0;">Wrestler Notes</h2>
+        <div class="btn-group">
+          <button class="btn btn-sm btn-primary" onclick="openNoteModal()">+ Add Note</button>
+        </div>
+      </div>
       <div id="notes-content"></div>
     </div>
 
     <!-- Scouting Section -->
     <div id="section-scouting" class="coach-section" style="display:none;">
-      <h2 class="section-title">Scouting Reports</h2>
+      <div class="section-bar">
+        <h2 class="section-title" style="margin:0;border:none;padding:0;">Scouting Reports</h2>
+        <div class="btn-group">
+          <button class="btn btn-sm btn-primary" onclick="openScoutModal()">+ Add Report</button>
+        </div>
+      </div>
       <div id="scouting-content"></div>
     </div>
 
     <!-- Forms Section -->
     <div id="section-forms" class="coach-section" style="display:none;">
-      <h2 class="section-title">Forms &amp; Documents</h2>
+      <div class="section-bar">
+        <h2 class="section-title" style="margin:0;border:none;padding:0;">Forms &amp; Documents</h2>
+        <div class="btn-group">
+          <button class="btn btn-sm btn-primary" onclick="openFormModal()">+ Add Form</button>
+        </div>
+      </div>
       <div id="forms-content"></div>
     </div>
 
     <!-- Flowchart Editor Section -->
     <div id="section-flowcharts" class="coach-section" style="display:none;">
       <h2 class="section-title">Flowchart Editor</h2>
-      <p class="text-muted" style="margin-bottom:1rem;">Open a flowchart in the visual builder to rearrange nodes, add techniques, or update connections. Use <strong>Export JSON</strong> to download your changes.</p>
+      <p class="text-muted" style="margin-bottom:1rem;">Open a flowchart in the visual builder to rearrange nodes, add techniques, or update connections.</p>
       <div id="flowcharts-content" class="grid-2"></div>
     </div>
   </div>
+
+  <!-- Modal Container -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h3 id="modal-title"></h3>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-footer" id="modal-footer"></div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
 
   <footer class="site-footer">
     <div class="footer-links">
@@ -92,117 +406,902 @@
   </footer>
 
   <script>
-    let coachData = null;
+    // ========== STATE ==========
+    let rosterData = null;  // from roster.json
+    let coachData = null;   // from coaches-data.json
+    let dirty = { roster: false, coaches: false };
 
+    // ========== API HELPERS ==========
+    async function apiSave(file, content, message) {
+      const resp = await fetch('/hs/coaches/api/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ file, content, message }),
+      });
+      return resp.json();
+    }
+
+    async function apiUpload(file, path) {
+      const form = new FormData();
+      form.append('file', file);
+      form.append('path', path);
+      const resp = await fetch('/hs/coaches/api/upload', {
+        method: 'POST',
+        body: form,
+      });
+      return resp.json();
+    }
+
+    async function apiDelete(filePath) {
+      const resp = await fetch('/hs/coaches/api/file', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ file: filePath }),
+      });
+      return resp.json();
+    }
+
+    // ========== TOAST ==========
+    function showToast(msg, type = 'success') {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast ' + type;
+      requestAnimationFrame(() => t.classList.add('show'));
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    // ========== MODAL ==========
+    function openModal(title, bodyHtml, footerHtml) {
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-body').innerHTML = bodyHtml;
+      document.getElementById('modal-footer').innerHTML = footerHtml;
+      document.getElementById('modal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+    }
+
+    document.getElementById('modal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeModal();
+    });
+
+    // ========== SECTION NAVIGATION ==========
     function showSection(name) {
       document.querySelectorAll('.coach-section').forEach(s => s.style.display = 'none');
       const section = document.getElementById('section-' + name);
       if (section) {
         section.style.display = 'block';
         section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        location.hash = name;
       }
     }
 
-    function renderPlans(plans) {
-      if (!plans.length) return '<p class="text-muted">No practice plans yet.</p>';
-      return plans.map(p => `
+    // ========== SAVE HELPERS ==========
+    async function saveRoster() {
+      const btn = event && event.target;
+      if (btn) { btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Saving...'; }
+      const result = await apiSave('hs/roster.json', rosterData, 'Update roster');
+      if (btn) { btn.disabled = false; btn.textContent = 'Save'; }
+      if (result.ok) {
+        dirty.roster = false;
+        showToast('Roster saved');
+      } else {
+        showToast('Error: ' + result.error, 'error');
+      }
+    }
+
+    async function saveCoachData() {
+      const btn = event && event.target;
+      if (btn) { btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Saving...'; }
+      const result = await apiSave('hs/coaches/coaches-data.json', coachData, 'Update coaches data');
+      if (btn) { btn.disabled = false; btn.textContent = 'Save'; }
+      if (result.ok) {
+        dirty.coaches = false;
+        showToast('Data saved');
+      } else {
+        showToast('Error: ' + result.error, 'error');
+      }
+    }
+
+    // ========== ESCAPE HTML ==========
+    function esc(s) {
+      if (!s) return '';
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    // ========== CSV HELPERS ==========
+    function parseCSV(text) {
+      const lines = text.trim().split('\n');
+      if (lines.length < 2) return [];
+      const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+      return lines.slice(1).map(line => {
+        const vals = [];
+        let current = '';
+        let inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+          if (line[i] === '"') { inQuotes = !inQuotes; }
+          else if (line[i] === ',' && !inQuotes) { vals.push(current.trim()); current = ''; }
+          else { current += line[i]; }
+        }
+        vals.push(current.trim());
+        const obj = {};
+        headers.forEach((h, i) => obj[h] = vals[i] || '');
+        return obj;
+      });
+    }
+
+    function toCSV(headers, rows) {
+      const escape = v => '"' + String(v || '').replace(/"/g, '""') + '"';
+      const lines = [headers.map(escape).join(',')];
+      rows.forEach(r => lines.push(headers.map(h => escape(r[h])).join(',')));
+      return lines.join('\n');
+    }
+
+    function downloadCSV(filename, csvText) {
+      const blob = new Blob([csvText], { type: 'text/csv' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    // ========== CONFIRM DIALOG ==========
+    function confirmAction(msg, onConfirm) {
+      openModal('Confirm', `<p class="confirm-text">${msg}</p>`,
+        `<button class="btn btn-sm btn-secondary" onclick="closeModal()">Cancel</button>
+         <button class="btn btn-sm btn-danger" id="confirm-btn">Delete</button>`);
+      document.getElementById('confirm-btn').onclick = () => { closeModal(); onConfirm(); };
+    }
+
+    // ================================================================
+    // ROSTER SECTION
+    // ================================================================
+    function renderRoster() {
+      if (!rosterData) return;
+      document.getElementById('roster-season').innerHTML = `
+        <span style="font-size:0.9rem;color:var(--text-light);">Season: <strong>${esc(rosterData.season)}</strong></span>
+        <button class="btn btn-sm btn-outline" style="margin-left:0.5rem;" onclick="editSeason()">Edit</button>
+        <button class="btn btn-sm btn-accent" style="margin-left:0.5rem;" onclick="saveRoster()">Save to GitHub</button>`;
+
+      const wrestlers = rosterData.wrestlers || [];
+      document.getElementById('roster-wrestlers').innerHTML = wrestlers.length === 0
+        ? '<p class="text-muted">No wrestlers yet. Click "+ Wrestler" to add.</p>'
+        : wrestlers.map((w, i) => `
+          <div class="roster-card roster-card-edit">
+            <div class="card-actions">
+              <button class="btn-edit" onclick="openRosterModal('wrestler',${i})">Edit</button>
+              <button class="btn-delete" onclick="deleteWrestler(${i})">Del</button>
+            </div>
+            ${w.photo ? `<img class="wrestler-photo photo-preview" src="../../${esc(w.photo)}">` : `<div class="photo-placeholder">&#9899;</div>`}
+            <h3>${esc(w.name)}</h3>
+            <div class="weight-class">${esc(w.weightClass)} lbs</div>
+            <div class="year">${esc(w.year)}</div>
+          </div>`).join('');
+
+      const coaches = rosterData.coaches || [];
+      document.getElementById('roster-coaches').innerHTML = coaches.length === 0
+        ? '<p class="text-muted">No coaches yet. Click "+ Coach" to add.</p>'
+        : coaches.map((c, i) => `
+          <div class="roster-card roster-card-edit">
+            <div class="card-actions">
+              <button class="btn-edit" onclick="openRosterModal('coach',${i})">Edit</button>
+              <button class="btn-delete" onclick="deleteCoach(${i})">Del</button>
+            </div>
+            ${c.photo ? `<img class="wrestler-photo photo-preview" src="../../${esc(c.photo)}">` : `<div class="photo-placeholder">&#128100;</div>`}
+            <h3>${esc(c.name)}</h3>
+            <div class="weight-class">${esc(c.role)}</div>
+            ${c.bio ? `<div style="font-size:0.8rem;color:var(--text-light);margin-top:0.3rem;">${esc(c.bio)}</div>` : ''}
+          </div>`).join('');
+    }
+
+    function editSeason() {
+      const v = prompt('Season:', rosterData.season);
+      if (v !== null) { rosterData.season = v; dirty.roster = true; renderRoster(); }
+    }
+
+    function openRosterModal(type, index) {
+      const isEdit = index !== undefined;
+      const isWrestler = type === 'wrestler';
+      const item = isEdit ? (isWrestler ? rosterData.wrestlers[index] : rosterData.coaches[index]) : {};
+      const title = (isEdit ? 'Edit' : 'Add') + ' ' + (isWrestler ? 'Wrestler' : 'Coach');
+
+      let body = '';
+      if (isWrestler) {
+        body = `
+          <div class="form-group"><label>Name</label><input class="form-control" id="rf-name" value="${esc(item.name || '')}"></div>
+          <div class="form-row">
+            <div class="form-group"><label>Weight Class</label><input class="form-control" id="rf-weight" value="${esc(item.weightClass || '')}" placeholder="e.g. 150"></div>
+            <div class="form-group"><label>Year</label>
+              <select class="form-control" id="rf-year">
+                <option value="">—</option>
+                ${['Freshman','Sophomore','Junior','Senior'].map(y => `<option ${item.year===y?'selected':''}>${y}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Photo</label>
+            <div id="rf-photo-area">
+              ${item.photo ? `<div style="margin-bottom:0.5rem;"><img src="../../${esc(item.photo)}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;"> <button class="btn btn-sm btn-delete" onclick="document.getElementById('rf-photo-val').value='';this.parentElement.remove();">Remove</button></div>` : ''}
+            </div>
+            <input type="hidden" id="rf-photo-val" value="${esc(item.photo || '')}">
+            <div class="file-upload-area" onclick="this.querySelector('input').click()">
+              Click to upload photo
+              <input type="file" accept="image/*" onchange="uploadRosterPhoto(this)">
+            </div>
+          </div>`;
+      } else {
+        body = `
+          <div class="form-group"><label>Name</label><input class="form-control" id="rf-name" value="${esc(item.name || '')}"></div>
+          <div class="form-group"><label>Role</label><input class="form-control" id="rf-role" value="${esc(item.role || '')}" placeholder="e.g. Head Coach"></div>
+          <div class="form-group"><label>Bio</label><textarea class="form-control" id="rf-bio">${esc(item.bio || '')}</textarea></div>
+          <div class="form-group">
+            <label>Photo</label>
+            <div id="rf-photo-area">
+              ${item.photo ? `<div style="margin-bottom:0.5rem;"><img src="../../${esc(item.photo)}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;"> <button class="btn btn-sm btn-delete" onclick="document.getElementById('rf-photo-val').value='';this.parentElement.remove();">Remove</button></div>` : ''}
+            </div>
+            <input type="hidden" id="rf-photo-val" value="${esc(item.photo || '')}">
+            <div class="file-upload-area" onclick="this.querySelector('input').click()">
+              Click to upload photo
+              <input type="file" accept="image/*" onchange="uploadRosterPhoto(this)">
+            </div>
+          </div>`;
+      }
+
+      openModal(title, body,
+        `<button class="btn btn-sm btn-secondary" onclick="closeModal()">Cancel</button>
+         <button class="btn btn-sm btn-primary" onclick="saveRosterItem('${type}',${isEdit ? index : -1})">Save</button>`);
+    }
+
+    async function uploadRosterPhoto(input) {
+      const file = input.files[0];
+      if (!file) return;
+      const area = input.closest('.file-upload-area');
+      area.innerHTML = '<span class="spinner"></span> Uploading...';
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+      const path = 'hs/photos/' + Date.now() + '-' + safeName;
+      const result = await apiUpload(file, path);
+      if (result.ok) {
+        document.getElementById('rf-photo-val').value = result.url;
+        area.classList.add('has-file');
+        area.innerHTML = 'Uploaded: ' + safeName;
+        showToast('Photo uploaded');
+      } else {
+        area.innerHTML = 'Upload failed — click to retry<input type="file" accept="image/*" style="display:none;" onchange="uploadRosterPhoto(this)">';
+        showToast('Upload error: ' + result.error, 'error');
+      }
+    }
+
+    function saveRosterItem(type, index) {
+      const name = document.getElementById('rf-name').value.trim();
+      if (!name) { showToast('Name is required', 'error'); return; }
+      const photo = document.getElementById('rf-photo-val').value;
+
+      if (type === 'wrestler') {
+        const item = {
+          name,
+          weightClass: document.getElementById('rf-weight').value.trim(),
+          year: document.getElementById('rf-year').value,
+          photo,
+        };
+        if (index >= 0) rosterData.wrestlers[index] = item;
+        else rosterData.wrestlers.push(item);
+      } else {
+        const item = {
+          name,
+          role: document.getElementById('rf-role').value.trim(),
+          bio: document.getElementById('rf-bio').value.trim(),
+          photo,
+        };
+        if (index >= 0) rosterData.coaches[index] = item;
+        else rosterData.coaches.push(item);
+      }
+      dirty.roster = true;
+      closeModal();
+      renderRoster();
+    }
+
+    function deleteWrestler(i) {
+      confirmAction(`Delete wrestler <strong>${esc(rosterData.wrestlers[i].name)}</strong>?`, () => {
+        rosterData.wrestlers.splice(i, 1);
+        dirty.roster = true;
+        renderRoster();
+      });
+    }
+
+    function deleteCoach(i) {
+      confirmAction(`Delete coach <strong>${esc(rosterData.coaches[i].name)}</strong>?`, () => {
+        rosterData.coaches.splice(i, 1);
+        dirty.roster = true;
+        renderRoster();
+      });
+    }
+
+    function exportRosterCSV() {
+      if (!rosterData || !rosterData.wrestlers.length) { showToast('No wrestlers to export', 'error'); return; }
+      const csv = toCSV(['Name', 'Weight Class', 'Year'], rosterData.wrestlers.map(w => ({
+        'Name': w.name, 'Weight Class': w.weightClass, 'Year': w.year
+      })));
+      downloadCSV('roster.csv', csv);
+    }
+
+    function importRosterCSV(input) {
+      const file = input.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const rows = parseCSV(reader.result);
+        if (!rows.length) { showToast('No data found in CSV', 'error'); return; }
+        const mapped = rows.map(r => ({
+          name: r['Name'] || r['name'] || '',
+          weightClass: r['Weight Class'] || r['weightClass'] || r['Weight'] || '',
+          year: r['Year'] || r['year'] || '',
+          photo: '',
+        })).filter(r => r.name);
+        if (!mapped.length) { showToast('No valid rows found', 'error'); return; }
+        // Merge: add new, update existing by name
+        mapped.forEach(m => {
+          const existing = rosterData.wrestlers.findIndex(w => w.name.toLowerCase() === m.name.toLowerCase());
+          if (existing >= 0) {
+            rosterData.wrestlers[existing].weightClass = m.weightClass || rosterData.wrestlers[existing].weightClass;
+            rosterData.wrestlers[existing].year = m.year || rosterData.wrestlers[existing].year;
+          } else {
+            rosterData.wrestlers.push(m);
+          }
+        });
+        dirty.roster = true;
+        renderRoster();
+        showToast(`Imported ${mapped.length} wrestler(s)`);
+      };
+      reader.readAsText(file);
+      input.value = '';
+    }
+
+    // ================================================================
+    // PRACTICE PLANS SECTION
+    // ================================================================
+    function renderPlans() {
+      const plans = coachData.practicePlans || [];
+      const el = document.getElementById('plans-content');
+      if (!plans.length) { el.innerHTML = '<p class="text-muted">No practice plans yet.</p>'; return; }
+      el.innerHTML = plans.map((p, i) => `
         <div class="card">
           <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:0.5rem;">
-            <h3>${p.title}</h3>
-            <span class="text-muted" style="font-size:0.85rem;">${p.date} &middot; ${p.duration}</span>
+            <h3>${esc(p.title)}</h3>
+            <span class="text-muted" style="font-size:0.85rem;">${esc(p.date)} &middot; ${esc(p.duration)}</span>
           </div>
-          <p style="margin:0.5rem 0;"><strong>Focus:</strong> ${p.focus}</p>
-          <p><strong>Warm-up:</strong> ${p.warmup}</p>
+          <p style="margin:0.5rem 0;"><strong>Focus:</strong> ${esc(p.focus)}</p>
+          <p><strong>Warm-up:</strong> ${esc(p.warmup)}</p>
           <table class="data-table" style="margin:1rem 0;">
             <thead><tr><th>Drill</th><th>Duration</th><th>Notes</th></tr></thead>
             <tbody>
-              ${p.technique.map(t => `<tr><td>${t.drill}</td><td>${t.duration}</td><td>${t.notes}</td></tr>`).join('')}
+              ${(p.technique||[]).map(t => `<tr><td>${esc(t.drill)}</td><td>${esc(t.duration)}</td><td>${esc(t.notes)}</td></tr>`).join('')}
             </tbody>
           </table>
-          <p><strong>Live Wrestling:</strong> ${p.liveWrestling}</p>
-          <p><strong>Conditioning:</strong> ${p.conditioning}</p>
-          ${p.notes ? `<p style="margin-top:0.5rem;color:var(--text-light);font-style:italic;">${p.notes}</p>` : ''}
+          <p><strong>Live Wrestling:</strong> ${esc(p.liveWrestling)}</p>
+          <p><strong>Conditioning:</strong> ${esc(p.conditioning)}</p>
+          ${p.notes ? `<p style="margin-top:0.5rem;color:var(--text-light);font-style:italic;">${esc(p.notes)}</p>` : ''}
+          ${p.documents && p.documents.length ? `
+            <div style="margin-top:0.75rem;"><strong>Attachments:</strong>
+              <ul class="attachment-list">${p.documents.map(d => `<li><a href="../../${esc(d.url)}" target="_blank">${esc(d.name)}</a></li>`).join('')}</ul>
+            </div>` : ''}
+          <div class="card-actions">
+            <button class="btn-edit" onclick="openPlanModal(${i})">Edit</button>
+            <button class="btn-delete" onclick="deletePlan(${i})">Delete</button>
+          </div>
+        </div>`).join('');
+    }
+
+    function openPlanModal(index) {
+      const isEdit = index !== undefined;
+      const p = isEdit ? coachData.practicePlans[index] : { technique: [], documents: [] };
+      const drills = p.technique || [];
+      const docs = p.documents || [];
+
+      let body = `
+        <div class="form-group"><label>Title</label><input class="form-control" id="pf-title" value="${esc(p.title || '')}"></div>
+        <div class="form-row">
+          <div class="form-group"><label>Date</label><input type="date" class="form-control" id="pf-date" value="${esc(p.date || '')}"></div>
+          <div class="form-group"><label>Duration</label><input class="form-control" id="pf-duration" value="${esc(p.duration || '')}" placeholder="e.g. 120 min"></div>
         </div>
-      `).join('');
+        <div class="form-group"><label>Focus</label><input class="form-control" id="pf-focus" value="${esc(p.focus || '')}"></div>
+        <div class="form-group"><label>Warm-up</label><textarea class="form-control" id="pf-warmup">${esc(p.warmup || '')}</textarea></div>
+        <div class="form-group">
+          <label>Technique Drills</label>
+          <div class="array-editor" id="pf-drills">
+            ${drills.map((d, i) => planDrillRow(d, i)).join('')}
+          </div>
+          <button class="array-add" onclick="addPlanDrill()">+ Add Drill</button>
+        </div>
+        <div class="form-group"><label>Live Wrestling</label><textarea class="form-control" id="pf-live">${esc(p.liveWrestling || '')}</textarea></div>
+        <div class="form-group"><label>Conditioning</label><textarea class="form-control" id="pf-cond">${esc(p.conditioning || '')}</textarea></div>
+        <div class="form-group"><label>Notes</label><textarea class="form-control" id="pf-notes">${esc(p.notes || '')}</textarea></div>
+        <div class="form-group">
+          <label>Documents / Attachments</label>
+          <ul class="attachment-list" id="pf-docs">
+            ${docs.map((d, i) => `<li><a href="../../${esc(d.url)}" target="_blank">${esc(d.name)}</a> <button class="attachment-remove" data-idx="${i}" onclick="removePlanDoc(this)">&times;</button></li>`).join('')}
+          </ul>
+          <div class="file-upload-area" onclick="this.querySelector('input').click()">
+            Upload PDF or document
+            <input type="file" accept=".pdf,.doc,.docx,.xls,.xlsx" onchange="uploadPlanDoc(this,${isEdit ? index : -1})">
+          </div>
+        </div>`;
+
+      openModal(isEdit ? 'Edit Practice Plan' : 'Add Practice Plan', body,
+        `<button class="btn btn-sm btn-secondary" onclick="closeModal()">Cancel</button>
+         <button class="btn btn-sm btn-accent" onclick="saveCoachData()">Save to GitHub</button>
+         <button class="btn btn-sm btn-primary" onclick="savePlan(${isEdit ? index : -1})">Apply</button>`);
     }
 
-    function renderNotes(notes) {
-      if (!notes.length) return '<p class="text-muted">No wrestler notes yet.</p>';
-      return `
+    function planDrillRow(d, i) {
+      return `<div class="array-item" data-idx="${i}">
+        <div class="array-fields">
+          <input class="form-control drill-name" placeholder="Drill name" value="${esc(d.drill || '')}">
+          <div class="form-row">
+            <input class="form-control drill-dur" placeholder="Duration" value="${esc(d.duration || '')}">
+            <input class="form-control drill-notes" placeholder="Notes" value="${esc(d.notes || '')}">
+          </div>
+        </div>
+        <button class="array-remove" onclick="this.closest('.array-item').remove()">&times;</button>
+      </div>`;
+    }
+
+    function addPlanDrill() {
+      const container = document.getElementById('pf-drills');
+      const idx = container.children.length;
+      container.insertAdjacentHTML('beforeend', planDrillRow({}, idx));
+    }
+
+    // Temporary store for plan docs being edited in the modal
+    let _planDocsTemp = [];
+
+    function removePlanDoc(btn) {
+      const idx = parseInt(btn.dataset.idx);
+      btn.closest('li').remove();
+      _planDocsTemp.splice(idx, 1);
+    }
+
+    async function uploadPlanDoc(input, planIdx) {
+      const file = input.files[0];
+      if (!file) return;
+      const area = input.closest('.file-upload-area');
+      area.innerHTML = '<span class="spinner"></span> Uploading...';
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+      const path = 'hs/coaches/docs/' + Date.now() + '-' + safeName;
+      const result = await apiUpload(file, path);
+      if (result.ok) {
+        _planDocsTemp.push({ name: file.name, url: result.url });
+        const list = document.getElementById('pf-docs');
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="../../${esc(result.url)}" target="_blank">${esc(file.name)}</a> <button class="attachment-remove" data-idx="${_planDocsTemp.length - 1}" onclick="removePlanDoc(this)">&times;</button>`;
+        list.appendChild(li);
+        area.innerHTML = 'Upload another<input type="file" accept=".pdf,.doc,.docx,.xls,.xlsx" style="display:none;" onchange="uploadPlanDoc(this,' + planIdx + ')">';
+        showToast('Document uploaded');
+      } else {
+        area.innerHTML = 'Upload failed — click to retry<input type="file" accept=".pdf,.doc,.docx,.xls,.xlsx" style="display:none;" onchange="uploadPlanDoc(this,' + planIdx + ')">';
+        showToast('Upload error: ' + result.error, 'error');
+      }
+    }
+
+    function savePlan(index) {
+      const title = document.getElementById('pf-title').value.trim();
+      if (!title) { showToast('Title is required', 'error'); return; }
+      const drills = [];
+      document.querySelectorAll('#pf-drills .array-item').forEach(el => {
+        drills.push({
+          drill: el.querySelector('.drill-name').value.trim(),
+          duration: el.querySelector('.drill-dur').value.trim(),
+          notes: el.querySelector('.drill-notes').value.trim(),
+        });
+      });
+      const plan = {
+        id: (index >= 0 && coachData.practicePlans[index].id) || title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        title,
+        date: document.getElementById('pf-date').value,
+        duration: document.getElementById('pf-duration').value.trim(),
+        focus: document.getElementById('pf-focus').value.trim(),
+        warmup: document.getElementById('pf-warmup').value.trim(),
+        technique: drills,
+        liveWrestling: document.getElementById('pf-live').value.trim(),
+        conditioning: document.getElementById('pf-cond').value.trim(),
+        notes: document.getElementById('pf-notes').value.trim(),
+        documents: _planDocsTemp.slice(),
+      };
+      if (index >= 0) coachData.practicePlans[index] = plan;
+      else coachData.practicePlans.push(plan);
+      dirty.coaches = true;
+      closeModal();
+      renderPlans();
+    }
+
+    function deletePlan(i) {
+      confirmAction(`Delete plan <strong>${esc(coachData.practicePlans[i].title)}</strong>?`, () => {
+        coachData.practicePlans.splice(i, 1);
+        dirty.coaches = true;
+        renderPlans();
+      });
+    }
+
+    // ================================================================
+    // WRESTLER NOTES SECTION
+    // ================================================================
+    function renderNotes() {
+      const notes = coachData.wrestlerNotes || [];
+      const el = document.getElementById('notes-content');
+      if (!notes.length) { el.innerHTML = '<p class="text-muted">No wrestler notes yet.</p>'; return; }
+      el.innerHTML = `
+        <button class="btn btn-sm btn-accent" style="margin-bottom:1rem;" onclick="saveCoachData()">Save to GitHub</button>
         <table class="data-table">
-          <thead><tr><th>Name</th><th>Weight</th><th>Strengths</th><th>Areas to Improve</th><th>Notes</th></tr></thead>
+          <thead><tr><th>Name</th><th>Weight</th><th>Strengths</th><th>Areas to Improve</th><th>Notes</th><th style="width:100px;"></th></tr></thead>
           <tbody>
-            ${notes.map(n => `<tr><td><strong>${n.name}</strong></td><td>${n.weightClass}</td><td>${n.strengths}</td><td>${n.areasToImprove}</td><td>${n.notes}</td></tr>`).join('')}
+            ${notes.map((n, i) => `<tr>
+              <td><strong>${esc(n.name)}</strong></td><td>${esc(n.weightClass)}</td>
+              <td>${esc(n.strengths)}</td><td>${esc(n.areasToImprove)}</td><td>${esc(n.notes)}</td>
+              <td><button class="btn-edit" onclick="openNoteModal(${i})">Edit</button> <button class="btn-delete" onclick="deleteNote(${i})">Del</button></td>
+            </tr>`).join('')}
           </tbody>
-        </table>
-      `;
+        </table>`;
     }
 
-    function renderScouting(reports) {
-      if (!reports.length) return '<p class="text-muted">No scouting reports yet.</p>';
-      return reports.map(r => `
+    function openNoteModal(index) {
+      const isEdit = index !== undefined;
+      const n = isEdit ? coachData.wrestlerNotes[index] : {};
+      const rosterNames = (rosterData && rosterData.wrestlers || []).map(w => w.name);
+
+      let body = `
+        <div class="form-group">
+          <label>Wrestler Name</label>
+          <input class="form-control" id="nf-name" value="${esc(n.name || '')}" list="wrestler-names" oninput="autoFillWeight()">
+          <datalist id="wrestler-names">${rosterNames.map(n => `<option value="${esc(n)}">`).join('')}</datalist>
+        </div>
+        <div class="form-group"><label>Weight Class</label><input class="form-control" id="nf-weight" value="${esc(n.weightClass || '')}"></div>
+        <div class="form-group"><label>Strengths</label><textarea class="form-control" id="nf-strengths">${esc(n.strengths || '')}</textarea></div>
+        <div class="form-group"><label>Areas to Improve</label><textarea class="form-control" id="nf-improve">${esc(n.areasToImprove || '')}</textarea></div>
+        <div class="form-group"><label>Notes</label><textarea class="form-control" id="nf-notes">${esc(n.notes || '')}</textarea></div>`;
+
+      openModal(isEdit ? 'Edit Wrestler Note' : 'Add Wrestler Note', body,
+        `<button class="btn btn-sm btn-secondary" onclick="closeModal()">Cancel</button>
+         <button class="btn btn-sm btn-primary" onclick="saveNote(${isEdit ? index : -1})">Save</button>`);
+    }
+
+    function autoFillWeight() {
+      const name = document.getElementById('nf-name').value.trim();
+      if (!rosterData) return;
+      const match = rosterData.wrestlers.find(w => w.name.toLowerCase() === name.toLowerCase());
+      if (match) document.getElementById('nf-weight').value = match.weightClass;
+    }
+
+    function saveNote(index) {
+      const name = document.getElementById('nf-name').value.trim();
+      if (!name) { showToast('Name is required', 'error'); return; }
+      const note = {
+        name,
+        weightClass: document.getElementById('nf-weight').value.trim(),
+        strengths: document.getElementById('nf-strengths').value.trim(),
+        areasToImprove: document.getElementById('nf-improve').value.trim(),
+        notes: document.getElementById('nf-notes').value.trim(),
+      };
+      if (index >= 0) coachData.wrestlerNotes[index] = note;
+      else coachData.wrestlerNotes.push(note);
+      dirty.coaches = true;
+      closeModal();
+      renderNotes();
+    }
+
+    function deleteNote(i) {
+      confirmAction(`Delete note for <strong>${esc(coachData.wrestlerNotes[i].name)}</strong>?`, () => {
+        coachData.wrestlerNotes.splice(i, 1);
+        dirty.coaches = true;
+        renderNotes();
+      });
+    }
+
+    // ================================================================
+    // SCOUTING REPORTS SECTION
+    // ================================================================
+    function renderScouting() {
+      const reports = coachData.scouting || [];
+      const el = document.getElementById('scouting-content');
+      if (!reports.length) { el.innerHTML = '<p class="text-muted">No scouting reports yet.</p>'; return; }
+      el.innerHTML = reports.map((r, ri) => `
         <div class="card">
-          <h3>vs. ${r.team}</h3>
-          <p class="text-muted" style="margin-bottom:0.75rem;">${r.date}</p>
-          <table class="data-table">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:0.5rem;">
+            <h3>vs. ${esc(r.team)}</h3>
+            <span class="text-muted" style="font-size:0.85rem;">${esc(r.date)}</span>
+          </div>
+          <table class="data-table" style="margin:0.75rem 0;">
             <thead><tr><th>Weight</th><th>Name</th><th>Record</th><th>Style</th><th>Game Plan</th></tr></thead>
             <tbody>
-              ${r.wrestlers.map(w => `<tr><td>${w.weightClass}</td><td>${w.name}</td><td>${w.record}</td><td>${w.style}</td><td>${w.notes}</td></tr>`).join('')}
+              ${(r.wrestlers||[]).map(w => `<tr><td>${esc(w.weightClass)}</td><td>${esc(w.name)}</td><td>${esc(w.record)}</td><td>${esc(w.style)}</td><td>${esc(w.notes)}</td></tr>`).join('')}
             </tbody>
           </table>
-        </div>
-      `).join('');
+          <div class="card-actions">
+            <button class="btn-edit" onclick="openScoutModal(${ri})">Edit</button>
+            <button class="btn-delete" onclick="deleteScout(${ri})">Delete</button>
+            <button class="btn-edit" onclick="exportScoutCSV(${ri})">Export CSV</button>
+            <label class="btn-edit" style="cursor:pointer;margin:0;">Import CSV<input type="file" accept=".csv" style="display:none;" onchange="importScoutCSV(this,${ri})"></label>
+          </div>
+        </div>`).join('');
     }
 
-    function renderForms(forms) {
-      if (!forms.length) return '<p class="text-muted">No forms uploaded yet.</p>';
-      return `<div class="grid-2">${forms.map(f => `
-        <div class="card">
-          <h3>${f.title}</h3>
-          <p style="font-size:0.9rem;color:var(--text-light);margin-bottom:0.75rem;">${f.description}</p>
-          ${f.url ? `<a href="${f.url}" class="btn btn-primary btn-sm" target="_blank">Download ${f.type.toUpperCase()}</a>` : '<span class="text-muted" style="font-size:0.85rem;">Link coming soon</span>'}
+    function openScoutModal(index) {
+      const isEdit = index !== undefined;
+      const r = isEdit ? coachData.scouting[index] : { wrestlers: [] };
+      const wrestlers = r.wrestlers || [];
+
+      let body = `
+        <div class="form-row">
+          <div class="form-group"><label>Team</label><input class="form-control" id="sf-team" value="${esc(r.team || '')}"></div>
+          <div class="form-group"><label>Date</label><input type="date" class="form-control" id="sf-date" value="${esc(r.date || '')}"></div>
         </div>
-      `).join('')}</div>`;
+        <div class="form-group">
+          <label>Opponent Wrestlers</label>
+          <div class="array-editor" id="sf-wrestlers">
+            ${wrestlers.map((w, i) => scoutWrestlerRow(w, i)).join('')}
+          </div>
+          <button class="array-add" onclick="addScoutWrestler()">+ Add Wrestler</button>
+        </div>`;
+
+      openModal(isEdit ? 'Edit Scouting Report' : 'Add Scouting Report', body,
+        `<button class="btn btn-sm btn-secondary" onclick="closeModal()">Cancel</button>
+         <button class="btn btn-sm btn-accent" onclick="saveCoachData()">Save to GitHub</button>
+         <button class="btn btn-sm btn-primary" onclick="saveScout(${isEdit ? index : -1})">Apply</button>`);
     }
 
-    fetch('coaches-data.json')
-      .then(r => r.json())
-      .then(data => {
-        coachData = data;
-        document.getElementById('plans-content').innerHTML = renderPlans(data.practicePlans || []);
-        document.getElementById('notes-content').innerHTML = renderNotes(data.wrestlerNotes || []);
-        document.getElementById('scouting-content').innerHTML = renderScouting(data.scouting || []);
-        document.getElementById('forms-content').innerHTML = renderForms(data.forms || []);
+    function scoutWrestlerRow(w, i) {
+      return `<div class="array-item" data-idx="${i}">
+        <div class="array-fields">
+          <div class="form-row" style="grid-template-columns:80px 1fr 80px;">
+            <input class="form-control sw-weight" placeholder="Weight" value="${esc(w.weightClass || '')}">
+            <input class="form-control sw-name" placeholder="Name" value="${esc(w.name || '')}">
+            <input class="form-control sw-record" placeholder="Record" value="${esc(w.record || '')}">
+          </div>
+          <div class="form-row">
+            <input class="form-control sw-style" placeholder="Style" value="${esc(w.style || '')}">
+            <input class="form-control sw-notes" placeholder="Game Plan" value="${esc(w.notes || '')}">
+          </div>
+        </div>
+        <button class="array-remove" onclick="this.closest('.array-item').remove()">&times;</button>
+      </div>`;
+    }
 
-        // Auto-open section from hash
-        const hash = location.hash.replace('#', '');
-        if (hash && document.getElementById('section-' + hash)) {
-          showSection(hash);
-        }
-      })
-      .catch(() => {
-        document.getElementById('nav-cards').insertAdjacentHTML('afterend',
-          '<p class="text-muted mt-2">Could not load coaches data.</p>');
+    function addScoutWrestler() {
+      const container = document.getElementById('sf-wrestlers');
+      container.insertAdjacentHTML('beforeend', scoutWrestlerRow({}, container.children.length));
+    }
+
+    function saveScout(index) {
+      const team = document.getElementById('sf-team').value.trim();
+      if (!team) { showToast('Team is required', 'error'); return; }
+      const wrestlers = [];
+      document.querySelectorAll('#sf-wrestlers .array-item').forEach(el => {
+        wrestlers.push({
+          weightClass: el.querySelector('.sw-weight').value.trim(),
+          name: el.querySelector('.sw-name').value.trim(),
+          record: el.querySelector('.sw-record').value.trim(),
+          style: el.querySelector('.sw-style').value.trim(),
+          notes: el.querySelector('.sw-notes').value.trim(),
+        });
       });
+      const report = {
+        team,
+        date: document.getElementById('sf-date').value,
+        wrestlers,
+      };
+      if (index >= 0) coachData.scouting[index] = report;
+      else coachData.scouting.push(report);
+      dirty.coaches = true;
+      closeModal();
+      renderScouting();
+    }
+
+    function deleteScout(i) {
+      confirmAction(`Delete scouting report for <strong>${esc(coachData.scouting[i].team)}</strong>?`, () => {
+        coachData.scouting.splice(i, 1);
+        dirty.coaches = true;
+        renderScouting();
+      });
+    }
+
+    function exportScoutCSV(i) {
+      const r = coachData.scouting[i];
+      if (!r || !r.wrestlers.length) { showToast('No wrestlers to export', 'error'); return; }
+      const csv = toCSV(['Weight','Name','Record','Style','Notes'], r.wrestlers.map(w => ({
+        Weight: w.weightClass, Name: w.name, Record: w.record, Style: w.style, Notes: w.notes
+      })));
+      downloadCSV(`scouting-${r.team.replace(/\s+/g,'-').toLowerCase()}.csv`, csv);
+    }
+
+    function importScoutCSV(input, ri) {
+      const file = input.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const rows = parseCSV(reader.result);
+        if (!rows.length) { showToast('No data found in CSV', 'error'); return; }
+        const mapped = rows.map(r => ({
+          weightClass: r['Weight'] || r['Weight Class'] || r['weightClass'] || '',
+          name: r['Name'] || r['name'] || '',
+          record: r['Record'] || r['record'] || '',
+          style: r['Style'] || r['style'] || '',
+          notes: r['Notes'] || r['Game Plan'] || r['notes'] || '',
+        })).filter(r => r.name || r.weightClass);
+        if (!mapped.length) { showToast('No valid rows', 'error'); return; }
+        coachData.scouting[ri].wrestlers = coachData.scouting[ri].wrestlers.concat(mapped);
+        dirty.coaches = true;
+        renderScouting();
+        showToast(`Imported ${mapped.length} wrestler(s)`);
+      };
+      reader.readAsText(file);
+      input.value = '';
+    }
+
+    // ================================================================
+    // FORMS & DOCUMENTS SECTION
+    // ================================================================
+    function renderForms() {
+      const forms = coachData.forms || [];
+      const el = document.getElementById('forms-content');
+      if (!forms.length) { el.innerHTML = '<p class="text-muted">No forms uploaded yet.</p>'; return; }
+      el.innerHTML = `
+        <button class="btn btn-sm btn-accent" style="margin-bottom:1rem;" onclick="saveCoachData()">Save to GitHub</button>
+        <div class="grid-2">${forms.map((f, i) => `
+          <div class="card">
+            <h3>${esc(f.title)}</h3>
+            <p style="font-size:0.9rem;color:var(--text-light);margin-bottom:0.75rem;">${esc(f.description)}</p>
+            ${f.url ? `<a href="../../${esc(f.url)}" class="btn btn-primary btn-sm" target="_blank">Download ${esc(f.type || 'file').toUpperCase()}</a>` : '<span class="text-muted" style="font-size:0.85rem;">No file uploaded</span>'}
+            <div class="card-actions">
+              <button class="btn-edit" onclick="openFormModal(${i})">Edit</button>
+              <button class="btn-delete" onclick="deleteForm(${i})">Delete</button>
+            </div>
+          </div>
+        `).join('')}</div>`;
+    }
+
+    function openFormModal(index) {
+      const isEdit = index !== undefined;
+      const f = isEdit ? coachData.forms[index] : {};
+
+      let body = `
+        <div class="form-group"><label>Title</label><input class="form-control" id="ff-title" value="${esc(f.title || '')}"></div>
+        <div class="form-group"><label>Description</label><textarea class="form-control" id="ff-desc">${esc(f.description || '')}</textarea></div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Type</label>
+            <select class="form-control" id="ff-type">
+              ${['pdf','doc','docx','xls','xlsx'].map(t => `<option ${f.type===t?'selected':''}>${t}</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-group"><label>Current URL</label><input class="form-control" id="ff-url" value="${esc(f.url || '')}" readonly style="background:#f8f9fa;"></div>
+        </div>
+        <div class="form-group">
+          <label>Upload File</label>
+          <div class="file-upload-area" onclick="this.querySelector('input').click()">
+            ${f.url ? 'Replace file' : 'Click to upload'}
+            <input type="file" accept=".pdf,.doc,.docx,.xls,.xlsx" onchange="uploadFormFile(this)">
+          </div>
+        </div>`;
+
+      openModal(isEdit ? 'Edit Form' : 'Add Form', body,
+        `<button class="btn btn-sm btn-secondary" onclick="closeModal()">Cancel</button>
+         <button class="btn btn-sm btn-primary" onclick="saveForm(${isEdit ? index : -1})">Save</button>`);
+    }
+
+    async function uploadFormFile(input) {
+      const file = input.files[0];
+      if (!file) return;
+      const area = input.closest('.file-upload-area');
+      area.innerHTML = '<span class="spinner"></span> Uploading...';
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+      const path = 'hs/coaches/docs/' + Date.now() + '-' + safeName;
+      const result = await apiUpload(file, path);
+      if (result.ok) {
+        document.getElementById('ff-url').value = result.url;
+        area.classList.add('has-file');
+        area.innerHTML = 'Uploaded: ' + safeName;
+        showToast('File uploaded');
+      } else {
+        area.innerHTML = 'Upload failed — click to retry<input type="file" accept=".pdf,.doc,.docx,.xls,.xlsx" style="display:none;" onchange="uploadFormFile(this)">';
+        showToast('Upload error: ' + result.error, 'error');
+      }
+    }
+
+    function saveForm(index) {
+      const title = document.getElementById('ff-title').value.trim();
+      if (!title) { showToast('Title is required', 'error'); return; }
+      const form = {
+        title,
+        description: document.getElementById('ff-desc').value.trim(),
+        url: document.getElementById('ff-url').value.trim(),
+        type: document.getElementById('ff-type').value,
+      };
+      if (index >= 0) coachData.forms[index] = form;
+      else coachData.forms.push(form);
+      dirty.coaches = true;
+      closeModal();
+      renderForms();
+    }
+
+    function deleteForm(i) {
+      const f = coachData.forms[i];
+      confirmAction(`Delete form <strong>${esc(f.title)}</strong>?${f.url ? ' The uploaded file will also be deleted.' : ''}`, async () => {
+        if (f.url) {
+          const result = await apiDelete(f.url);
+          if (!result.ok) showToast('Warning: could not delete file from repo', 'error');
+        }
+        coachData.forms.splice(i, 1);
+        dirty.coaches = true;
+        renderForms();
+      });
+    }
+
+    // ================================================================
+    // FLOWCHARTS SECTION (read-only, links to builder)
+    // ================================================================
+    function renderFlowcharts(flowcharts) {
+      const container = document.getElementById('flowcharts-content');
+      if (!flowcharts || !flowcharts.length) {
+        container.innerHTML = '<p class="text-muted">No flowcharts found.</p>';
+        return;
+      }
+      container.innerHTML = flowcharts.map(fc => `
+        <a href="../../flowcharts/builder.html?chart=${fc.id}" class="card" style="text-decoration:none;color:inherit;display:block;transition:border-color 0.2s;">
+          <h3 style="color:var(--primary);margin-bottom:0.25rem;">${esc(fc.name)}</h3>
+          <p style="font-size:0.85rem;color:var(--text-light);">${fc.nodes.length} nodes &middot; ${fc.edges.length} connections</p>
+        </a>`).join('');
+    }
+
+    // ================================================================
+    // DATA LOADING
+    // ================================================================
+    Promise.all([
+      fetch('../roster.json').then(r => r.json()).catch(() => ({ season: '', wrestlers: [], coaches: [] })),
+      fetch('coaches-data.json').then(r => r.json()).catch(() => ({ practicePlans: [], wrestlerNotes: [], scouting: [], forms: [] })),
+    ]).then(([roster, coaches]) => {
+      rosterData = roster;
+      coachData = coaches;
+      renderRoster();
+      renderPlans();
+      renderNotes();
+      renderScouting();
+      renderForms();
+
+      const hash = location.hash.replace('#', '');
+      if (hash && document.getElementById('section-' + hash)) {
+        showSection(hash);
+      }
+    }).catch(() => {
+      document.getElementById('nav-cards').insertAdjacentHTML('afterend',
+        '<p class="text-muted mt-2">Could not load data.</p>');
+    });
 
     // Load flowcharts list from techniques.json
     fetch('../../techniques.json')
       .then(r => r.json())
-      .then(data => {
-        const flowcharts = data.flowcharts || [];
-        const container = document.getElementById('flowcharts-content');
-        if (!flowcharts.length) {
-          container.innerHTML = '<p class="text-muted">No flowcharts found.</p>';
-          return;
-        }
-        container.innerHTML = flowcharts.map(fc => `
-          <a href="../../flowcharts/builder.html?chart=${fc.id}" class="card" style="text-decoration:none;color:inherit;display:block;transition:border-color 0.2s;">
-            <h3 style="color:var(--primary);margin-bottom:0.25rem;">${fc.name}</h3>
-            <p style="font-size:0.85rem;color:var(--text-light);">${fc.nodes.length} nodes &middot; ${fc.edges.length} connections</p>
-          </a>
-        `).join('');
-      })
+      .then(data => renderFlowcharts(data.flowcharts || []))
       .catch(() => {});
+
+    // Warn on unsaved changes
+    window.addEventListener('beforeunload', (e) => {
+      if (dirty.roster || dirty.coaches) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    });
+
+    // Init plan docs temp from opened plan
+    function initPlanDocsTemp(docs) {
+      _planDocsTemp = (docs || []).slice();
+    }
+
+    // Patch openPlanModal to init temp docs
+    const _origOpenPlanModal = openPlanModal;
+    openPlanModal = function(index) {
+      const p = index !== undefined ? coachData.practicePlans[index] : {};
+      _planDocsTemp = (p.documents || []).slice();
+      _origOpenPlanModal(index);
+    };
   </script>
 </body>
 </html>
