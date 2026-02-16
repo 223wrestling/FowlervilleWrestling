@@ -56,6 +56,7 @@ Search these channels first when looking for technique videos:
 - Single `techniques.html` with hash routing (not one file per technique)
 - Flowcharts render dynamically from `techniques.json` — no Python generation step needed
 - `flowcharts/chart.html` uses BFS tree layout (same algorithm as legacy `gen_flowcharts.py`) to position nodes
+- `flowcharts/chart.html` has mobile-friendly touch pan/zoom: viewBox-based zooming (pinch + drag on touch, scroll wheel on desktop), floating +/−/reset zoom controls, auto-zoom to root node on mobile load (1.5x, 70vh wrapper), bottom sheet popup with "Watch Video" link instead of iframe
 - `flowcharts/builder.html` is the visual editor with: drag to reposition, technique name autocomplete, Export/Import JSON, Preview mode with technique popups
 - YouTube videos searched via `curl` to YouTube search results, parsed with Python JSON extraction
 - Technique descriptions written as coaching points (starting position, key steps, common mistakes)
@@ -95,11 +96,17 @@ Search these channels first when looking for technique videos:
 ## Coaches Area Workflow
 The coaches area (`hs/coaches/index.html`) is a full editing app behind Cloudflare basic auth:
 
-1. **Roster** — Add/edit/delete wrestlers and coaches, upload photos, CSV import/export
+1. **Roster** — Add/edit/delete wrestlers and coaches, upload photos, CSV import/export (Name, Weight Class, Year)
 2. **Practice Plans** — Create plans with drill arrays, upload PDF attachments
 3. **Wrestler Notes** — Table with roster autocomplete for name/weight
-4. **Scouting Reports** — Opponent data with CSV import/export per report
+4. **Scouting Reports** — Opponent data with CSV import/export per report (Weight, Name, Record, Style, Notes)
 5. **Forms & Documents** — Upload PDFs/docs to `hs/coaches/docs/`, auto-delete on remove
+
+**CSV Import/Export:**
+- Roster and Scouting Reports both support CSV export (downloads file) and import (file picker)
+- Roster import merges by name: updates existing wrestlers, adds new ones; columns: `Name`, `Weight Class`, `Year`
+- Scouting import appends wrestlers to the selected report; columns: `Weight`, `Name`, `Record`, `Style`, `Notes`
+- CSV parser handles quoted fields with commas and newlines; import shows error modal with details on failure
 
 **Save flow:** Coach edits data → clicks "Save to GitHub" → `POST /hs/coaches/api/save` → Worker (already authenticated via basic auth) uses `GITHUB_TOKEN` to commit via GitHub API → returns success/error. No browser-side API tokens needed.
 

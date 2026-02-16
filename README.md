@@ -124,6 +124,17 @@ You can also edit the `"flowcharts"` section of `techniques.json` by hand on Git
 - **Add a connection** — Add `{"from": "parent-id", "to": "child-id"}` to the `edges` array
 - **Remove a node** — Delete it from `nodes` and remove any edges that reference its `id`
 
+### Mobile Support
+
+Flowcharts are fully interactive on mobile devices:
+
+- **Pinch to zoom** in/out, **drag to pan** around the chart
+- On load, the chart auto-zooms to the **starting position** node so text is readable
+- Floating **+/−/reset zoom controls** in the bottom-right corner
+- Node popups appear as a **bottom sheet** with compact layout
+- Videos show as a **"Watch Video" button** (opens YouTube directly) instead of an embedded iframe
+- Desktop keeps full chart visible with scroll-wheel zoom support
+
 ### Popup Links
 
 When you click a flowchart node, it looks up the node's label in `techniques.json` to show a popup with description and video. For this to work, the node `label` should match (or be a substring of) a technique `name` in the categories section. The builder's label autocomplete suggests matching technique names to make this easy.
@@ -173,6 +184,26 @@ The checklist auto-generates from the categories in `techniques.json`. Just edit
 Refresh the browser and the checklist updates automatically. No rebuild needed.
 
 Student progress (checkboxes) is saved in the browser's localStorage. The "Clear All" button resets it. Checked state does not print — the print version always shows empty checkboxes.
+
+## Coaches Area
+
+The coaches area (`hs/coaches/index.html`) is behind Cloudflare basic auth at `/hs/coaches/`. It includes roster management, practice plans, wrestler notes, scouting reports, and document uploads.
+
+### CSV Import/Export
+
+**Roster** and **Scouting Reports** both support CSV export and import:
+
+| Section | Export Columns | Import Behavior |
+|---------|---------------|-----------------|
+| Roster | `Name`, `Weight Class`, `Year` | Merges by name — updates existing wrestlers, adds new ones |
+| Scouting | `Weight`, `Name`, `Record`, `Style`, `Notes` | Appends wrestlers to the selected report |
+
+- Click **Export CSV** to download the current data as a `.csv` file
+- Click **Import CSV** to upload a `.csv` file — column headers must match (case-insensitive)
+- The CSV parser handles quoted fields with commas and newlines
+- Import errors show a modal with details and a download option for the error log
+
+After importing, remember to click **Save to GitHub** to persist changes.
 
 ## Testing Locally
 
