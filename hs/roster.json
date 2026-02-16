@@ -10,9 +10,10 @@
   ],
   "coaches": [
     {
-      "name": "Coach Dave",
+      "name": "Coach",
       "role": "Head Coach",
-      "bio": ""
+      "bio": "",
+      "photo": ""
     }
   ]
 }
