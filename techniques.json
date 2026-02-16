@@ -532,6 +532,43 @@
               "url": "https://www.youtube.com/watch?v=6D-vO5QtRsw"
             }
           ]
+        },
+        {
+          "id": "pummeling",
+          "name": "Pummeling",
+          "category": "hand-fighting",
+          "description": "The most fundamental hand fighting drill in wrestling. Two wrestlers work to establish and re-establish underhooks by alternately swimming their arms inside. Builds the muscle memory for winning the tie-up battle.",
+          "keyPoints": [
+            "Start in collar tie / underhook position with partner",
+            "Swim your arm inside to replace opponent's underhook with yours",
+            "Keep elbows tight and fight for inside position",
+            "Stay in good stance with your hips underneath you",
+            "Practice both sides — alternate left and right underhooks"
+          ],
+          "commonMistakes": [
+            "Going through the motions without pressure",
+            "Reaching too wide instead of swimming tight",
+            "Standing straight up instead of staying in wrestling stance"
+          ],
+          "related": [
+            "underhook",
+            "inside-outside-control",
+            "collar-tie"
+          ],
+          "videos": [
+            {
+              "id": "xu2fm32vih0",
+              "title": "Pummeling For Double Under Drill - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=xu2fm32vih0"
+            },
+            {
+              "id": "9Sn9z5OREgw",
+              "title": "The BASIC Pummeling Drill Done RIGHT!",
+              "channel": "TeachMeGrappling Coach Brian",
+              "url": "https://www.youtube.com/watch?v=9Sn9z5OREgw"
+            }
+          ]
         }
       ]
     },
@@ -1033,6 +1070,43 @@
               "title": "FHL Knee Tap",
               "channel": "Askren Wrestling Academy",
               "url": "https://www.youtube.com/watch?v=F29Chv2R9MI"
+            }
+          ]
+        },
+        {
+          "id": "head-and-arm",
+          "name": "Head and Arm Throw",
+          "category": "takedowns-1",
+          "description": "Wrap one arm around opponent's head and the other under their arm, lock your hands, and throw them over your hip. A powerful upper body throw that can score big points or a pin.",
+          "keyPoints": [
+            "Wrap arm around opponent's head from a collar tie",
+            "Underhook their arm on the same side and lock your hands",
+            "Step your hip in front of opponent's hips",
+            "Bend your knees and throw them over your hip",
+            "Follow through and land on top for the pin"
+          ],
+          "commonMistakes": [
+            "Not getting your hip in front before throwing",
+            "Throwing with just your arms instead of your hips",
+            "Locking too loose — opponent slips out mid-throw"
+          ],
+          "related": [
+            "headlock-throw",
+            "hip-toss",
+            "body-lock-throw"
+          ],
+          "videos": [
+            {
+              "id": "5OQXrZCBJzU",
+              "title": "Arm Throw Wrap",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=5OQXrZCBJzU"
+            },
+            {
+              "id": "C20iZwMO7NE",
+              "title": "Hip Toss",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=C20iZwMO7NE"
             }
           ]
         }
@@ -1750,6 +1824,79 @@
               "url": "https://www.youtube.com/watch?v=YpH2p6e__Wg"
             }
           ]
+        },
+        {
+          "id": "lateral-drop",
+          "name": "Lateral Drop",
+          "category": "takedowns-2",
+          "description": "An explosive upper body throw. From an over-under or body lock position, arch backward and throw opponent over your hip, landing on top of them. High-risk, high-reward.",
+          "keyPoints": [
+            "Establish over-under or body lock position",
+            "Step your hip across in front of opponent",
+            "Arch your back and throw them laterally over your hip",
+            "Turn and land on top — don't fall flat on your own back",
+            "Commit fully to the throw — hesitation gets you scored on"
+          ],
+          "commonMistakes": [
+            "Not committing to the throw fully",
+            "Falling straight back instead of arching laterally",
+            "Not turning to land on top after the throw"
+          ],
+          "related": [
+            "body-lock-throw",
+            "hip-toss",
+            "head-and-arm"
+          ],
+          "videos": [
+            {
+              "id": "_JmhIIhKjPM",
+              "title": "Wrestling Moves KOLAT.COM Lateral Drop Throw",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=_JmhIIhKjPM"
+            },
+            {
+              "id": "C1rE2CWyCKE",
+              "title": "Iranian Lat Drop Is Wrestling's Best Throw",
+              "channel": "Earn Your Gold Medal",
+              "url": "https://www.youtube.com/watch?v=C1rE2CWyCKE"
+            }
+          ]
+        },
+        {
+          "id": "pancake",
+          "name": "Pancake",
+          "category": "takedowns-2",
+          "description": "A counter where you drive opponent flat to the mat face-down, landing on top of them. Used to counter shots, sit-outs, switches, and front headlock positions. Named because you flatten them like a pancake.",
+          "keyPoints": [
+            "When opponent is on their knees or off-balance forward, get behind their head",
+            "Drive down on their upper back/shoulders with your chest weight",
+            "Sprawl your hips back to maximize downward pressure",
+            "Can follow a crossface, a stuffed shot, or a switch defense"
+          ],
+          "commonMistakes": [
+            "Not getting your weight over them before driving down",
+            "Trying to pancake without controlling their upper body",
+            "Driving down with arms only instead of hips and chest"
+          ],
+          "related": [
+            "front-headlock",
+            "sprawl-go-behind",
+            "crossface"
+          ],
+          "videos": [
+            {
+              "id": "dwGlacEUwDU",
+              "title": "Wrestling Moves KOLAT.COM Pancake Trap",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=dwGlacEUwDU"
+            },
+            {
+              "id": "s9Fb-dviloY",
+              "title": "The Crossface Pancake Is The Perfect 2nd Move",
+              "channel": "Earn Your Gold Medal",
+              "url": "https://www.youtube.com/watch?v=s9Fb-dviloY"
+            }
+          ]
         }
       ]
     },
@@ -2002,6 +2149,42 @@
               "url": "https://www.youtube.com/watch?v=JEFRqqXokb4"
             }
           ]
+        },
+        {
+          "id": "crossface",
+          "name": "Crossface",
+          "category": "top-position",
+          "description": "From top position, reach across opponent's face with your forearm to turn their head and break them down. Sets up cradles, tilts, and other turns. One of the most effective top position tools.",
+          "keyPoints": [
+            "From top, drive your forearm across opponent's face/chin (not the nose)",
+            "Use the crossface to turn their head away from you",
+            "Drive your chest into their back as you crossface",
+            "Follow up with a cradle, pancake, or breakdown"
+          ],
+          "commonMistakes": [
+            "Hitting the nose/eyes — crossface should hit the chin/cheek",
+            "Not driving forward with your body weight behind the crossface",
+            "Using just your arm without chest pressure"
+          ],
+          "related": [
+            "cradle-near",
+            "pancake",
+            "tight-waist"
+          ],
+          "videos": [
+            {
+              "id": "2aoeYRjpFLg",
+              "title": "Spiral Breakdown Proper Drive",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=2aoeYRjpFLg"
+            },
+            {
+              "id": "s9Fb-dviloY",
+              "title": "The Crossface Pancake Is The Perfect 2nd Move",
+              "channel": "Earn Your Gold Medal",
+              "url": "https://www.youtube.com/watch?v=s9Fb-dviloY"
+            }
+          ]
         }
       ]
     },
@@ -2248,6 +2431,43 @@
               "title": "KOLAT.COM Wrestling Techniques: Drew Headlee Turk & Low Leg Cradle Cross Ankle to Turk",
               "channel": "Cary Kolat",
               "url": "https://www.youtube.com/watch?v=MYqy6EyUSs8"
+            }
+          ]
+        },
+        {
+          "id": "cheap-tilt",
+          "name": "Tilt / Cheap Tilt",
+          "category": "finishers",
+          "description": "A quick tilt from top position to expose opponent's back for near-fall points. Grab the inside wrist and far ankle (or use a 2-on-1), then tilt them to their back. Called 'cheap' because it's simple and effective.",
+          "keyPoints": [
+            "From top, control opponent's near wrist",
+            "Hook or grab their far ankle or knee",
+            "Pull the wrist and ankle together, tilting them to their back",
+            "Keep your chest heavy on them to hold the tilt",
+            "Quick tilts: don't hold too long — score the points and return to top"
+          ],
+          "commonMistakes": [
+            "Tilting without controlling both the wrist and ankle",
+            "Rolling through too far and ending up on bottom",
+            "Not keeping hips heavy during the tilt"
+          ],
+          "related": [
+            "arm-bar",
+            "half-nelson",
+            "claw"
+          ],
+          "videos": [
+            {
+              "id": "7-NdQcx9KZw",
+              "title": "Cheap Tilt",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=7-NdQcx9KZw"
+            },
+            {
+              "id": "rmbYBZEF61I",
+              "title": "Greg Kerkvliet Spams 2-on-1 Tilt For 16 Points",
+              "channel": "Earn Your Gold Medal",
+              "url": "https://www.youtube.com/watch?v=rmbYBZEF61I"
             }
           ]
         }
@@ -2618,6 +2838,117 @@
               "title": "Quad Pod | Wrestling Moves",
               "channel": "Iron Faith Wrestling",
               "url": "https://www.youtube.com/watch?v=c7QKJ1VBnTA"
+            }
+          ]
+        },
+        {
+          "id": "granby-roll",
+          "name": "Granby Roll",
+          "category": "defense-3",
+          "description": "A rolling escape from bottom position. Tuck your shoulder and roll through to escape opponent's control, coming back to your base or creating a scramble. Named after Granby High School where it was popularized.",
+          "keyPoints": [
+            "From bottom, tuck your near shoulder and look back under your body",
+            "Roll over your shoulder (not your head) in a tight ball",
+            "Keep your arms tight to protect against giving up the arm",
+            "Come out of the roll in base or attacking position",
+            "Can chain into a Peterson roll or go-behind"
+          ],
+          "commonMistakes": [
+            "Rolling too slowly — this must be explosive",
+            "Rolling over your head instead of your shoulder",
+            "Exposing your back during the roll"
+          ],
+          "related": [
+            "sit-out",
+            "switch",
+            "peterson-roll"
+          ],
+          "videos": [
+            {
+              "id": "mDsEtl1uNUY",
+              "title": "Granby Roll To Peterson Finish - Cary Kolat Wrestling Move",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=mDsEtl1uNUY"
+            },
+            {
+              "id": "a6MwzHF4Zak",
+              "title": "Granby Roll Details",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=a6MwzHF4Zak"
+            }
+          ]
+        },
+        {
+          "id": "peek-out",
+          "name": "Peek Out",
+          "category": "defense-3",
+          "description": "From bottom when flattened out or in a front headlock, peek your head out to the side, clearing past opponent's control to escape or get behind them. Works when you can't sit out or stand up.",
+          "keyPoints": [
+            "From bottom/flattened position, turn your head to one side",
+            "Swim your near arm through to clear their control",
+            "Peek your head out past their arm or hip",
+            "Circle behind as you clear — don't stay flat",
+            "Works well when opponent is riding heavy with chest pressure"
+          ],
+          "commonMistakes": [
+            "Trying to peek out without first creating movement",
+            "Peeking straight forward instead of to the side",
+            "Not circling behind after clearing the head"
+          ],
+          "related": [
+            "sit-out",
+            "stand-up",
+            "granby-roll"
+          ],
+          "videos": [
+            {
+              "id": "D-YdMhOBpb0",
+              "title": "Peek Out - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=D-YdMhOBpb0"
+            },
+            {
+              "id": "t3DFJsflG0s",
+              "title": "Why 99% of Beginners Get Stuck on Bottom (And How to Escape)",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=t3DFJsflG0s"
+            }
+          ]
+        },
+        {
+          "id": "peterson-roll",
+          "name": "Peterson Roll",
+          "category": "defense-3",
+          "description": "A bottom reversal where you trap opponent's arm, roll through, and come out on top with back exposure. Can score a reversal plus near-fall points in one move. Works from a Granby or when opponent has an arm in.",
+          "keyPoints": [
+            "From bottom, trap opponent's near arm against your body",
+            "Tuck and roll over your shoulder while holding the arm",
+            "Roll through and come out on top with their arm controlled",
+            "Can transition directly into a pin or tilt",
+            "Standing Peterson: same concept but from feet"
+          ],
+          "commonMistakes": [
+            "Not trapping the arm tight enough before rolling",
+            "Rolling the wrong direction",
+            "Letting go of the arm during the roll"
+          ],
+          "related": [
+            "granby-roll",
+            "switch",
+            "half-nelson"
+          ],
+          "videos": [
+            {
+              "id": "oF55rnsABnI",
+              "title": "Standing Granby to Peterson - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=oF55rnsABnI"
+            },
+            {
+              "id": "x0ypN1ADCv8",
+              "title": "Can't Get Away Do This | Standing Peterson",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=x0ypN1ADCv8"
             }
           ]
         }
