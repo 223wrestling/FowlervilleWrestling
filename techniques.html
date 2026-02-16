@@ -197,8 +197,8 @@
           </div>
           <div class="technique-grid">
             ${cat.techniques.map(t => `
-              <a href="#${t.id}" class="technique-card" data-name="${t.name.toLowerCase()}" data-id="${t.id}">
-                <div class="name">${t.name}</div>
+              <a href="#${t.id}" class="technique-card${t.critical ? ' critical' : ''}" data-name="${t.name.toLowerCase()}" data-id="${t.id}">
+                <div class="name">${t.critical ? '<span class="critical-star">&#9733;</span>' : ''}${t.name}</div>
                 <div class="cat">${cat.name}</div>
               </a>
             `).join('')}
@@ -274,7 +274,7 @@
         <a href="#" class="back-link">&larr; All Techniques</a>
 
         <div class="detail-header">
-          <h2>${technique.name}</h2>
+          <h2>${technique.critical ? '<span class="critical-star">&#9733;</span> ' : ''}${technique.name}</h2>
           <span class="category-tag">${technique._categoryName}</span>
         </div>
 

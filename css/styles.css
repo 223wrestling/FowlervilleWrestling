@@ -1284,6 +1284,26 @@ body {
   .cal-tab { padding: 0.5rem 0.8rem; font-size: 0.8rem; }
 }
 
+/* ========== CRITICAL TECHNIQUE STAR ========== */
+.critical-star {
+  color: var(--accent);
+  font-weight: bold;
+  margin-right: 0.2em;
+}
+
+.checklist-table tr.critical td.technique-name {
+  font-weight: 700;
+}
+
+.technique-card.critical {
+  border-left: 3px solid var(--accent);
+}
+
+.node-critical ellipse {
+  stroke: var(--accent) !important;
+  stroke-width: 3 !important;
+}
+
 /* ========== UTILITY ========== */
 .text-center { text-align: center; }
 .text-muted { color: var(--text-light); }

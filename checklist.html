@@ -105,8 +105,8 @@
             </thead>
             <tbody>
               ${cat.techniques.map(t => `
-                <tr>
-                  <td class="technique-name">${t.name}</td>
+                <tr${t.critical ? ' class="critical"' : ''}>
+                  <td class="technique-name">${t.critical ? '<span class="critical-star">&#9733;</span>' : ''}${t.name}</td>
                   <td><input type="checkbox" data-id="${t.id}-learned" onchange="saveState(this)"></td>
                   <td><input type="checkbox" data-id="${t.id}-mastered" onchange="saveState(this)"></td>
                 </tr>

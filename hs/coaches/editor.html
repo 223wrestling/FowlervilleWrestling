@@ -499,6 +499,9 @@
         <button class="tb-btn tb-btn-primary" id="btn-save">Save to GitHub</button>
         <span class="dirty-dot" id="dirty-dot" title="Unsaved changes"></span>
         <button class="tb-btn" id="btn-export">Export JSON</button>
+        <button class="tb-btn" id="btn-export-csv">Export CSV</button>
+        <button class="tb-btn" id="btn-import-csv">Import CSV</button>
+        <input type="file" id="csv-file-input" accept=".csv" style="display:none">
         <button class="tb-btn" id="btn-settings">Settings</button>
       </div>
       <span class="tb-status" id="status-msg"></span>
@@ -759,6 +762,12 @@
         <div class="form-group">
           <label>Description</label>
           <textarea id="f-desc">${esc(t.description || '')}</textarea>
+        </div>
+        <div class="form-group" style="display:flex;align-items:center;gap:0.5rem;">
+          <input type="checkbox" id="f-critical" ${t.critical ? 'checked' : ''} style="width:18px;height:18px;">
+          <label for="f-critical" style="display:inline;margin:0;text-transform:none;letter-spacing:0;font-size:0.9rem;cursor:pointer;">
+            <span style="color:var(--accent);font-weight:bold;">&#9733;</span> Critical Technique
+          </label>
         </div>
 
         <div class="array-editor" id="ae-keyPoints">
@@ -1036,6 +1045,7 @@
       const newName = document.getElementById('f-name').value.trim();
       const newCat = document.getElementById('f-category').value;
       const newDesc = document.getElementById('f-desc').value.trim();
+      const newCritical = document.getElementById('f-critical').checked;
 
       if (!newId || !newName) {
         alert('ID and Name are required.');
@@ -1055,6 +1065,11 @@
       t.id = newId;
       t.name = newName;
       t.description = newDesc;
+      if (newCritical) {
+        t.critical = true;
+      } else {
+        delete t.critical;
+      }
 
       // If category changed, move the technique
       if (newCat !== t.category) {
@@ -1521,6 +1536,213 @@
       return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
+    // ==================== CSV EXPORT/IMPORT ====================
+    function csvEscape(val) {
+      const s = String(val == null ? '' : val);
+      if (s.includes('"') || s.includes(',') || s.includes('\n') || s.includes('\r')) {
+        return '"' + s.replace(/"/g, '""') + '"';
+      }
+      return s;
+    }
+
+    function exportCSV() {
+      const headers = ['id','category','name','description','critical','keyPoints','commonMistakes','related','videos'];
+      const rows = [headers.join(',')];
+
+      for (const cat of data.categories) {
+        for (const t of cat.techniques) {
+          const row = [
+            csvEscape(t.id),
+            csvEscape(t.category || cat.id),
+            csvEscape(t.name),
+            csvEscape(t.description || ''),
+            t.critical ? 'true' : '',
+            csvEscape((t.keyPoints || []).join('|')),
+            csvEscape((t.commonMistakes || []).join('|')),
+            csvEscape((t.related || []).join('|')),
+            csvEscape((t.videos || []).map(v => v.id + ';' + (v.title || '') + ';' + (v.channel || '')).join('|'))
+          ];
+          rows.push(row.join(','));
+        }
+      }
+
+      const blob = new Blob([rows.join('\n') + '\n'], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'techniques.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+      setStatus('Exported techniques.csv (' + countTechniques() + ' rows)', 'success');
+    }
+
+    function parseCSV(text) {
+      const rows = [];
+      let current = [];
+      let field = '';
+      let inQuotes = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i];
+        if (inQuotes) {
+          if (ch === '"') {
+            if (text[i + 1] === '"') {
+              field += '"';
+              i++;
+            } else {
+              inQuotes = false;
+            }
+          } else {
+            field += ch;
+          }
+        } else {
+          if (ch === '"') {
+            inQuotes = true;
+          } else if (ch === ',') {
+            current.push(field);
+            field = '';
+          } else if (ch === '\n' || ch === '\r') {
+            if (ch === '\r' && text[i + 1] === '\n') i++;
+            current.push(field);
+            field = '';
+            if (current.length > 1 || current[0] !== '') rows.push(current);
+            current = [];
+          } else {
+            field += ch;
+          }
+        }
+      }
+      current.push(field);
+      if (current.length > 1 || current[0] !== '') rows.push(current);
+      return rows;
+    }
+
+    function importCSV() {
+      const input = document.getElementById('csv-file-input');
+      input.onchange = function() {
+        if (!input.files.length) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const rows = parseCSV(e.target.result);
+          if (rows.length < 2) {
+            setStatus('CSV file is empty or has no data rows', 'error');
+            return;
+          }
+
+          const headers = rows[0].map(h => h.trim().toLowerCase());
+          const idxOf = col => headers.indexOf(col);
+          const iId = idxOf('id'), iCat = idxOf('category'), iName = idxOf('name');
+          const iDesc = idxOf('description'), iCrit = idxOf('critical');
+          const iKp = idxOf('keypoints'), iCm = idxOf('commonmistakes');
+          const iRel = idxOf('related'), iVid = idxOf('videos');
+
+          if (iId === -1 || iName === -1) {
+            setStatus('CSV must have "id" and "name" columns', 'error');
+            return;
+          }
+
+          const catIds = new Set(data.categories.map(c => c.id));
+          let updated = 0, added = 0, errors = [];
+
+          for (let r = 1; r < rows.length; r++) {
+            const row = rows[r];
+            const id = (row[iId] || '').trim();
+            if (!id) continue;
+
+            const catId = iCat !== -1 ? (row[iCat] || '').trim() : '';
+            if (catId && !catIds.has(catId)) {
+              errors.push('Row ' + (r + 1) + ': unknown category "' + catId + '"');
+              continue;
+            }
+
+            // Find existing technique
+            let existing = null, existCatIdx = -1, existTechIdx = -1;
+            for (let ci = 0; ci < data.categories.length; ci++) {
+              const idx = data.categories[ci].techniques.findIndex(t => t.id === id);
+              if (idx !== -1) {
+                existing = data.categories[ci].techniques[idx];
+                existCatIdx = ci;
+                existTechIdx = idx;
+                break;
+              }
+            }
+
+            const tech = existing || { id, category: '', keyPoints: [], commonMistakes: [], related: [], videos: [] };
+
+            if (iName !== -1 && row[iName] != null) tech.name = row[iName].trim() || tech.name;
+            if (iDesc !== -1 && row[iDesc] != null) tech.description = row[iDesc].trim();
+            if (iCrit !== -1) {
+              const cv = (row[iCrit] || '').trim().toLowerCase();
+              if (cv === 'true') tech.critical = true;
+              else delete tech.critical;
+            }
+            if (iKp !== -1 && row[iKp] != null) {
+              const val = row[iKp].trim();
+              tech.keyPoints = val ? val.split('|').map(s => s.trim()) : [];
+            }
+            if (iCm !== -1 && row[iCm] != null) {
+              const val = row[iCm].trim();
+              tech.commonMistakes = val ? val.split('|').map(s => s.trim()) : [];
+            }
+            if (iRel !== -1 && row[iRel] != null) {
+              const val = row[iRel].trim();
+              tech.related = val ? val.split('|').map(s => s.trim()) : [];
+            }
+            if (iVid !== -1 && row[iVid] != null) {
+              const val = row[iVid].trim();
+              if (val) {
+                tech.videos = val.split('|').map(entry => {
+                  const parts = entry.split(';');
+                  return {
+                    id: (parts[0] || '').trim(),
+                    title: (parts[1] || '').trim(),
+                    channel: (parts[2] || '').trim(),
+                    url: parts[0] ? 'https://www.youtube.com/watch?v=' + parts[0].trim() : ''
+                  };
+                });
+              } else {
+                tech.videos = [];
+              }
+            }
+
+            if (existing) {
+              // Move to new category if changed
+              if (catId && catId !== data.categories[existCatIdx].id) {
+                data.categories[existCatIdx].techniques.splice(existTechIdx, 1);
+                const newCatIdx = data.categories.findIndex(c => c.id === catId);
+                tech.category = catId;
+                data.categories[newCatIdx].techniques.push(tech);
+              }
+              updated++;
+            } else {
+              // Add new technique
+              const targetCat = catId || data.categories[0].id;
+              tech.category = targetCat;
+              const catIdx = data.categories.findIndex(c => c.id === targetCat);
+              if (catIdx !== -1) {
+                data.categories[catIdx].techniques.push(tech);
+                added++;
+              }
+            }
+          }
+
+          markDirty();
+          renderTable();
+          populateCategoryFilter();
+
+          let msg = 'CSV imported: ' + updated + ' updated, ' + added + ' added';
+          if (errors.length) msg += ', ' + errors.length + ' errors';
+          setStatus(msg, errors.length ? 'error' : 'success');
+          if (errors.length) {
+            alert('Import warnings:\n' + errors.join('\n'));
+          }
+        };
+        reader.readAsText(input.files[0]);
+        input.value = '';
+      };
+      input.click();
+    }
+
     // ==================== EVENT LISTENERS ====================
     document.getElementById('search-input').addEventListener('input', renderTable);
     document.getElementById('category-filter').addEventListener('change', renderTable);
@@ -1528,6 +1750,8 @@
     document.getElementById('btn-add-category').addEventListener('click', addCategory);
     document.getElementById('btn-save').addEventListener('click', saveToGitHub);
     document.getElementById('btn-export').addEventListener('click', exportJson);
+    document.getElementById('btn-export-csv').addEventListener('click', exportCSV);
+    document.getElementById('btn-import-csv').addEventListener('click', importCSV);
     document.getElementById('btn-settings').addEventListener('click', () => openModal('settings-modal'));
     document.getElementById('btn-save-settings').addEventListener('click', saveSettings);
     document.getElementById('btn-save-category').addEventListener('click', saveCategory);

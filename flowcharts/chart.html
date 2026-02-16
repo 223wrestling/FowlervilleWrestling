@@ -202,7 +202,10 @@
         nodeData[n.id] = { label: n.label, type: ntype };
 
         const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-        g.setAttribute('class', 'fc-node node-' + ntype);
+        let nodeClass = 'fc-node node-' + ntype;
+        const matchedTech = findTechnique(n.label);
+        if (matchedTech && matchedTech.critical) nodeClass += ' node-critical';
+        g.setAttribute('class', nodeClass);
         g.setAttribute('data-id', n.id);
         g.addEventListener('click', () => showNodeInfo(n.id));
 
