@@ -326,7 +326,8 @@
             "Sharp, quick pull downward - not a slow drag",
             "Pull with both hands (collar tie + wrist control)",
             "Step back as you snap to create space",
-            "Immediately follow up: front headlock, go behind, or re-attack"
+            "Immediately follow up: front headlock, go behind, or re-attack",
+            "Bounce variation: from knees (e.g. after a sprawl), snap opponent's head down to the mat and spin behind"
           ],
           "commonMistakes": [
             "Snapping without moving your feet",
@@ -929,12 +930,14 @@
           "id": "firemans-carry",
           "name": "Fireman's Carry",
           "category": "takedowns-1",
-          "description": "Drop to one knee, thread your arm between opponent's legs, and roll them over your shoulders to the mat. Inside and outside variations.",
+          "description": "Drop to one knee, thread your arm between opponent's legs, and roll them over your shoulders to the mat. Inside and outside variations. Dump variations skip the roll — instead, lift and dump opponent directly to the mat.",
           "keyPoints": [
             "Control opponent's arm (wrist or elbow)",
             "Level change - drop to lead knee",
             "Thread opposite arm between their legs",
-            "Pull arm and lift with your legs, rolling opponent across your back"
+            "Pull arm and lift with your legs, rolling opponent across your back",
+            "Inside dump: from inside tie, dump opponent over your shoulder to the same side",
+            "Outside dump: from outside position, dump opponent away from you"
           ],
           "commonMistakes": [
             "Not controlling the arm through the throw",
@@ -957,6 +960,79 @@
               "title": "Takedown Outside Step Arm Drag to fireman's Carry",
               "channel": "Cary Kolat",
               "url": "https://www.youtube.com/watch?v=5bahNGhuw5w"
+            }
+          ]
+        },
+        {
+          "id": "low-single",
+          "name": "Low Single",
+          "category": "takedowns-1",
+          "description": "A long-range single leg attack targeting the opponent's ankle from outside shooting distance. Drop low and reach for the far ankle, then finish by lifting and running the pipe.",
+          "keyPoints": [
+            "Attack from outside normal tie-up range",
+            "Drop step deep — your chest should be near the mat",
+            "Reach for the far ankle with both hands",
+            "Turn the corner and run the pipe to finish",
+            "Can be set up with fakes or level changes"
+          ],
+          "commonMistakes": [
+            "Not getting low enough on the shot",
+            "Reaching without changing levels first",
+            "Staying on your knees instead of getting back to your feet to finish"
+          ],
+          "related": [
+            "single-leg",
+            "snatch-single",
+            "ankle-pick"
+          ],
+          "videos": [
+            {
+              "id": "U533ArBT5tw",
+              "title": "Low Single | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=U533ArBT5tw"
+            },
+            {
+              "id": "PsEyOM6xvLk",
+              "title": "Low Single, Single Leg - Richard Figueroa Highlight NCAA 2024",
+              "channel": "Wrestling Rabbit Hole",
+              "url": "https://www.youtube.com/watch?v=PsEyOM6xvLk"
+            }
+          ]
+        },
+        {
+          "id": "knee-tap",
+          "name": "Knee Tap",
+          "category": "takedowns-1",
+          "description": "From an underhook or body lock position, use your free hand to tap or push the opponent's knee while driving forward to take them down. Quick, low-risk attack.",
+          "keyPoints": [
+            "Establish inside control or underhook first",
+            "Step to the side to create an angle",
+            "Reach down and tap/push behind opponent's knee",
+            "Drive forward with your shoulder as you tap the knee"
+          ],
+          "commonMistakes": [
+            "Reaching for the knee without an angle",
+            "Bending at the waist instead of changing levels",
+            "Not driving through after tapping the knee"
+          ],
+          "related": [
+            "underhook",
+            "knee-pick",
+            "body-lock-throw"
+          ],
+          "videos": [
+            {
+              "id": "cupxfAoNhwA",
+              "title": "Wrestling Knee Tap Takedown; Justin Ruiz",
+              "channel": "High School Wrestling Matches",
+              "url": "https://www.youtube.com/watch?v=cupxfAoNhwA"
+            },
+            {
+              "id": "F29Chv2R9MI",
+              "title": "FHL Knee Tap",
+              "channel": "Askren Wrestling Academy",
+              "url": "https://www.youtube.com/watch?v=F29Chv2R9MI"
             }
           ]
         }
@@ -1276,6 +1352,404 @@
               "url": "https://www.youtube.com/watch?v=p4zRBQwkmn4"
             }
           ]
+        },
+        {
+          "id": "foot-sweep",
+          "name": "Foot Sweep",
+          "category": "takedowns-2",
+          "description": "From a 2-on-1, Russian tie, or collar tie position, use your foot to sweep or hook opponent's lead foot while pulling them off balance. Timing and misdirection are key.",
+          "keyPoints": [
+            "Set up with a pull or push to get opponent stepping",
+            "Sweep the foot as they shift weight onto it",
+            "Use upper body control (2-on-1 or collar tie) to pull them over the sweep",
+            "Time the sweep with their step — don't chase the foot"
+          ],
+          "commonMistakes": [
+            "Kicking at the foot instead of sweeping with timing",
+            "Not controlling the upper body while sweeping",
+            "Telegraphing the sweep without a setup"
+          ],
+          "related": [
+            "two-on-one",
+            "inside-trip",
+            "outside-trip"
+          ],
+          "videos": [
+            {
+              "id": "MPe3IrFfuz4",
+              "title": "Foot Sweep From 2 on 1",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=MPe3IrFfuz4"
+            },
+            {
+              "id": "bv_vcgIsX20",
+              "title": "FOOT SWEEPS & TRIPS | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=bv_vcgIsX20"
+            }
+          ]
+        },
+        {
+          "id": "inside-trip",
+          "name": "Inside Trip",
+          "category": "takedowns-2",
+          "description": "From an underhook, collar tie, or Russian tie, step your foot inside and behind opponent's leg while driving forward to trip them backward.",
+          "keyPoints": [
+            "Establish inside control — underhook or 2-on-1",
+            "Step your foot inside and behind opponent's near leg",
+            "Drive your hips and chest forward into opponent",
+            "Follow them to the mat and secure top position"
+          ],
+          "commonMistakes": [
+            "Reaching for the trip without upper body control",
+            "Not driving forward through the opponent",
+            "Hooking too deep and getting your foot caught"
+          ],
+          "related": [
+            "underhook",
+            "two-on-one",
+            "outside-trip",
+            "foot-sweep"
+          ],
+          "videos": [
+            {
+              "id": "kVczDuKdcvY",
+              "title": "Inside Trip to the Underhook Side - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=kVczDuKdcvY"
+            },
+            {
+              "id": "-2dikGJ6io0",
+              "title": "Dom Demas Perfected THIS Principle of Wrestling",
+              "channel": "Earn Your Gold Medal",
+              "url": "https://www.youtube.com/watch?v=-2dikGJ6io0"
+            }
+          ]
+        },
+        {
+          "id": "outside-trip",
+          "name": "Outside Trip",
+          "category": "takedowns-2",
+          "description": "From a body lock, 2-on-1, or over-under position, step your foot behind opponent's far leg and drive them backward over your leg.",
+          "keyPoints": [
+            "Establish strong upper body control (body lock or 2-on-1)",
+            "Step your foot behind opponent's far leg",
+            "Turn your hips and drive diagonally through opponent",
+            "Keep your weight on them as they fall backward"
+          ],
+          "commonMistakes": [
+            "Trying to trip without closing the distance first",
+            "Not turning your hips into the throw",
+            "Placing your foot too shallow — get behind the knee"
+          ],
+          "related": [
+            "two-on-one",
+            "body-lock-throw",
+            "inside-trip",
+            "foot-sweep"
+          ],
+          "videos": [
+            {
+              "id": "N57GdPKrGcM",
+              "title": "Outside Trip From 2 on 1",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=N57GdPKrGcM"
+            },
+            {
+              "id": "ZIPL2IfdTRw",
+              "title": "Inside vs Outside Trip",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=ZIPL2IfdTRw"
+            }
+          ]
+        },
+        {
+          "id": "gator-roll",
+          "name": "Gator Roll",
+          "category": "takedowns-2",
+          "description": "From a front headlock, roll across your body while maintaining the headlock to drag opponent across the mat and expose their back. Named for the rolling motion like an alligator.",
+          "keyPoints": [
+            "Lock up a tight front headlock with arm and head control",
+            "Tuck your head and roll over your far shoulder",
+            "Keep the headlock locked tight throughout the roll",
+            "End up on top or transition to a pin combination"
+          ],
+          "commonMistakes": [
+            "Losing the headlock grip during the roll",
+            "Rolling straight over instead of diagonally",
+            "Not staying tight to opponent through the rotation"
+          ],
+          "related": [
+            "front-headlock",
+            "cement-job",
+            "head-in-hole"
+          ],
+          "videos": [
+            {
+              "id": "C5zDjEAMEWc",
+              "title": "Front Headlock Roll",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=C5zDjEAMEWc"
+            },
+            {
+              "id": "4R9aRws9nno",
+              "title": "Front Head Lock: Gator Roll by Ian Butler",
+              "channel": "FANATIC WRESTLING",
+              "url": "https://www.youtube.com/watch?v=4R9aRws9nno"
+            }
+          ]
+        },
+        {
+          "id": "head-in-hole",
+          "name": "Head in the Hole",
+          "category": "takedowns-2",
+          "description": "From a front headlock, drive your head under opponent's armpit (the 'hole') and use it to turn them and take them down or expose their back for a cradle.",
+          "keyPoints": [
+            "Start from a tight front headlock position",
+            "Drive your head under their armpit toward the far side",
+            "Use your head as a post to turn and control them",
+            "Follow up with a cradle, go-behind, or turn for back points"
+          ],
+          "commonMistakes": [
+            "Not maintaining headlock control while driving the head through",
+            "Going too slow — this needs to be explosive",
+            "Not following up after getting your head through"
+          ],
+          "related": [
+            "front-headlock",
+            "gator-roll",
+            "cradle-near"
+          ],
+          "videos": [
+            {
+              "id": "aSi_kzTiQAw",
+              "title": "Front Headlock to Head in the Hole Cradle - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=aSi_kzTiQAw"
+            },
+            {
+              "id": "z6q-lRONZqA",
+              "title": "Head In Hole Front Headlock Finish - The School of Wrestling Technique",
+              "channel": "The School of Wrestling",
+              "url": "https://www.youtube.com/watch?v=z6q-lRONZqA"
+            }
+          ]
+        },
+        {
+          "id": "arm-block",
+          "name": "Arm Block",
+          "category": "takedowns-2",
+          "description": "From a front headlock on the mat, block opponent's posting arm and drive them to their back. Prevents them from basing out while you work to score.",
+          "keyPoints": [
+            "From front headlock, identify their posting arm",
+            "Block or hook their arm so they can't base out",
+            "Drive forward and turn them to their back",
+            "Transition to a pin or riding position"
+          ],
+          "commonMistakes": [
+            "Not maintaining head control while blocking the arm",
+            "Letting them re-post before driving through",
+            "Not staying heavy with chest pressure"
+          ],
+          "related": [
+            "front-headlock",
+            "gator-roll",
+            "head-in-hole"
+          ],
+          "videos": [
+            {
+              "id": "LIQR3ip-gGk",
+              "title": "Front Headlock on Mat, Bounce, Arm Block - Jeff Jordan Wrestling Camp",
+              "channel": "Eddie Jayne",
+              "url": "https://www.youtube.com/watch?v=LIQR3ip-gGk"
+            },
+            {
+              "id": "73Jep8_jgXg",
+              "title": "Front Headlock Proper Position - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=73Jep8_jgXg"
+            }
+          ]
+        },
+        {
+          "id": "assassin",
+          "name": "Assassin",
+          "category": "takedowns-2",
+          "description": "A front headlock finish where you quickly snap and drag opponent past you while stepping behind to score. An explosive, high-percentage front headlock attack.",
+          "keyPoints": [
+            "Start from a tight front headlock",
+            "Snap opponent's head down and drag past you",
+            "Step behind as they go past",
+            "Stay connected and follow to the mat for control"
+          ],
+          "commonMistakes": [
+            "Not snapping hard enough to get opponent moving",
+            "Letting go of head control during the drag",
+            "Not circling behind quickly enough"
+          ],
+          "related": [
+            "front-headlock",
+            "shuck",
+            "gator-roll"
+          ],
+          "videos": [
+            {
+              "id": "0cyPxJ0BFi8",
+              "title": "McDonough Assassin At Iron Sharpens Iron",
+              "channel": "GOhioCasts",
+              "url": "https://www.youtube.com/watch?v=0cyPxJ0BFi8"
+            },
+            {
+              "id": "znsqlHUMdU0",
+              "title": "Sonnen Working With Campers On Front Head Assassin",
+              "channel": "GOhioCasts",
+              "url": "https://www.youtube.com/watch?v=znsqlHUMdU0"
+            }
+          ]
+        },
+        {
+          "id": "uchi-mata",
+          "name": "Uchi-Mata",
+          "category": "takedowns-2",
+          "description": "An inner thigh throw adapted from judo. From a Russian tie or overhook, turn in and sweep opponent's inner thigh with your leg to throw them over your hip.",
+          "keyPoints": [
+            "Set up from Russian tie, overhook, or collar tie",
+            "Turn your back into opponent and load them on your hip",
+            "Sweep your leg back between their legs, hitting the inner thigh",
+            "Pull with your arms and drive through the throw"
+          ],
+          "commonMistakes": [
+            "Not turning your hips enough before sweeping",
+            "Sweeping too low (ankle) instead of inner thigh",
+            "Losing upper body control during the turn"
+          ],
+          "related": [
+            "two-on-one",
+            "hip-toss",
+            "body-lock-throw"
+          ],
+          "videos": [
+            {
+              "id": "xBKQOhj3o7Q",
+              "title": "Russian Tie Uchi Mata: LEARN THIS Takedown!",
+              "channel": "Earn Your Gold Medal",
+              "url": "https://www.youtube.com/watch?v=xBKQOhj3o7Q"
+            },
+            {
+              "id": "x8s1h-ZF4p0",
+              "title": "Slide-By Meets Uchi Mata! (MUST WATCH For Wrestlers)",
+              "channel": "Earn Your Gold Medal",
+              "url": "https://www.youtube.com/watch?v=x8s1h-ZF4p0"
+            }
+          ]
+        },
+        {
+          "id": "keyhole-lock",
+          "name": "Keyhole Lock",
+          "category": "takedowns-2",
+          "description": "Also called a double wrist lock or key lock. From a 2-on-1 or Russian tie, lock opponent's wrist with a figure-four grip and use it to control, throw, or take down. Creates tremendous leverage on the shoulder.",
+          "keyPoints": [
+            "Secure a figure-four grip on opponent's wrist (your hand grabs your own wrist)",
+            "Keep their elbow tight to your body",
+            "Use the lock to steer them, set up throws, or drag them down",
+            "Can transition to a takedown, throw, or pin from the lock"
+          ],
+          "commonMistakes": [
+            "Locking too loosely — grip must be tight",
+            "Letting opponent straighten their arm and escape",
+            "Holding the lock without attacking"
+          ],
+          "related": [
+            "two-on-one",
+            "elbow-control",
+            "body-lock-throw"
+          ],
+          "videos": [
+            {
+              "id": "NExqwHV41j0",
+              "title": "Real Woods' Key Lock Throw Breakdown (Two Variations) - Wrestling for Jiu Jitsu",
+              "channel": "Merge Grappling",
+              "url": "https://www.youtube.com/watch?v=NExqwHV41j0"
+            },
+            {
+              "id": "lrHj8AVaf2U",
+              "title": "EASY Takedown with a 2 on 1 Keylock!",
+              "channel": "TeachMeGrappling Coach Brian",
+              "url": "https://www.youtube.com/watch?v=lrHj8AVaf2U"
+            }
+          ]
+        },
+        {
+          "id": "leg-block",
+          "name": "Leg Block / Carryover",
+          "category": "takedowns-2",
+          "description": "From a body lock or over-under clinch, block opponent's leg with yours and drive them over it. The carryover variation lifts and carries them past the block. Common from Russian tie reactions.",
+          "keyPoints": [
+            "Secure upper body control (body lock or over-under)",
+            "Step your leg in front of or behind opponent's leg to block",
+            "Drive forward through opponent over the block",
+            "Carryover: lift opponent's hips and carry them past your blocking leg"
+          ],
+          "commonMistakes": [
+            "Blocking without upper body pressure",
+            "Placing the block too far from opponent's base",
+            "Not following through after the block"
+          ],
+          "related": [
+            "inside-trip",
+            "outside-trip",
+            "body-lock-throw"
+          ],
+          "videos": [
+            {
+              "id": "puWVEwaBwbE",
+              "title": "Inside Trip Underhook Side",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=puWVEwaBwbE"
+            },
+            {
+              "id": "uFooJB3M1OM",
+              "title": "Over Under Position - Thigh Block Takedown By Nathan Tomasello",
+              "channel": "FANATIC WRESTLING",
+              "url": "https://www.youtube.com/watch?v=uFooJB3M1OM"
+            }
+          ]
+        },
+        {
+          "id": "attack-far-leg",
+          "name": "Attack Far Leg",
+          "category": "takedowns-2",
+          "description": "From a Russian tie or 2-on-1, reach across to attack opponent's far leg (ankle pick, sweep, or hook) while controlling their arm. The arm control prevents them from defending the far-side attack.",
+          "keyPoints": [
+            "Maintain tight 2-on-1 control on opponent's arm",
+            "Step to the side and reach for far ankle or knee",
+            "Pull their arm toward you while attacking the far leg",
+            "Can finish as an ankle pick, sweep, or hook and drive"
+          ],
+          "commonMistakes": [
+            "Releasing arm control to reach for the leg",
+            "Not creating enough angle before attacking",
+            "Reaching without a level change"
+          ],
+          "related": [
+            "two-on-one",
+            "ankle-pick",
+            "foot-sweep"
+          ],
+          "videos": [
+            {
+              "id": "RN5C2_bqWxQ",
+              "title": "2 on 1 Far Ankle Pick - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=RN5C2_bqWxQ"
+            },
+            {
+              "id": "YpH2p6e__Wg",
+              "title": "Ankle Pick and Drag Combo from Russian Tie - PJ Duke",
+              "channel": "Wrestling Rabbit Hole",
+              "url": "https://www.youtube.com/watch?v=YpH2p6e__Wg"
+            }
+          ]
         }
       ]
     },
@@ -1454,6 +1928,78 @@
               "title": "Front Trip Mat Return",
               "channel": "Iron Faith Wrestling",
               "url": "https://www.youtube.com/watch?v=8Siq4BAa8ro"
+            }
+          ]
+        },
+        {
+          "id": "claw",
+          "name": "Claw",
+          "category": "top-position",
+          "description": "A riding technique where you grip the back of opponent's arm near the tricep with a claw grip while riding with a spiral. Controls their arm and prevents them from building up or escaping.",
+          "keyPoints": [
+            "From top, grab behind opponent's tricep/elbow with a claw grip (fingers hooked)",
+            "Use with a spiral ride to control their movement",
+            "Drive opponent flat by pulling their arm back and applying chest pressure",
+            "Transition to turns or tilts (turk, arm bar) from the claw"
+          ],
+          "commonMistakes": [
+            "Gripping too high on the shoulder instead of the tricep",
+            "Not driving forward with your hips while riding",
+            "Holding the claw without working for a turn"
+          ],
+          "related": [
+            "spiral-ride",
+            "turk",
+            "arm-bar"
+          ],
+          "videos": [
+            {
+              "id": "fawTqTrQazc",
+              "title": "Claw Ride Transition to 2 on 1 Explanation",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=fawTqTrQazc"
+            },
+            {
+              "id": "PRjPnvB_bnU",
+              "title": "Throwing In Boots With Claw Spiral!",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=PRjPnvB_bnU"
+            }
+          ]
+        },
+        {
+          "id": "navy-ride",
+          "name": "Navy Ride",
+          "category": "top-position",
+          "description": "A top position ride where you control opponent from the side using an arm around their waist and a leg hook. Named for its use by Navy wrestlers. Extremely controlling and hard to escape.",
+          "keyPoints": [
+            "From top, hook opponent's far leg with your near leg",
+            "Wrap tight waist or control their near arm",
+            "Keep your hips heavy and stay tight",
+            "Work to turn them using the leg hook as leverage"
+          ],
+          "commonMistakes": [
+            "Not keeping hips heavy enough — opponent can roll",
+            "Hooking too shallow with the leg",
+            "Staying in the ride without working to score"
+          ],
+          "related": [
+            "tight-waist",
+            "spiral-ride",
+            "half-nelson"
+          ],
+          "videos": [
+            {
+              "id": "EpGSCw8aTNE",
+              "title": "Golf Swing Single to Navy Finish - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=EpGSCw8aTNE"
+            },
+            {
+              "id": "JEFRqqXokb4",
+              "title": "Make The Navy Ride Great Again",
+              "channel": "Earn Your Gold Medal",
+              "url": "https://www.youtube.com/watch?v=JEFRqqXokb4"
             }
           ]
         }
