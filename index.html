@@ -100,11 +100,34 @@
         document.getElementById('latest-news').innerHTML = '<p class="text-muted">No news posts yet.</p>';
       });
 
-    // Load upcoming events from both schedules
+    // Load upcoming events from Google Calendar (fallback to static JSON)
+    function fetchCal(name) {
+      return fetch('/api/calendar/' + name).then(r => r.json()).catch(() => ({ events: [] }));
+    }
+    function fetchStaticFallback(file) {
+      return fetch(file).then(r => r.json()).catch(() => ({ events: [] }));
+    }
     Promise.all([
-      fetch('data/schedule-youth.json').then(r => r.json()).catch(() => ({ events: [] })),
-      fetch('data/schedule-hs.json').then(r => r.json()).catch(() => ({ events: [] }))
+      Promise.all([fetchCal('youth-k3'), fetchCal('youth-48'), fetchCal('youth-gold')])
+        .then(results => {
+          const merged = [], seen = new Set();
+          for (const d of results) for (const e of d.events) {
+            const k = e.title + '|' + e.date;
+            if (!seen.has(k)) { seen.add(k); merged.push(e); }
+          }
+          return { events: merged };
+        }),
+      fetchCal('hs')
     ]).then(([youth, hs]) => {
+      // If both empty, try static fallback
+      if (!youth.events.length && !hs.events.length) {
+        return Promise.all([
+          fetchStaticFallback('data/schedule-youth.json'),
+          fetchStaticFallback('data/schedule-hs.json')
+        ]);
+      }
+      return [youth, hs];
+    }).then(([youth, hs]) => {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 

@@ -116,11 +116,128 @@ function hasAnyDataPermission(auth) {
   return ['roster', 'plans', 'notes', 'scouting', 'forms'].some(s => auth.permissions.includes(s));
 }
 
+// ========== CALENDAR PROXY ==========
+
+const CALENDAR_IDS = {
+  'hs': '9f55d626e24928f89eb8094a54352ecdfbc555548fd551dbe1d9d259fbe8cf28',
+  'ms': '55a13336f44cac27c02c150420d279655fc4e9e2e55b4221966fc408222e84e1',
+  'youth-k3': '1b03eda3c06083f738cc1b9bbe5b110d38c23e626cf9f891b75eda5fe840a913',
+  'youth-48': '30e733c9abcffd8506881817b18c2f21239d78a7e0af6e32cc1d0b386c6e05d0',
+  'youth-gold': '0e73a02e0d56fd6493c4372439b6b750923614110a6acd3db5a2e79f67644782',
+};
+
+function classifyEvent(title) {
+  const t = title.toLowerCase();
+  if (t.includes('practice') || t.includes('skinfold') || t.includes('nutrition')) return 'practice';
+  if (t.includes('tournament') || t.includes('invitational') || t.includes('districts') ||
+      t.includes('regional') || t.includes('team reg') || t.includes('finals') || t.includes('caac')) return 'tournament';
+  if (t.includes('vs') || t.includes('vs.') || t.includes('@ ') || t.startsWith('@') ||
+      t.includes('dual') || t.includes('duals') || t.includes('scrimmage')) return 'match';
+  return 'event';
+}
+
+function parseIcal(icsText) {
+  const events = [];
+  const blocks = icsText.split('BEGIN:VEVENT');
+  for (let i = 1; i < blocks.length; i++) {
+    const block = blocks[i].split('END:VEVENT')[0];
+    // Handle folded lines (RFC 5545: lines starting with space/tab are continuations)
+    const unfolded = block.replace(/\r?\n[ \t]/g, '');
+
+    const get = (key) => {
+      const re = new RegExp('^' + key + '[^:]*:(.*)', 'm');
+      const m = unfolded.match(re);
+      return m ? m[1].trim() : '';
+    };
+
+    const summary = get('SUMMARY').replace(/\\,/g, ',').replace(/\\n/g, ' ').replace(/\\/g, '');
+    const location = get('LOCATION').replace(/\\,/g, ',').replace(/\\n/g, ' ').replace(/\\/g, '');
+    const dtstart = get('DTSTART');
+
+    if (!summary || !dtstart) continue;
+
+    let date, time = '';
+    if (dtstart.length === 8) {
+      // All-day event: 20260110
+      date = dtstart.slice(0, 4) + '-' + dtstart.slice(4, 6) + '-' + dtstart.slice(6, 8);
+    } else {
+      // Timed event: 20260107T220000Z or 20251124T143000
+      const isUTC = dtstart.endsWith('Z');
+      const d = dtstart.replace('Z', '');
+      const year = d.slice(0, 4), mon = d.slice(4, 6), day = d.slice(6, 8);
+      const hr = d.slice(9, 11), min = d.slice(11, 13);
+
+      // Create date object and convert UTC to Eastern time
+      const dt = new Date(Date.UTC(+year, +mon - 1, +day, +hr, +min));
+      if (isUTC) {
+        // Convert to America/Detroit
+        const eastern = new Date(dt.toLocaleString('en-US', { timeZone: 'America/Detroit' }));
+        date = eastern.getFullYear() + '-' +
+          String(eastern.getMonth() + 1).padStart(2, '0') + '-' +
+          String(eastern.getDate()).padStart(2, '0');
+        const h = eastern.getHours();
+        const ampm = h >= 12 ? 'PM' : 'AM';
+        const h12 = h % 12 || 12;
+        time = h12 + ':' + String(eastern.getMinutes()).padStart(2, '0') + ' ' + ampm;
+      } else {
+        // Local time already
+        date = year + '-' + mon + '-' + day;
+        const h = +hr;
+        const ampm = h >= 12 ? 'PM' : 'AM';
+        const h12 = h % 12 || 12;
+        time = h12 + ':' + String(+min).padStart(2, '0') + ' ' + ampm;
+      }
+    }
+
+    events.push({
+      title: summary,
+      date,
+      time,
+      location,
+      type: classifyEvent(summary),
+    });
+  }
+  return events.sort((a, b) => a.date.localeCompare(b.date));
+}
+
+async function handleCalendar(calId) {
+  const icsUrl = `https://calendar.google.com/calendar/ical/${calId}%40group.calendar.google.com/public/basic.ics`;
+  const resp = await fetch(icsUrl);
+  if (!resp.ok) {
+    return new Response(JSON.stringify({ error: 'Failed to fetch calendar' }), {
+      status: 502,
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+    });
+  }
+  const icsText = await resp.text();
+  const events = parseIcal(icsText);
+  return new Response(JSON.stringify({ events }), {
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Cache-Control': 'public, max-age=3600',
+    },
+  });
+}
+
 // ========== MAIN HANDLER ==========
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    // Public calendar API (no auth)
+    if (url.pathname.startsWith('/api/calendar/')) {
+      const calName = url.pathname.split('/api/calendar/')[1];
+      const calId = CALENDAR_IDS[calName];
+      if (!calId) {
+        return new Response(JSON.stringify({ error: 'Unknown calendar: ' + calName }), {
+          status: 404,
+          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+        });
+      }
+      return handleCalendar(calId);
+    }
 
     // Only protect /hs/coaches/ paths
     if (!url.pathname.startsWith('/hs/coaches/')) {

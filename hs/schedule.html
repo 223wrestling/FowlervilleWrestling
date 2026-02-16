@@ -108,14 +108,20 @@
       renderEvents();
     });
 
-    fetch('../data/schedule-hs.json')
+    fetch('/api/calendar/hs')
       .then(r => r.json())
       .then(data => {
         allEvents = data.events;
         renderEvents();
       })
       .catch(() => {
-        document.getElementById('upcoming').innerHTML = '<p class="text-muted">Could not load schedule.</p>';
+        // Fallback to static JSON
+        fetch('../data/schedule-hs.json')
+          .then(r => r.json())
+          .then(data => { allEvents = data.events; renderEvents(); })
+          .catch(() => {
+            document.getElementById('upcoming').innerHTML = '<p class="text-muted">Could not load schedule.</p>';
+          });
       });
 
     // Calendar tabs

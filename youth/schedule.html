@@ -113,15 +113,31 @@
       renderEvents();
     });
 
-    fetch('../data/schedule-youth.json')
-      .then(r => r.json())
-      .then(data => {
-        allEvents = data.events;
-        renderEvents();
-      })
-      .catch(() => {
-        document.getElementById('upcoming').innerHTML = '<p class="text-muted">Could not load schedule.</p>';
-      });
+    // Fetch all 3 youth calendars, merge and deduplicate
+    Promise.all([
+      fetch('/api/calendar/youth-k3').then(r => r.json()).catch(() => ({ events: [] })),
+      fetch('/api/calendar/youth-48').then(r => r.json()).catch(() => ({ events: [] })),
+      fetch('/api/calendar/youth-gold').then(r => r.json()).catch(() => ({ events: [] })),
+    ]).then(results => {
+      const merged = [];
+      const seen = new Set();
+      for (const data of results) {
+        for (const e of data.events) {
+          const key = e.title + '|' + e.date;
+          if (!seen.has(key)) { seen.add(key); merged.push(e); }
+        }
+      }
+      allEvents = merged;
+      renderEvents();
+    }).catch(() => {
+      // Fallback to static JSON
+      fetch('../data/schedule-youth.json')
+        .then(r => r.json())
+        .then(data => { allEvents = data.events; renderEvents(); })
+        .catch(() => {
+          document.getElementById('upcoming').innerHTML = '<p class="text-muted">Could not load schedule.</p>';
+        });
+    });
 
     // Calendar tabs
     document.querySelector('.cal-tabs').addEventListener('click', e => {

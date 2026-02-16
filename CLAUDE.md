@@ -19,7 +19,9 @@ A self-contained wrestling curriculum website for Fowlerville Wrestling Club. Pu
 - `hs/coaches/editor.html` - Technique editor with table view, form editing, GitHub API save
 - `hs/photos/` - Wrestler and coach photos (uploaded via roster editor)
 - `hs/coaches/docs/` - Uploaded PDFs, practice plans, forms, documents
-- `workers/coaches-auth.js` - Cloudflare Worker: basic auth + API proxy (save JSON, upload/delete files via GitHub API)
+- `data/schedule-hs.json` - Static fallback schedule data (stale backup; live data comes from Google Calendar)
+- `data/schedule-youth.json` - Static fallback youth schedule data
+- `workers/coaches-auth.js` - Cloudflare Worker: basic auth + API proxy + Google Calendar proxy
 - `wrangler.toml` - Cloudflare Worker config
 - `gen_flowcharts.py` - Legacy Python generator (no longer needed, kept for reference)
 - `CNAME` - Custom domain for GitHub Pages
@@ -49,8 +51,9 @@ Search these channels first when looking for technique videos:
 ## Hosting
 - **GitHub Pages** serves the static site from the `main` branch
 - **Cloudflare** handles DNS for `fowlervillewrestling.com` and runs the auth Worker
-- **Cloudflare Worker** (`workers/coaches-auth.js`) protects `/hs/coaches/*` with HTTP basic auth and proxies GitHub API writes
+- **Cloudflare Worker** (`workers/coaches-auth.js`) protects `/hs/coaches/*` with HTTP basic auth, proxies GitHub API writes, and serves live Google Calendar data via `/api/calendar/*`
 - Worker secrets: `AUTH_USER`, `AUTH_PASS` (basic auth), `GITHUB_TOKEN` (fine-grained PAT), `GITHUB_REPO` (e.g. `user/repo`)
+- Worker deployment: `CLOUDFLARE_API_TOKEN=$(cat ~/.cloudflare-token) npx wrangler deploy`
 
 ## Key Design Decisions
 - Single `techniques.html` with hash routing (not one file per technique)
@@ -111,9 +114,20 @@ The coaches area (`hs/coaches/index.html`) is a full editing app behind Cloudfla
 **Save flow:** Coach edits data → clicks "Save to GitHub" → `POST /hs/coaches/api/save` → Worker (already authenticated via basic auth) uses `GITHUB_TOKEN` to commit via GitHub API → returns success/error. No browser-side API tokens needed.
 
 **Worker API endpoints:**
+- `GET /api/calendar/:id` — Public (no auth). Proxies Google Calendar iCal feed, returns JSON events. IDs: `hs`, `ms`, `youth-k3`, `youth-48`, `youth-gold`. Cached 1hr.
 - `POST /hs/coaches/api/save` — Save JSON file (`hs/roster.json` or `hs/coaches/coaches-data.json`)
 - `POST /hs/coaches/api/upload` — Upload file to `hs/photos/*` or `hs/coaches/docs/*`
 - `DELETE /hs/coaches/api/file` — Delete uploaded file from repo
+
+## Google Calendar Integration
+Schedule pages (`hs/schedule.html`, `youth/schedule.html`, `hs/index.html`, `index.html`) fetch live event data from Google Calendar via the Worker's `/api/calendar/:id` endpoint. The Worker fetches the public iCal feed, parses VEVENT blocks, classifies events by keyword (practice/match/tournament/event), and returns JSON. Pages fall back to static `data/schedule-*.json` files if the Worker is unreachable.
+
+**Calendar IDs** (hardcoded in Worker):
+- `hs` — Fowlerville HS Wrestling
+- `ms` — Middle School
+- `youth-k3` — Youth K-3
+- `youth-48` — Youth 4-8
+- `youth-gold` — Youth Gold
 
 ## Video Search Method
 YouTube videos are found by curling YouTube search results and parsing the `ytInitialData` JSON. Preferred channels (Kolat, Iron Faith, Earn Your Gold, Wrestling Rabbit Hole) are prioritized in results.

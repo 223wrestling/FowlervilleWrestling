@@ -82,9 +82,10 @@
         document.getElementById('coaches').innerHTML = '<p class="text-muted">Could not load roster data.</p>';
       });
 
-    // Load schedule
-    fetch('../data/schedule-hs.json')
+    // Load schedule (live from Google Calendar, fallback to static JSON)
+    fetch('/api/calendar/hs')
       .then(r => r.json())
+      .catch(() => fetch('../data/schedule-hs.json').then(r => r.json()))
       .then(data => {
         const today = new Date();
         today.setHours(0, 0, 0, 0);

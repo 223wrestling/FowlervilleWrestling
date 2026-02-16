@@ -21,8 +21,11 @@ Open `http://localhost:8000` in your browser.
 ├── gen_flowcharts.py        Legacy script (static flowcharts, no longer needed)
 ├── CNAME                    Custom domain for GitHub Pages
 ├── wrangler.toml            Cloudflare Worker config
+├── data/
+│   ├── schedule-hs.json     Static fallback HS schedule (live data from Google Calendar)
+│   └── schedule-youth.json  Static fallback youth schedule
 ├── workers/
-│   ├── coaches-auth.js      Basic auth Worker for /hs/coaches/*
+│   ├── coaches-auth.js      Cloudflare Worker: auth + API proxy + calendar proxy
 │   └── README.md            Worker setup instructions
 ├── css/
 │   └── styles.css           Shared stylesheet
@@ -230,6 +233,25 @@ The site is hosted on **GitHub Pages** with **Cloudflare** providing DNS and the
 
 ### Coaches Auth
 The `/hs/coaches/` path is protected by a Cloudflare Worker that requires HTTP basic auth. Credentials are stored as Worker secrets, not in source. See `workers/README.md` for setup.
+
+### Google Calendar Integration
+
+Schedule pages pull live event data from Google Calendar via the Cloudflare Worker:
+
+1. Schedule pages fetch from `/api/calendar/:id` (e.g. `/api/calendar/hs`)
+2. The Worker fetches the public Google Calendar iCal feed
+3. Parses VEVENT blocks and classifies events (practice, match, tournament, event)
+4. Returns JSON with 1-hour cache; pages fall back to static `data/schedule-*.json` if Worker is down
+
+**Available calendar IDs:** `hs`, `ms`, `youth-k3`, `youth-48`, `youth-gold`
+
+To add events, just update the Google Calendar — the website picks up changes automatically (within 1 hour).
+
+### Worker Deployment
+
+```bash
+CLOUDFLARE_API_TOKEN=$(cat ~/.cloudflare-token) npx wrangler deploy
+```
 
 ## Tech Stack
 
