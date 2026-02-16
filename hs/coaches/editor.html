@@ -603,6 +603,19 @@
     </div>
   </div>
 
+  <!-- CSV Import Errors Modal -->
+  <div class="modal-overlay" id="csv-errors-modal">
+    <div class="modal">
+      <h2 style="color:#dc3545;">CSV Import Errors</h2>
+      <p id="csv-errors-summary" style="margin-bottom:0.75rem;font-size:0.9rem;"></p>
+      <ul class="validation-list" id="csv-errors-list"></ul>
+      <div class="modal-footer">
+        <button class="tb-btn" id="btn-download-errors">Download Errors (.txt)</button>
+        <button class="tb-btn tb-btn-primary" onclick="closeModal('csv-errors-modal')">OK</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // ==================== STATE ====================
     let data = null;           // The full techniques.json object
@@ -1734,13 +1747,36 @@
           if (errors.length) msg += ', ' + errors.length + ' errors';
           setStatus(msg, errors.length ? 'error' : 'success');
           if (errors.length) {
-            alert('Import warnings:\n' + errors.join('\n'));
+            showCsvErrors(errors, updated, added);
           }
         };
         reader.readAsText(input.files[0]);
         input.value = '';
       };
       input.click();
+    }
+
+    let lastCsvErrors = [];
+
+    function showCsvErrors(errors, updated, added) {
+      lastCsvErrors = errors;
+      document.getElementById('csv-errors-summary').textContent =
+        updated + ' updated, ' + added + ' added, ' + errors.length + ' row(s) skipped due to errors:';
+      document.getElementById('csv-errors-list').innerHTML =
+        errors.map(e => '<li>' + esc(e) + '</li>').join('');
+      openModal('csv-errors-modal');
+    }
+
+    function downloadCsvErrors() {
+      if (!lastCsvErrors.length) return;
+      const text = 'CSV Import Errors\n' + '='.repeat(40) + '\n\n' + lastCsvErrors.join('\n') + '\n';
+      const blob = new Blob([text], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'csv-import-errors.txt';
+      a.click();
+      URL.revokeObjectURL(url);
     }
 
     // ==================== EVENT LISTENERS ====================
@@ -1752,6 +1788,7 @@
     document.getElementById('btn-export').addEventListener('click', exportJson);
     document.getElementById('btn-export-csv').addEventListener('click', exportCSV);
     document.getElementById('btn-import-csv').addEventListener('click', importCSV);
+    document.getElementById('btn-download-errors').addEventListener('click', downloadCsvErrors);
     document.getElementById('btn-settings').addEventListener('click', () => openModal('settings-modal'));
     document.getElementById('btn-save-settings').addEventListener('click', saveSettings);
     document.getElementById('btn-save-category').addEventListener('click', saveCategory);
