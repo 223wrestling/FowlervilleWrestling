@@ -120,7 +120,7 @@ The coaches area (`hs/coaches/index.html`) is a full editing app behind Cloudfla
 - `DELETE /hs/coaches/api/file` — Delete uploaded file from repo
 
 ## Google Calendar Integration
-Schedule pages (`hs/schedule.html`, `youth/schedule.html`, `hs/index.html`, `index.html`) fetch live event data from Google Calendar via the Worker's `/api/calendar/:id` endpoint. The Worker fetches the public iCal feed, parses VEVENT blocks, classifies events by keyword (practice/match/tournament/event), and returns JSON. Pages fall back to static `data/schedule-*.json` files if the Worker is unreachable.
+Schedule pages (`hs/schedule.html`, `youth/schedule.html`, `hs/index.html`, `youth/index.html`, `index.html`) fetch live event data from Google Calendar via the Worker's `/api/calendar/:id` endpoint. The Worker fetches the public iCal feed, parses VEVENT blocks (including RRULE recurring events with BYDAY/UNTIL/COUNT/EXDATE and TZID-prefixed datetimes), classifies events by keyword (practice/match/tournament/event), and returns JSON. Pages fall back to static `data/schedule-*.json` files if the Worker is unreachable.
 
 **Calendar IDs** (hardcoded in Worker):
 - `hs` — Fowlerville HS Wrestling

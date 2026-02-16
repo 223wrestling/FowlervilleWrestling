@@ -240,8 +240,10 @@ Schedule pages pull live event data from Google Calendar via the Cloudflare Work
 
 1. Schedule pages fetch from `/api/calendar/:id` (e.g. `/api/calendar/hs`)
 2. The Worker fetches the public Google Calendar iCal feed
-3. Parses VEVENT blocks and classifies events (practice, match, tournament, event)
-4. Returns JSON with 1-hour cache; pages fall back to static `data/schedule-*.json` if Worker is down
+3. Parses VEVENT blocks including recurring events (RRULE with WEEKLY/DAILY frequencies, BYDAY, UNTIL, COUNT, EXDATE)
+4. Handles TZID-prefixed dates, UTC times, and all-day events
+5. Classifies events by keyword matching (practice, match, tournament, event)
+6. Returns JSON with 1-hour cache; pages fall back to static `data/schedule-*.json` if Worker is down
 
 **Available calendar IDs:** `hs`, `ms`, `youth-k3`, `youth-48`, `youth-gold`
 
