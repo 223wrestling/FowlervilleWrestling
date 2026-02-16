@@ -273,41 +273,46 @@
 
     <!-- Navigation Cards -->
     <div class="coaches-grid" id="nav-cards">
-      <div class="coach-nav-card" style="cursor:pointer;" onclick="showSection('roster')">
+      <div class="coach-nav-card" style="cursor:pointer;" onclick="showSection('roster')" data-section="roster">
         <div class="icon">&#128101;</div>
         <h3>Roster</h3>
         <p>Manage wrestlers and coaching staff.</p>
       </div>
-      <div class="coach-nav-card" style="cursor:pointer;" onclick="showSection('plans')">
+      <div class="coach-nav-card" style="cursor:pointer;" onclick="showSection('plans')" data-section="plans">
         <div class="icon">&#128203;</div>
         <h3>Practice Plans</h3>
         <p>Create and manage practice plans.</p>
       </div>
-      <div class="coach-nav-card" style="cursor:pointer;" onclick="showSection('notes')">
+      <div class="coach-nav-card" style="cursor:pointer;" onclick="showSection('notes')" data-section="notes">
         <div class="icon">&#128221;</div>
         <h3>Wrestler Notes</h3>
         <p>Individual wrestler strengths and areas to improve.</p>
       </div>
-      <div class="coach-nav-card" style="cursor:pointer;" onclick="showSection('scouting')">
+      <div class="coach-nav-card" style="cursor:pointer;" onclick="showSection('scouting')" data-section="scouting">
         <div class="icon">&#128269;</div>
         <h3>Scouting Reports</h3>
         <p>Opponent scouting and match preparation.</p>
       </div>
-      <div class="coach-nav-card" style="cursor:pointer;" onclick="showSection('forms')">
+      <div class="coach-nav-card" style="cursor:pointer;" onclick="showSection('forms')" data-section="forms">
         <div class="icon">&#128196;</div>
         <h3>Forms &amp; Documents</h3>
         <p>MHSAA forms, emergency contacts, and other documents.</p>
       </div>
-      <div class="coach-nav-card" style="cursor:pointer;" onclick="showSection('flowcharts')">
+      <div class="coach-nav-card" style="cursor:pointer;" onclick="showSection('flowcharts')" data-section="flowcharts">
         <div class="icon">&#128280;</div>
         <h3>Flowchart Editor</h3>
         <p>Edit chain wrestling flowcharts in the visual builder.</p>
       </div>
-      <a class="coach-nav-card" href="editor.html" style="cursor:pointer;text-decoration:none;color:inherit;">
+      <a class="coach-nav-card" href="editor.html" style="cursor:pointer;text-decoration:none;color:inherit;" data-section="techniques">
         <div class="icon">&#9998;</div>
         <h3>Technique Editor</h3>
         <p>Edit techniques, videos, and categories with GitHub save.</p>
       </a>
+      <div class="coach-nav-card" style="cursor:pointer;" onclick="showSection('users')" data-section="users">
+        <div class="icon">&#128274;</div>
+        <h3>User Management</h3>
+        <p>Manage user accounts and role permissions.</p>
+      </div>
     </div>
 
     <!-- Roster Section -->
@@ -365,7 +370,7 @@
     <div id="section-forms" class="coach-section" style="display:none;">
       <div class="section-bar">
         <h2 class="section-title" style="margin:0;border:none;padding:0;">Forms &amp; Documents</h2>
-        <div class="btn-group">
+        <div class="btn-group forms-edit-controls">
           <button class="btn btn-sm btn-primary" onclick="openFormModal()">+ Add Form</button>
         </div>
       </div>
@@ -377,6 +382,20 @@
       <h2 class="section-title">Flowchart Editor</h2>
       <p class="text-muted" style="margin-bottom:1rem;">Open a flowchart in the visual builder to rearrange nodes, add techniques, or update connections.</p>
       <div id="flowcharts-content" class="grid-2"></div>
+    </div>
+
+    <!-- User Management Section (admin only) -->
+    <div id="section-users" class="coach-section" style="display:none;">
+      <div class="section-bar">
+        <h2 class="section-title" style="margin:0;border:none;padding:0;">User Management</h2>
+        <div class="btn-group">
+          <button class="btn btn-sm btn-primary" onclick="openUserModal()">+ Add User</button>
+        </div>
+      </div>
+      <h3 style="color:var(--primary);margin-bottom:0.75rem;">User Accounts</h3>
+      <div id="users-table-container"></div>
+      <h3 style="color:var(--primary);margin:1.5rem 0 0.75rem;">Role Permissions</h3>
+      <div id="permissions-editor"></div>
     </div>
   </div>
 
@@ -410,6 +429,8 @@
     let rosterData = null;  // from roster.json
     let coachData = null;   // from coaches-data.json
     let dirty = { roster: false, coaches: false };
+    let currentUser = null; // { user, role, name, permissions }
+    let isReadOnly = false; // true for player role
 
     // ========== API HELPERS ==========
     async function apiSave(file, content, message) {
@@ -1145,16 +1166,16 @@
       const el = document.getElementById('forms-content');
       if (!forms.length) { el.innerHTML = '<p class="text-muted">No forms uploaded yet.</p>'; return; }
       el.innerHTML = `
-        <button class="btn btn-sm btn-accent" style="margin-bottom:1rem;" onclick="saveCoachData()">Save to GitHub</button>
+        ${!isReadOnly ? '<button class="btn btn-sm btn-accent" style="margin-bottom:1rem;" onclick="saveCoachData()">Save to GitHub</button>' : ''}
         <div class="grid-2">${forms.map((f, i) => `
           <div class="card">
             <h3>${esc(f.title)}</h3>
             <p style="font-size:0.9rem;color:var(--text-light);margin-bottom:0.75rem;">${esc(f.description)}</p>
             ${f.url ? `<a href="../../${esc(f.url)}" class="btn btn-primary btn-sm" target="_blank">Download ${esc(f.type || 'file').toUpperCase()}</a>` : '<span class="text-muted" style="font-size:0.85rem;">No file uploaded</span>'}
-            <div class="card-actions">
+            ${!isReadOnly ? `<div class="card-actions">
               <button class="btn-edit" onclick="openFormModal(${i})">Edit</button>
               <button class="btn-delete" onclick="deleteForm(${i})">Delete</button>
-            </div>
+            </div>` : ''}
           </div>
         `).join('')}</div>`;
     }
@@ -1253,12 +1274,237 @@
     }
 
     // ================================================================
+    // ROLE-AWARE UI
+    // ================================================================
+    function applyPermissions() {
+      if (!currentUser) return;
+      const perms = currentUser.permissions || [];
+      isReadOnly = currentUser.role === 'player';
+
+      // Show/hide nav cards based on permissions
+      document.querySelectorAll('#nav-cards [data-section]').forEach(card => {
+        const section = card.dataset.section;
+        card.style.display = perms.includes(section) ? '' : 'none';
+      });
+
+      // Hide form edit controls for read-only users
+      const formControls = document.querySelector('.forms-edit-controls');
+      if (formControls) formControls.style.display = isReadOnly ? 'none' : '';
+
+      // Show user greeting
+      const greeting = document.getElementById('user-greeting');
+      if (greeting) greeting.remove();
+      const subtitle = document.querySelector('.container > .text-muted');
+      if (subtitle) {
+        subtitle.insertAdjacentHTML('afterend',
+          `<p id="user-greeting" style="font-size:0.85rem;color:var(--text-light);margin-bottom:0.5rem;">Logged in as <strong>${esc(currentUser.name)}</strong> (${esc(currentUser.role)})</p>`);
+      }
+    }
+
+    // ================================================================
+    // USER MANAGEMENT (admin only)
+    // ================================================================
+    let usersData = null;
+    let permissionsData = null;
+
+    const ALL_SECTIONS = [
+      { id: 'roster', label: 'Roster' },
+      { id: 'plans', label: 'Practice Plans' },
+      { id: 'notes', label: 'Wrestler Notes' },
+      { id: 'scouting', label: 'Scouting Reports' },
+      { id: 'forms', label: 'Forms & Documents' },
+      { id: 'flowcharts', label: 'Flowchart Editor' },
+      { id: 'techniques', label: 'Technique Editor' },
+      { id: 'users', label: 'User Management' },
+    ];
+
+    async function loadUsers() {
+      try {
+        const resp = await fetch('/hs/coaches/api/users');
+        usersData = await resp.json();
+      } catch { usersData = {}; }
+      renderUsers();
+    }
+
+    async function loadPermissions() {
+      try {
+        const resp = await fetch('/hs/coaches/api/permissions');
+        permissionsData = await resp.json();
+      } catch { permissionsData = {}; }
+      renderPermissions();
+    }
+
+    function renderUsers() {
+      const el = document.getElementById('users-table-container');
+      if (!usersData || !Object.keys(usersData).length) {
+        el.innerHTML = '<p class="text-muted">No users found.</p>';
+        return;
+      }
+      const rows = Object.entries(usersData).map(([username, data]) => `
+        <tr>
+          <td><strong>${esc(username)}</strong></td>
+          <td>${esc(data.name)}</td>
+          <td><span style="background:${data.role==='admin'?'#dc3545':data.role==='coach'?'var(--primary)':'#6c757d'};color:white;padding:0.15rem 0.5rem;border-radius:3px;font-size:0.8rem;">${esc(data.role)}</span></td>
+          <td>
+            <button class="btn-edit" onclick="openUserModal('${esc(username)}')">Edit</button>
+            ${username !== currentUser.user ? `<button class="btn-delete" onclick="deleteUser('${esc(username)}')">Delete</button>` : ''}
+          </td>
+        </tr>`).join('');
+      el.innerHTML = `
+        <table class="data-table">
+          <thead><tr><th>Username</th><th>Name</th><th>Role</th><th style="width:120px;"></th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>`;
+    }
+
+    function openUserModal(username) {
+      const isEdit = !!username;
+      const user = isEdit && usersData[username] ? usersData[username] : {};
+
+      const body = `
+        <div class="form-group">
+          <label>Username</label>
+          <input class="form-control" id="uf-username" value="${esc(username || '')}" ${isEdit ? 'readonly style="background:#f8f9fa;"' : ''}>
+        </div>
+        <div class="form-group">
+          <label>Display Name</label>
+          <input class="form-control" id="uf-name" value="${esc(user.name || '')}">
+        </div>
+        <div class="form-group">
+          <label>Password${isEdit ? ' (leave blank to keep current)' : ''}</label>
+          <input type="password" class="form-control" id="uf-password" placeholder="${isEdit ? 'Leave blank to keep current' : 'Enter password'}">
+        </div>
+        <div class="form-group">
+          <label>Role</label>
+          <select class="form-control" id="uf-role">
+            ${['admin','coach','player'].map(r => `<option value="${r}" ${user.role===r?'selected':''}>${r.charAt(0).toUpperCase()+r.slice(1)}</option>`).join('')}
+          </select>
+        </div>`;
+
+      openModal(isEdit ? 'Edit User' : 'Add User', body,
+        `<button class="btn btn-sm btn-secondary" onclick="closeModal()">Cancel</button>
+         <button class="btn btn-sm btn-primary" onclick="saveUser(${isEdit ? `'${esc(username)}'` : 'null'})">Save</button>`);
+    }
+
+    async function saveUser(existingUsername) {
+      const username = existingUsername || document.getElementById('uf-username').value.trim();
+      const name = document.getElementById('uf-name').value.trim();
+      const password = document.getElementById('uf-password').value;
+      const role = document.getElementById('uf-role').value;
+
+      if (!username) { showToast('Username is required', 'error'); return; }
+      if (!name) { showToast('Name is required', 'error'); return; }
+      if (!existingUsername && !password) { showToast('Password is required for new users', 'error'); return; }
+
+      const payload = { username, role, name };
+      if (password) payload.password = password;
+
+      const resp = await fetch('/hs/coaches/api/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const result = await resp.json();
+      if (result.ok) {
+        showToast(existingUsername ? 'User updated' : 'User created');
+        closeModal();
+        loadUsers();
+      } else {
+        showToast('Error: ' + result.error, 'error');
+      }
+    }
+
+    function deleteUser(username) {
+      confirmAction(`Delete user <strong>${esc(username)}</strong>? They will no longer be able to log in.`, async () => {
+        const resp = await fetch('/hs/coaches/api/users', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username }),
+        });
+        const result = await resp.json();
+        if (result.ok) {
+          showToast('User deleted');
+          loadUsers();
+        } else {
+          showToast('Error: ' + result.error, 'error');
+        }
+      });
+    }
+
+    function renderPermissions() {
+      const el = document.getElementById('permissions-editor');
+      if (!permissionsData) { el.innerHTML = ''; return; }
+      const roles = ['admin', 'coach', 'player'];
+      const headerCells = roles.map(r => `<th>${r.charAt(0).toUpperCase()+r.slice(1)}</th>`).join('');
+      const rows = ALL_SECTIONS.map(s => {
+        const cells = roles.map(r => {
+          const checked = (permissionsData[r] || []).includes(s.id);
+          return `<td style="text-align:center;"><input type="checkbox" data-role="${r}" data-section="${s.id}" ${checked ? 'checked' : ''} onchange="onPermChange()"></td>`;
+        }).join('');
+        return `<tr><td>${esc(s.label)}</td>${cells}</tr>`;
+      }).join('');
+
+      el.innerHTML = `
+        <table class="data-table">
+          <thead><tr><th>Section</th>${headerCells}</tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+        <button class="btn btn-sm btn-accent" style="margin-top:0.75rem;" onclick="savePermissions()">Save Permissions</button>`;
+    }
+
+    function onPermChange() {
+      // Just marks UI dirty — save button handles it
+    }
+
+    async function savePermissions() {
+      const perms = {};
+      document.querySelectorAll('#permissions-editor input[type="checkbox"]').forEach(cb => {
+        const role = cb.dataset.role;
+        const section = cb.dataset.section;
+        if (!perms[role]) perms[role] = [];
+        if (cb.checked) perms[role].push(section);
+      });
+
+      const resp = await fetch('/hs/coaches/api/permissions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(perms),
+      });
+      const result = await resp.json();
+      if (result.ok) {
+        permissionsData = perms;
+        showToast('Permissions saved');
+      } else {
+        showToast('Error: ' + result.error, 'error');
+      }
+    }
+
+    // ================================================================
     // DATA LOADING
     // ================================================================
-    Promise.all([
-      fetch('../roster.json').then(r => r.json()).catch(() => ({ season: '', wrestlers: [], coaches: [] })),
-      fetch('coaches-data.json').then(r => r.json()).catch(() => ({ practicePlans: [], wrestlerNotes: [], scouting: [], forms: [] })),
-    ]).then(([roster, coaches]) => {
+    // Fetch current user info first, then load data (chained to avoid race condition)
+    fetch('/hs/coaches/api/me')
+      .then(r => r.json())
+      .then(me => {
+        currentUser = me;
+        applyPermissions();
+
+        // Load user management data if admin
+        if (me.permissions.includes('users')) {
+          loadUsers();
+          loadPermissions();
+        }
+      })
+      .catch(() => {
+        // Fallback: show everything (old behavior if /api/me not available)
+        currentUser = { user: 'unknown', role: 'admin', name: 'Unknown', permissions: ['roster','plans','notes','scouting','forms','flowcharts','techniques','users'] };
+        applyPermissions();
+      })
+      .then(() => Promise.all([
+        fetch('../roster.json').then(r => r.json()).catch(() => ({ season: '', wrestlers: [], coaches: [] })),
+        fetch('coaches-data.json').then(r => r.json()).catch(() => ({ practicePlans: [], wrestlerNotes: [], scouting: [], forms: [] })),
+      ]))
+    .then(([roster, coaches]) => {
       rosterData = roster;
       coachData = coaches;
       renderRoster();

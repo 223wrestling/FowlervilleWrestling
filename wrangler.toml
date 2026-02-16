@@ -5,3 +5,7 @@ compatibility_date = "2026-02-12"
 routes = [
   { pattern = "223wrestling.com/hs/coaches/*", zone_name = "223wrestling.com" }
 ]
+
+[[kv_namespaces]]
+binding = "COACHES_AUTH"
+id = "90989018b57e42579bc47486562dbb88"
