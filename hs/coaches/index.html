@@ -268,7 +268,10 @@
 
   <div class="container">
     <a href="../index.html" class="back-link">&larr; High School</a>
-    <h1 style="color:var(--primary);margin-bottom:0.25rem;">Coaches Area</h1>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;">
+      <h1 style="color:var(--primary);margin-bottom:0.25rem;">Coaches Area</h1>
+      <button id="logout-btn" class="btn btn-sm btn-outline" style="display:none;" onclick="doLogout()">Logout</button>
+    </div>
     <p class="text-muted mb-3">Manage roster, practice plans, wrestler notes, scouting reports, and forms.</p>
 
     <!-- Navigation Cards -->
@@ -1291,7 +1294,7 @@
       const formControls = document.querySelector('.forms-edit-controls');
       if (formControls) formControls.style.display = isReadOnly ? 'none' : '';
 
-      // Show user greeting
+      // Show user greeting and logout button
       const greeting = document.getElementById('user-greeting');
       if (greeting) greeting.remove();
       const subtitle = document.querySelector('.container > .text-muted');
@@ -1299,6 +1302,18 @@
         subtitle.insertAdjacentHTML('afterend',
           `<p id="user-greeting" style="font-size:0.85rem;color:var(--text-light);margin-bottom:0.5rem;">Logged in as <strong>${esc(currentUser.name)}</strong> (${esc(currentUser.role)})</p>`);
       }
+      document.getElementById('logout-btn').style.display = '';
+    }
+
+    function doLogout() {
+      // Send request with bogus credentials to clear browser's Basic Auth cache
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', '/hs/coaches/api/me', true, 'logout', 'logout');
+      xhr.onloadend = function() {
+        // Redirect to force a fresh login prompt
+        window.location.replace('/hs/coaches/');
+      };
+      xhr.send();
     }
 
     // ================================================================
