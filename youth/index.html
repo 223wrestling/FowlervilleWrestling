@@ -104,8 +104,19 @@
   <script>
     const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-    fetch('../data/schedule-youth.json')
-      .then(r => r.json())
+    // Fetch all 3 youth calendars, merge and deduplicate (fallback to static JSON)
+    Promise.all([
+      fetch('/api/calendar/youth-k3').then(r => r.json()).catch(() => ({ events: [] })),
+      fetch('/api/calendar/youth-48').then(r => r.json()).catch(() => ({ events: [] })),
+      fetch('/api/calendar/youth-gold').then(r => r.json()).catch(() => ({ events: [] })),
+    ]).then(results => {
+      const merged = [], seen = new Set();
+      for (const d of results) for (const e of d.events) {
+        const k = e.title + '|' + e.date;
+        if (!seen.has(k)) { seen.add(k); merged.push(e); }
+      }
+      return { events: merged };
+    }).catch(() => fetch('../data/schedule-youth.json').then(r => r.json()))
       .then(data => {
         const today = new Date();
         today.setHours(0, 0, 0, 0);

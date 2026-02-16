@@ -136,6 +136,86 @@ function classifyEvent(title) {
   return 'event';
 }
 
+// Parse iCal datetime value (handles 20260106, 20260107T220000Z, 20260106T183000)
+function parseIcalDate(val) {
+  if (!val) return null;
+  const isUTC = val.endsWith('Z');
+  const d = val.replace('Z', '');
+  const year = +d.slice(0, 4), mon = +d.slice(4, 6) - 1, day = +d.slice(6, 8);
+  if (d.length === 8) return { date: new Date(year, mon, day), allDay: true };
+  const hr = +d.slice(9, 11), min = +d.slice(11, 13);
+  if (isUTC) {
+    const utc = new Date(Date.UTC(year, mon, day, hr, min));
+    const eastern = new Date(utc.toLocaleString('en-US', { timeZone: 'America/Detroit' }));
+    return { date: eastern, allDay: false };
+  }
+  return { date: new Date(year, mon, day, hr, min), allDay: false };
+}
+
+function formatDate(dt) {
+  return dt.getFullYear() + '-' +
+    String(dt.getMonth() + 1).padStart(2, '0') + '-' +
+    String(dt.getDate()).padStart(2, '0');
+}
+
+function formatTime(dt) {
+  const h = dt.getHours(), ampm = h >= 12 ? 'PM' : 'AM', h12 = h % 12 || 12;
+  return h12 + ':' + String(dt.getMinutes()).padStart(2, '0') + ' ' + ampm;
+}
+
+const DAY_MAP = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 };
+
+function expandRRule(startDt, rrule, exdates) {
+  const dates = [];
+  const params = {};
+  for (const part of rrule.split(';')) {
+    const [k, v] = part.split('=');
+    params[k] = v;
+  }
+  if (params.FREQ !== 'WEEKLY' && params.FREQ !== 'DAILY') return [startDt];
+
+  const until = params.UNTIL ? parseIcalDate(params.UNTIL).date : null;
+  const count = params.COUNT ? +params.COUNT : null;
+  // Default: expand up to 1 year out, max 200 instances
+  const maxDate = until || new Date(startDt.getTime() + 365 * 86400000);
+  const maxCount = count || 200;
+  const interval = params.INTERVAL ? +params.INTERVAL : 1;
+
+  const exSet = new Set(exdates.map(d => formatDate(d)));
+
+  if (params.FREQ === 'DAILY') {
+    let cur = new Date(startDt);
+    while (cur <= maxDate && dates.length < maxCount) {
+      if (!exSet.has(formatDate(cur))) dates.push(new Date(cur));
+      cur.setDate(cur.getDate() + interval);
+    }
+    return dates;
+  }
+
+  // WEEKLY with BYDAY
+  const byDay = params.BYDAY ? params.BYDAY.split(',').map(d => DAY_MAP[d]).filter(d => d !== undefined) : [startDt.getDay()];
+
+  // Start from the week of startDt
+  let cur = new Date(startDt);
+  cur.setDate(cur.getDate() - cur.getDay()); // go to Sunday of that week
+  let weeksProcessed = 0;
+
+  while (weeksProcessed < maxCount * 2 && dates.length < maxCount) {
+    for (const dayNum of byDay) {
+      const candidate = new Date(cur);
+      candidate.setDate(cur.getDate() + dayNum);
+      candidate.setHours(startDt.getHours(), startDt.getMinutes(), 0, 0);
+      if (candidate < startDt) continue;
+      if (candidate > maxDate) return dates;
+      if (!exSet.has(formatDate(candidate))) dates.push(candidate);
+      if (dates.length >= maxCount) return dates;
+    }
+    cur.setDate(cur.getDate() + 7 * interval);
+    weeksProcessed++;
+  }
+  return dates;
+}
+
 function parseIcal(icsText) {
   const events = [];
   const blocks = icsText.split('BEGIN:VEVENT');
@@ -153,49 +233,44 @@ function parseIcal(icsText) {
     const summary = get('SUMMARY').replace(/\\,/g, ',').replace(/\\n/g, ' ').replace(/\\/g, '');
     const location = get('LOCATION').replace(/\\,/g, ',').replace(/\\n/g, ' ').replace(/\\/g, '');
     const dtstart = get('DTSTART');
+    const rrule = get('RRULE');
 
     if (!summary || !dtstart) continue;
 
-    let date, time = '';
-    if (dtstart.length === 8) {
-      // All-day event: 20260110
-      date = dtstart.slice(0, 4) + '-' + dtstart.slice(4, 6) + '-' + dtstart.slice(6, 8);
-    } else {
-      // Timed event: 20260107T220000Z or 20251124T143000
-      const isUTC = dtstart.endsWith('Z');
-      const d = dtstart.replace('Z', '');
-      const year = d.slice(0, 4), mon = d.slice(4, 6), day = d.slice(6, 8);
-      const hr = d.slice(9, 11), min = d.slice(11, 13);
+    const parsed = parseIcalDate(dtstart);
+    if (!parsed) continue;
 
-      // Create date object and convert UTC to Eastern time
-      const dt = new Date(Date.UTC(+year, +mon - 1, +day, +hr, +min));
-      if (isUTC) {
-        // Convert to America/Detroit
-        const eastern = new Date(dt.toLocaleString('en-US', { timeZone: 'America/Detroit' }));
-        date = eastern.getFullYear() + '-' +
-          String(eastern.getMonth() + 1).padStart(2, '0') + '-' +
-          String(eastern.getDate()).padStart(2, '0');
-        const h = eastern.getHours();
-        const ampm = h >= 12 ? 'PM' : 'AM';
-        const h12 = h % 12 || 12;
-        time = h12 + ':' + String(eastern.getMinutes()).padStart(2, '0') + ' ' + ampm;
-      } else {
-        // Local time already
-        date = year + '-' + mon + '-' + day;
-        const h = +hr;
-        const ampm = h >= 12 ? 'PM' : 'AM';
-        const h12 = h % 12 || 12;
-        time = h12 + ':' + String(+min).padStart(2, '0') + ' ' + ampm;
-      }
+    // Collect EXDATE values
+    const exdates = [];
+    const exMatches = unfolded.matchAll(/^EXDATE[^:]*:(.*)/gm);
+    for (const m of exMatches) {
+      const exParsed = parseIcalDate(m[1].trim());
+      if (exParsed) exdates.push(exParsed.date);
     }
 
-    events.push({
-      title: summary,
-      date,
-      time,
-      location,
-      type: classifyEvent(summary),
-    });
+    const type = classifyEvent(summary);
+
+    if (rrule) {
+      // Expand recurring event
+      const dates = expandRRule(parsed.date, rrule, exdates);
+      for (const dt of dates) {
+        events.push({
+          title: summary,
+          date: formatDate(dt),
+          time: parsed.allDay ? '' : formatTime(dt),
+          location,
+          type,
+        });
+      }
+    } else {
+      events.push({
+        title: summary,
+        date: formatDate(parsed.date),
+        time: parsed.allDay ? '' : formatTime(parsed.date),
+        location,
+        type,
+      });
+    }
   }
   return events.sort((a, b) => a.date.localeCompare(b.date));
 }
