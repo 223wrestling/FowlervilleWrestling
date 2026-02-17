@@ -488,7 +488,7 @@ async function handleUpdatePermissions(request, env) {
 
 // ========== EXISTING API HANDLERS ==========
 
-const JSON_WHITELIST = ['hs/roster.json', 'hs/coaches/coaches-data.json'];
+const JSON_WHITELIST = ['hs/roster.json', 'hs/coaches/coaches-data.json', 'techniques.json'];
 const UPLOAD_PREFIXES = ['hs/coaches/docs/', 'hs/photos/'];
 
 function isAllowedUploadPath(path) {

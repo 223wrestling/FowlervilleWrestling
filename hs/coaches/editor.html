@@ -502,7 +502,7 @@
         <button class="tb-btn" id="btn-export-csv">Export CSV</button>
         <button class="tb-btn" id="btn-import-csv">Import CSV</button>
         <input type="file" id="csv-file-input" accept=".csv" style="display:none">
-        <button class="tb-btn" id="btn-settings">Settings</button>
+        <!-- Settings removed: saves through Worker API now -->
       </div>
       <span class="tb-status" id="status-msg"></span>
     </div>
@@ -528,27 +528,7 @@
     </div>
   </div>
 
-  <!-- Settings Modal -->
-  <div class="modal-overlay" id="settings-modal">
-    <div class="modal">
-      <h2>GitHub Settings</h2>
-      <div class="settings-grid">
-        <label>Owner/Repo</label>
-        <input type="text" id="set-repo" placeholder="user/repo">
-        <label>Branch</label>
-        <input type="text" id="set-branch" placeholder="main" value="main">
-        <label>File Path</label>
-        <input type="text" id="set-path" placeholder="techniques.json" value="techniques.json">
-        <label>Access Token</label>
-        <input type="password" id="set-token" placeholder="ghp_...">
-        <p class="settings-note">Token is stored in your browser only and sent exclusively to api.github.com. Requires <strong>Contents</strong> read/write permission.</p>
-      </div>
-      <div class="modal-footer">
-        <button class="tb-btn" onclick="closeModal('settings-modal')">Cancel</button>
-        <button class="tb-btn tb-btn-primary" id="btn-save-settings">Save Settings</button>
-      </div>
-    </div>
-  </div>
+  <!-- Settings modal removed: saves through Worker API now -->
 
   <!-- Category Modal -->
   <div class="modal-overlay" id="category-modal">
@@ -620,7 +600,7 @@
     // ==================== STATE ====================
     let data = null;           // The full techniques.json object
     let originalJson = '';     // JSON string at load time (for dirty detection + diff)
-    let fileSha = null;        // GitHub file SHA for conflict detection
+    // fileSha removed: Worker handles SHA/conflict detection
     let selectedTech = null;   // { catIdx, techIdx } of currently selected technique
     let editingCategory = null; // category index being edited, or null for new
     let dirty = false;
@@ -634,7 +614,6 @@
 
     // ==================== INIT ====================
     async function init() {
-      loadSettings();
       try {
         const resp = await fetch('../../techniques.json');
         data = await resp.json();
@@ -1295,43 +1274,6 @@
     }
 
     // ==================== GITHUB SAVE ====================
-    function loadSettings() {
-      const s = JSON.parse(localStorage.getItem('te-settings') || '{}');
-      document.getElementById('set-repo').value = s.repo || '';
-      document.getElementById('set-branch').value = s.branch || 'main';
-      document.getElementById('set-path').value = s.path || 'techniques.json';
-      document.getElementById('set-token').value = s.token || '';
-    }
-
-    function saveSettings() {
-      const s = {
-        repo: document.getElementById('set-repo').value.trim(),
-        branch: document.getElementById('set-branch').value.trim() || 'main',
-        path: document.getElementById('set-path').value.trim() || 'techniques.json',
-        token: document.getElementById('set-token').value.trim()
-      };
-      localStorage.setItem('te-settings', JSON.stringify(s));
-      closeModal('settings-modal');
-      setStatus('Settings saved', 'success');
-    }
-
-    function getSettings() {
-      return JSON.parse(localStorage.getItem('te-settings') || '{}');
-    }
-
-    async function fetchFileSha() {
-      const s = getSettings();
-      if (!s.repo || !s.token) return null;
-      try {
-        const resp = await fetch(`https://api.github.com/repos/${s.repo}/contents/${s.path}?ref=${s.branch || 'main'}`, {
-          headers: { 'Authorization': 'token ' + s.token, 'Accept': 'application/vnd.github.v3+json' }
-        });
-        if (!resp.ok) return null;
-        const d = await resp.json();
-        return d.sha;
-      } catch { return null; }
-    }
-
     async function saveToGitHub() {
       // Validate first
       const errors = validate();
@@ -1340,31 +1282,6 @@
         openModal('validation-modal');
         return;
       }
-
-      const s = getSettings();
-      if (!s.repo || !s.token) {
-        openModal('settings-modal');
-        setStatus('Configure GitHub settings first', 'error');
-        return;
-      }
-
-      setStatus('Fetching current file SHA...', '');
-
-      // Get current SHA for conflict detection
-      const currentSha = await fetchFileSha();
-      if (!currentSha) {
-        setStatus('Could not fetch file SHA. Check settings.', 'error');
-        return;
-      }
-
-      // If we already have a SHA and it changed, warn about conflict
-      if (fileSha && currentSha !== fileSha) {
-        alert('Conflict detected! The file has been modified on GitHub since you loaded it. Please reload the page and re-apply your changes.');
-        setStatus('Conflict detected - reload needed', 'error');
-        return;
-      }
-
-      fileSha = currentSha;
 
       // Generate diff
       const newJson = JSON.stringify(data, null, 2);
@@ -1378,46 +1295,33 @@
     }
 
     async function confirmSave() {
-      const s = getSettings();
       const msg = document.getElementById('commit-msg').value.trim() || 'Update techniques.json';
-      const newJson = JSON.stringify(data, null, 2) + '\n';
-      const content = btoa(unescape(encodeURIComponent(newJson)));
 
       closeModal('diff-modal');
       setStatus('Saving to GitHub...', '');
 
       try {
-        const resp = await fetch(`https://api.github.com/repos/${s.repo}/contents/${s.path}`, {
-          method: 'PUT',
-          headers: {
-            'Authorization': 'token ' + s.token,
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json'
-          },
+        const resp = await fetch('/hs/coaches/api/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            message: msg,
-            content: content,
-            sha: fileSha,
-            branch: s.branch || 'main'
+            file: 'techniques.json',
+            content: data,
+            message: msg
           })
         });
 
-        if (!resp.ok) {
-          const err = await resp.json();
-          if (resp.status === 409) {
-            setStatus('Conflict! File was modified. Reload page.', 'error');
-          } else {
-            setStatus('Save failed: ' + (err.message || resp.status), 'error');
-          }
+        const result = await resp.json();
+
+        if (!result.ok) {
+          setStatus('Save failed: ' + (result.error || 'Unknown error'), 'error');
           return;
         }
 
-        const result = await resp.json();
-        fileSha = result.content.sha;
         originalJson = JSON.stringify(data, null, 2);
         dirty = false;
         updateDirtyIndicator();
-        setStatus('Saved! Commit: ' + result.commit.sha.substring(0, 7), 'success');
+        setStatus('Saved!', 'success');
       } catch (e) {
         setStatus('Network error: ' + e.message, 'error');
       }
@@ -1789,8 +1693,8 @@
     document.getElementById('btn-export-csv').addEventListener('click', exportCSV);
     document.getElementById('btn-import-csv').addEventListener('click', importCSV);
     document.getElementById('btn-download-errors').addEventListener('click', downloadCsvErrors);
-    document.getElementById('btn-settings').addEventListener('click', () => openModal('settings-modal'));
-    document.getElementById('btn-save-settings').addEventListener('click', saveSettings);
+    // Settings removed: saves through Worker API now
+    // btn-save-settings removed: saves through Worker API now
     document.getElementById('btn-save-category').addEventListener('click', saveCategory);
     document.getElementById('btn-delete-category').addEventListener('click', deleteCategory);
     document.getElementById('btn-close-detail').addEventListener('click', closeDetail);

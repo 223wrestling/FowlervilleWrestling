@@ -92,9 +92,9 @@ Search these channels first when looking for technique videos:
 1. **Coaches Area** → **Technique Editor** (or `hs/coaches/editor.html` directly)
 2. Search/filter techniques, click a row to open the detail panel
 3. Edit fields, array items (keyPoints, commonMistakes, related, videos), manage categories
-4. "Apply Changes" writes to in-memory data; "Save to GitHub" commits via API with conflict detection
-5. Requires a GitHub fine-grained personal access token with Contents read/write on the repo
-6. Settings (repo, branch, token) stored in browser localStorage only
+4. "Apply Changes" writes to in-memory data; "Save to GitHub" saves via Worker API (same as coaches area)
+5. Shows diff preview and custom commit message before saving
+6. No browser-side GitHub tokens needed — Worker handles authentication
 
 ## Coaches Area Workflow
 The coaches area (`hs/coaches/index.html`) is a full editing app behind Cloudflare basic auth:
@@ -115,7 +115,7 @@ The coaches area (`hs/coaches/index.html`) is a full editing app behind Cloudfla
 
 **Worker API endpoints:**
 - `GET /api/calendar/:id` — Public (no auth). Proxies Google Calendar iCal feed, returns JSON events. IDs: `hs`, `ms`, `youth-k3`, `youth-48`, `youth-gold`. Cached 1hr.
-- `POST /hs/coaches/api/save` — Save JSON file (`hs/roster.json` or `hs/coaches/coaches-data.json`)
+- `POST /hs/coaches/api/save` — Save JSON file (`hs/roster.json`, `hs/coaches/coaches-data.json`, or `techniques.json`)
 - `POST /hs/coaches/api/upload` — Upload file to `hs/photos/*` or `hs/coaches/docs/*`
 - `DELETE /hs/coaches/api/file` — Delete uploaded file from repo
 

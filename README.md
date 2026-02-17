@@ -151,12 +151,8 @@ When you click a flowchart node, it looks up the node's label in `techniques.jso
 3. Click a technique row to open the detail panel with form fields for all data
 4. Edit key points, common mistakes, related techniques (with autocomplete), and videos (with YouTube thumbnail preview)
 5. Click **Apply Changes** to save to in-memory data, then **Save to GitHub** to commit
-6. The save uses GitHub's API with SHA-based conflict detection — if someone else edited the file since you loaded it, you'll be warned
-
-**First-time setup:** Click **Settings** in the toolbar and enter:
-- **Owner/Repo**: `223wrestling/FowlervilleWrestling`
-- **Branch**: `main`
-- **Access Token**: A GitHub fine-grained personal access token with **Contents** read/write permission on the repo
+6. Shows a diff preview and custom commit message before saving
+7. Saves through the Cloudflare Worker API — no GitHub tokens needed in the browser
 
 You can also use **Export JSON** to download the file and commit manually.
 
