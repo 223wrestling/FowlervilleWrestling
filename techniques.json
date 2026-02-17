@@ -539,7 +539,7 @@
           "category": "hand-fighting",
           "description": "The most fundamental hand fighting drill in wrestling. Two wrestlers work to establish and re-establish underhooks by alternately swimming their arms inside. Builds the muscle memory for winning the tie-up battle.",
           "keyPoints": [
-            "Start in collar tie / underhook position with partner",
+            "Start in overhook / underhook position with partner",
             "Swim your arm inside to replace opponent's underhook with yours",
             "Keep elbows tight and fight for inside position",
             "Stay in good stance with your hips underneath you",
@@ -552,8 +552,8 @@
           ],
           "related": [
             "underhook",
-            "inside-outside-control",
-            "collar-tie"
+            "overhook",
+            "lateral-drop"
           ],
           "videos": [
             {
@@ -568,7 +568,8 @@
               "channel": "TeachMeGrappling Coach Brian",
               "url": "https://www.youtube.com/watch?v=9Sn9z5OREgw"
             }
-          ]
+          ],
+          "critical": true
         }
       ]
     },
