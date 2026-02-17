@@ -39,7 +39,8 @@
               "channel": "Wrestling Rabbit Hole",
               "url": "https://www.youtube.com/watch?v=zxstwIzcb-U"
             }
-          ]
+          ],
+          "critical": true
         },
         {
           "id": "inside-outside-control",
