@@ -1026,16 +1026,16 @@
           ],
           "videos": [
             {
-              "id": "U533ArBT5tw",
-              "title": "Low Single | Wrestling Moves",
-              "channel": "Iron Faith Wrestling",
-              "url": "https://www.youtube.com/watch?v=U533ArBT5tw"
-            },
-            {
               "id": "A8ys3e6w69Q",
               "title": "John Smith teaches his legendary low single",
               "channel": "FloWrestling",
               "url": "https://www.youtube.com/watch?v=A8ys3e6w69Q"
+            },
+            {
+              "id": "U533ArBT5tw",
+              "title": "Low Single | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=U533ArBT5tw"
             }
           ]
         },
