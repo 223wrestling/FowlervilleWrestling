@@ -3063,6 +3063,12 @@
           ]
         }
       ]
+    },
+    {
+      "id": "fundamental-movements",
+      "name": "Fundamental Movements",
+      "subtitle": "The movements will be used in many different positions and techniques.",
+      "techniques": []
     }
   ],
   "flowcharts": [
