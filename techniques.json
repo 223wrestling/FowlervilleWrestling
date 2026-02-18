@@ -1899,6 +1899,43 @@
               "url": "https://www.youtube.com/watch?v=s9Fb-dviloY"
             }
           ]
+        },
+        {
+          "id": "peek-out",
+          "name": "Peek Out",
+          "category": "takedowns-2",
+          "description": "From bottom when flattened out or in a front headlock, peek your head out to the side, clearing past opponent's control to escape or get behind them. Works when you can't sit out or stand up.",
+          "keyPoints": [
+            "From bottom/flattened position, turn your head to one side",
+            "Swim your near arm through to clear their control",
+            "Peek your head out past their arm or hip",
+            "Circle behind as you clear — don't stay flat",
+            "Works well when opponent is riding heavy with chest pressure"
+          ],
+          "commonMistakes": [
+            "Trying to peek out without first creating movement",
+            "Peeking straight forward instead of to the side",
+            "Not circling behind after clearing the head"
+          ],
+          "related": [
+            "front-headlock",
+            "single-leg",
+            "high-crotch"
+          ],
+          "videos": [
+            {
+              "id": "D-YdMhOBpb0",
+              "title": "Peek Out - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=D-YdMhOBpb0"
+            },
+            {
+              "id": "t3DFJsflG0s",
+              "title": "Why 99% of Beginners Get Stuck on Bottom (And How to Escape)",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=t3DFJsflG0s"
+            }
+          ]
         }
       ]
     },
@@ -2877,43 +2914,6 @@
               "title": "Granby Roll Details",
               "channel": "Iron Faith Wrestling",
               "url": "https://www.youtube.com/watch?v=a6MwzHF4Zak"
-            }
-          ]
-        },
-        {
-          "id": "peek-out",
-          "name": "Peek Out",
-          "category": "defense-3",
-          "description": "From bottom when flattened out or in a front headlock, peek your head out to the side, clearing past opponent's control to escape or get behind them. Works when you can't sit out or stand up.",
-          "keyPoints": [
-            "From bottom/flattened position, turn your head to one side",
-            "Swim your near arm through to clear their control",
-            "Peek your head out past their arm or hip",
-            "Circle behind as you clear — don't stay flat",
-            "Works well when opponent is riding heavy with chest pressure"
-          ],
-          "commonMistakes": [
-            "Trying to peek out without first creating movement",
-            "Peeking straight forward instead of to the side",
-            "Not circling behind after clearing the head"
-          ],
-          "related": [
-            "sit-out",
-            "stand-up",
-            "granby-roll"
-          ],
-          "videos": [
-            {
-              "id": "D-YdMhOBpb0",
-              "title": "Peek Out - Cary Kolat Wrestling Moves",
-              "channel": "Cary Kolat",
-              "url": "https://www.youtube.com/watch?v=D-YdMhOBpb0"
-            },
-            {
-              "id": "t3DFJsflG0s",
-              "title": "Why 99% of Beginners Get Stuck on Bottom (And How to Escape)",
-              "channel": "Iron Faith Wrestling",
-              "url": "https://www.youtube.com/watch?v=t3DFJsflG0s"
             }
           ]
         },
