@@ -3068,7 +3068,40 @@
       "id": "fundamental-movements",
       "name": "Fundamental Movements",
       "subtitle": "The movements will be used in many different positions and techniques.",
-      "techniques": []
+      "techniques": [
+        {
+          "id": "knee-slide",
+          "name": "Knee Slide",
+          "category": "fundamental-movements",
+          "description": "Sliding on your knee to build better posture. Great start from bottom. Shot recovery. Peek outs.",
+          "keyPoints": [
+            "Explosively drive your knee forward to rebuild your posture",
+            "You are trying to drive underneath opponents center of gravity (shot recovery)",
+            "When done properly your opponent will \"feel light\""
+          ],
+          "commonMistakes": [
+            "Stopping after first attempt",
+            "Not building up chest/head with slide (Looking down at mat)",
+            "Stopping short"
+          ],
+          "related": [],
+          "videos": [
+            {
+              "id": "UCcsLu__tRM",
+              "title": "Pat Smith Knee Slide Recovery Drill",
+              "channel": "JROB Intensive Wrestling Camps",
+              "url": "https://www.youtube.com/watch?v=UCcsLu__tRM"
+            },
+            {
+              "id": "XsYQC4STGBY",
+              "title": "Stand Up💥Knee Slide💥Sit Turn",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=XsYQC4STGBY"
+            }
+          ],
+          "critical": true
+        }
+      ]
     }
   ],
   "flowcharts": [
