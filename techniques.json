@@ -3061,6 +3061,24 @@
               "url": "https://www.youtube.com/watch?v=LAiQeoQMJ5M"
             }
           ]
+        },
+        {
+          "id": "weldon-drill",
+          "name": "Weldon Drill",
+          "category": "drills",
+          "description": "Foundational movement drill practiced every day at Penn State. Focus is on moving the opponents back leg to create openings and disrupt their offense.",
+          "keyPoints": [],
+          "commonMistakes": [],
+          "related": [],
+          "videos": [
+            {
+              "id": "gNLFZh8UMFg",
+              "title": "WELDON DRILL: LEG ATTACKS WITH MARK HALL",
+              "channel": "FCA Wrestling",
+              "url": "https://www.youtube.com/watch?v=gNLFZh8UMFg"
+            }
+          ],
+          "critical": true
         }
       ]
     },
