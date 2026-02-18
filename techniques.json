@@ -1906,21 +1906,21 @@
           "category": "takedowns-2",
           "description": "From bottom when flattened out or in a front headlock, peek your head out to the side, clearing past opponent's control to escape or get behind them. Works when you can't sit out or stand up.",
           "keyPoints": [
-            "From bottom/flattened position, turn your head to one side",
-            "Swim your near arm through to clear their control",
+            "From front headlock or sprawl position, turn your head to one side",
+            "Swim your near elbow through while knee sliding to clear their control",
             "Peek your head out past their arm or hip",
-            "Circle behind as you clear — don't stay flat",
-            "Works well when opponent is riding heavy with chest pressure"
+            "Circle behind as you clear, don't stay there",
+            "Works well when opponent is riding heavy with chest pressure and your head is underneath"
           ],
           "commonMistakes": [
             "Trying to peek out without first creating movement",
-            "Peeking straight forward instead of to the side",
+            "Going too far out in the peek - stay tight!",
             "Not circling behind after clearing the head"
           ],
           "related": [
             "front-headlock",
             "single-leg",
-            "high-crotch"
+            "double-leg"
           ],
           "videos": [
             {
@@ -1935,7 +1935,8 @@
               "channel": "TeachMeGrappling",
               "url": "https://www.youtube.com/watch?v=3Vw2PGbe1Ic"
             }
-          ]
+          ],
+          "critical": true
         }
       ]
     },
