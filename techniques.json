@@ -423,6 +423,34 @@
               "url": "https://www.youtube.com/watch?v=AgHmuB9ortk"
             }
           ]
+        },
+        {
+          "id": "new-technique-1771444781299",
+          "name": "New Technique",
+          "category": "tie-ups",
+          "description": "",
+          "keyPoints": [
+            "Change levels first",
+            "Reach and catch heel",
+            "Forehead to inside of knee and forearm parallel to foot",
+            "Use head to drive knee over forearm"
+          ],
+          "commonMistakes": [
+            "Head above knee",
+            "Lifting leg"
+          ],
+          "related": [
+            "single-leg",
+            "double-leg"
+          ],
+          "videos": [
+            {
+              "id": "A8ys3e6w69Q",
+              "title": "John Smith teaches his legendary low single",
+              "channel": "FloWrestling",
+              "url": "https://www.youtube.com/watch?v=A8ys3e6w69Q"
+            }
+          ]
         }
       ]
     },
@@ -1006,18 +1034,20 @@
           "id": "low-single",
           "name": "Low Single",
           "category": "takedowns-1",
-          "description": "A long-range single leg attack targeting the opponent's ankle from outside shooting distance. Drop low and reach for the far ankle, then finish by lifting and running the pipe.",
+          "description": "A long-range single leg attack targeting the opponent's ankle from outside shooting distance. Drop low and reach for the ankle. Signature shot of all-time great John Smith",
           "keyPoints": [
+            "Can be set up with fakes or level changes",
             "Attack from outside normal tie-up range",
-            "Drop step deep — your chest should be near the mat",
-            "Reach for the far ankle with both hands",
-            "Turn the corner and run the pipe to finish",
-            "Can be set up with fakes or level changes"
+            "Drop step deep your chest should be near the mat",
+            "Reach for the ankle with forearm parallel to foot",
+            "Head below and inside knee",
+            "Drive knee over your forearm with your head and lower body"
           ],
           "commonMistakes": [
             "Not getting low enough on the shot",
             "Reaching without changing levels first",
-            "Staying on your knees instead of getting back to your feet to finish"
+            "Head went above the knee",
+            "Lifting leg instead of driving head"
           ],
           "related": [
             "single-leg",
@@ -1032,10 +1062,10 @@
               "url": "https://www.youtube.com/watch?v=U533ArBT5tw"
             },
             {
-              "id": "PsEyOM6xvLk",
-              "title": "Low Single, Single Leg - Richard Figueroa Highlight NCAA 2024",
-              "channel": "Wrestling Rabbit Hole",
-              "url": "https://www.youtube.com/watch?v=PsEyOM6xvLk"
+              "id": "A8ys3e6w69Q",
+              "title": "John Smith teaches his legendary low single",
+              "channel": "FloWrestling",
+              "url": "https://www.youtube.com/watch?v=A8ys3e6w69Q"
             }
           ]
         },
