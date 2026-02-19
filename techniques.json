@@ -220,43 +220,6 @@
           ]
         },
         {
-          "id": "whizzer",
-          "name": "Whizzer",
-          "category": "tie-ups",
-          "description": "A defensive overhook used to counter an opponent's underhook or single leg attempt. Drive your arm over their arm and crank your hip into them to create pressure and stop their attack. The whizzer is one of the most important defensive tools in wrestling.",
-          "keyPoints": [
-            "Clamp arm over opponent's arm and drive your hip into them",
-            "Turn the corner to create maximum pressure on their shoulder",
-            "Use the whizzer to re-pummel back to an underhook",
-            "On a single leg, whizzer hard and crossface to break their grip"
-          ],
-          "commonMistakes": [
-            "Whizzer too loose — no pressure on their shoulder",
-            "Not driving hip in, just reaching over the arm",
-            "Over-relying on whizzer without transitioning to offense"
-          ],
-          "related": [
-            "overhook",
-            "underhook",
-            "pummeling",
-            "whip-over"
-          ],
-          "videos": [
-            {
-              "id": "eaaHsLE3r3Q",
-              "title": "Powering Up Your Whizzer - Cary Kolat Wrestling Moves",
-              "channel": "Cary Kolat",
-              "url": "https://www.youtube.com/watch?v=eaaHsLE3r3Q"
-            },
-            {
-              "id": "Mtvn-qIyD5g",
-              "title": "The Whizzer | Wrestling Moves",
-              "channel": "Iron Faith Wrestling",
-              "url": "https://www.youtube.com/watch?v=Mtvn-qIyD5g"
-            }
-          ]
-        },
-        {
           "id": "circle",
           "name": "Circle",
           "category": "tie-ups",
@@ -2664,6 +2627,44 @@
               "url": "https://www.youtube.com/watch?v=QT7dxLzt2JA"
             }
           ]
+        },
+        {
+          "id": "whizzer",
+          "name": "Whizzer",
+          "category": "defense-1",
+          "description": "A defensive overhook used to counter an opponent's underhook or single leg attempt. Drive your arm over their arm and crank your hip into them to create pressure and stop their attack. The whizzer is one of the most important defensive tools in wrestling.",
+          "keyPoints": [
+            "Clamp arm over opponent's arm and drive your hip into them",
+            "Turn the corner to create maximum pressure on their shoulder",
+            "Use the whizzer to re-pummel back to an underhook",
+            "On a single leg, whizzer hard and crossface to break their grip"
+          ],
+          "commonMistakes": [
+            "Whizzer too loose — no pressure on their shoulder",
+            "Not driving hip in, just reaching over the arm",
+            "Over-relying on whizzer without transitioning to offense"
+          ],
+          "related": [
+            "overhook",
+            "underhook",
+            "pummeling",
+            "whip-over"
+          ],
+          "videos": [
+            {
+              "id": "eaaHsLE3r3Q",
+              "title": "Powering Up Your Whizzer - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=eaaHsLE3r3Q"
+            },
+            {
+              "id": "Mtvn-qIyD5g",
+              "title": "The Whizzer | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=Mtvn-qIyD5g"
+            }
+          ],
+          "critical": true
         }
       ]
     },
