@@ -43,31 +43,33 @@
           "critical": true
         },
         {
-          "id": "inside-outside-control",
-          "name": "Inside/Outside Control",
+          "id": "inside-control",
+          "name": "Inside Control",
           "category": "tie-ups",
-          "description": "Controlling the tie-up battle by fighting for inside or outside wrist and elbow position. Inside ties give you offensive access; outside ties create angles.",
+          "description": "Fighting to get your hands and arms inside your opponent's arms, controlling their biceps and elbows. Inside position is the dominant tie-up position — it gives you direct access to attacks while limiting your opponent's offense.",
           "keyPoints": [
-            "Inside position: hands inside opponent's arms, controlling biceps/elbows",
-            "Outside position: hands on outside of opponent's arms",
-            "Constantly fight to clear opponent's hands and re-establish your ties",
-            "Use push-pull motion to create openings"
+            "Hands inside opponent's arms, controlling biceps and elbows",
+            "Constantly fight to clear opponent's hands and re-establish inside position",
+            "Use push-pull motion to create openings for shots",
+            "Inside control sets up underhooks, collar ties, and level changes"
           ],
           "commonMistakes": [
             "Being passive and letting opponent control ties",
-            "Staying in one position too long"
+            "Reaching for inside position without good stance",
+            "Staying in one position too long without attacking"
           ],
           "related": [
             "collar-tie",
             "underhook",
-            "two-on-one"
+            "two-on-one",
+            "pummeling"
           ],
           "videos": [
             {
-              "id": "QD08BC03woQ",
-              "title": "Collar Tie💥Rip Defense😉💥",
+              "id": "cKKHGhvph38",
+              "title": "Tie Ups 3 Seconds Rule - Cary Kolat Wrestling Moves",
               "channel": "Cary Kolat",
-              "url": "https://www.youtube.com/watch?v=QD08BC03woQ"
+              "url": "https://www.youtube.com/watch?v=cKKHGhvph38"
             },
             {
               "id": "dCK8316H-Ao",
@@ -182,36 +184,75 @@
         },
         {
           "id": "overhook",
-          "name": "Overhook / Whizzer",
+          "name": "Overhook",
           "category": "tie-ups",
-          "description": "Clamping down over opponent's arm from outside, hooking above the elbow. Used both offensively and as a counter to opponent's underhook.",
+          "description": "An offensive tie-up where you clamp your arm over the opponent's arm from the outside, hooking above the elbow. The overhook controls your opponent's arm and sets up throws, snaps, and go-behinds.",
           "keyPoints": [
             "Clamp arm tightly over opponent's bicep/upper arm",
             "Drive hip into opponent to maximize pressure",
-            "Use whizzer to counter opponent's underhook or single leg attempts",
-            "Can transition to throws and go-behinds"
+            "Use overhook to control opponent's arm and limit their attacks",
+            "Sets up hip toss, headlock throw, and go-behinds"
           ],
           "commonMistakes": [
-            "Whizzer too loose - no pressure",
-            "Over-relying on whizzer without attacking"
+            "Overhook too loose — no control",
+            "Hanging on the overhook without attacking",
+            "Leaning too far over and getting off balance"
           ],
           "related": [
             "underhook",
             "hip-toss",
+            "headlock-throw",
+            "whizzer"
+          ],
+          "videos": [
+            {
+              "id": "Kk0Th7DEX48",
+              "title": "Single Leg Defense Basics - The power of the Whizzer (Overhook)",
+              "channel": "WrestlingTournaments.com",
+              "url": "https://www.youtube.com/watch?v=Kk0Th7DEX48"
+            },
+            {
+              "id": "dCK8316H-Ao",
+              "title": "Inside Tie & Collar Tie | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=dCK8316H-Ao"
+            }
+          ]
+        },
+        {
+          "id": "whizzer",
+          "name": "Whizzer",
+          "category": "tie-ups",
+          "description": "A defensive overhook used to counter an opponent's underhook or single leg attempt. Drive your arm over their arm and crank your hip into them to create pressure and stop their attack. The whizzer is one of the most important defensive tools in wrestling.",
+          "keyPoints": [
+            "Clamp arm over opponent's arm and drive your hip into them",
+            "Turn the corner to create maximum pressure on their shoulder",
+            "Use the whizzer to re-pummel back to an underhook",
+            "On a single leg, whizzer hard and crossface to break their grip"
+          ],
+          "commonMistakes": [
+            "Whizzer too loose — no pressure on their shoulder",
+            "Not driving hip in, just reaching over the arm",
+            "Over-relying on whizzer without transitioning to offense"
+          ],
+          "related": [
+            "overhook",
+            "underhook",
+            "pummeling",
             "whip-over"
           ],
           "videos": [
+            {
+              "id": "eaaHsLE3r3Q",
+              "title": "Powering Up Your Whizzer - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=eaaHsLE3r3Q"
+            },
             {
               "id": "Mtvn-qIyD5g",
               "title": "The Whizzer | Wrestling Moves",
               "channel": "Iron Faith Wrestling",
               "url": "https://www.youtube.com/watch?v=Mtvn-qIyD5g"
-            },
-            {
-              "id": "Kk0Th7DEX48",
-              "title": "Single Leg Defense Basics - The power of the Whizzer (Overhook)",
-              "channel": "WrestlingTournaments․com",
-              "url": "https://www.youtube.com/watch?v=Kk0Th7DEX48"
             }
           ]
         },
@@ -450,7 +491,7 @@
           "related": [
             "two-on-one",
             "elbow-control",
-            "inside-outside-control"
+            "inside-control"
           ],
           "videos": [
             {
@@ -483,7 +524,7 @@
             "Not using the control to attack"
           ],
           "related": [
-            "inside-outside-control",
+            "inside-control",
             "duck-under"
           ],
           "videos": [
@@ -1243,7 +1284,7 @@
           ],
           "related": [
             "front-headlock",
-            "overhook",
+            "whizzer",
             "cement-job"
           ],
           "videos": [
@@ -2572,7 +2613,7 @@
             "Reaching down for your own leg"
           ],
           "related": [
-            "overhook",
+            "whizzer",
             "sprawl-go-behind"
           ],
           "videos": [
@@ -2607,7 +2648,7 @@
           ],
           "related": [
             "defend-double",
-            "overhook"
+            "whizzer"
           ],
           "videos": [
             {
