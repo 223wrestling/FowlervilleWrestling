@@ -1402,35 +1402,74 @@
         },
         {
           "id": "scramble",
-          "name": "Scramble / Dogfight",
+          "name": "Scramble",
           "category": "takedowns-2",
-          "description": "Dynamic exchanges where both wrestlers are fighting for position. Dogfight is a specific scramble where both wrestlers are on their knees battling for underhooks.",
+          "description": "Dynamic exchanges where both wrestlers are fighting for position on the mat. Scrambles happen when a takedown attempt doesn't finish clean and both wrestlers end up in a chaotic battle for control. The wrestler who keeps moving and stays aggressive usually wins the scramble.",
           "keyPoints": [
-            "Stay heavy and keep moving - never stop in a scramble",
-            "Fight for inside position and underhooks",
-            "In dogfight: get head up and drive into opponent",
-            "Always look to get behind or on top"
+            "Stay heavy and keep moving — never stop in a scramble",
+            "Always look to get behind or on top",
+            "Use your hips and legs to create angles",
+            "React quickly to every position change"
           ],
           "commonMistakes": [
-            "Freezing during a scramble",
-            "Giving up position instead of fighting through"
+            "Freezing during a scramble instead of fighting through",
+            "Giving up and going flat instead of continuing to wrestle",
+            "Not keeping your hips underneath you"
           ],
           "related": [
+            "dogfight",
+            "go-behind",
+            "front-headlock"
+          ],
+          "videos": [
+            {
+              "id": "UmgYDBmJyNs",
+              "title": "Want To Learn How To SCRAMBLE?",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=UmgYDBmJyNs"
+            },
+            {
+              "id": "CbgLhmBAYoI",
+              "title": "Funk Roll Scrambles | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=CbgLhmBAYoI"
+            }
+          ]
+        },
+        {
+          "id": "dogfight",
+          "name": "Dogfight",
+          "category": "takedowns-2",
+          "description": "A specific scramble position where both wrestlers are on their knees battling for underhooks. The wrestler who wins the underhook battle and drives into their opponent wins the dogfight. Common position after a failed takedown or when coming up from bottom.",
+          "keyPoints": [
+            "Fight for the underhook — inside position wins the dogfight",
+            "Get your head up and drive into your opponent",
+            "Use your hips to create pressure and force them down",
+            "Look to come up to your feet and get behind"
+          ],
+          "commonMistakes": [
+            "Staying on your knees too long instead of getting to your feet",
+            "Letting opponent win both underhooks",
+            "Not driving forward — being passive on your knees"
+          ],
+          "related": [
+            "scramble",
             "underhook",
+            "pummeling",
             "go-behind"
           ],
           "videos": [
             {
-              "id": "BoDgPdXSM94",
-              "title": "Dog Fight / Coyote Guard Instructional | Gi & Nogi Underhook Sweep System",
-              "channel": "Jordan Teaches Jiujitsu",
-              "url": "https://www.youtube.com/watch?v=BoDgPdXSM94"
+              "id": "FRc3FGxbefs",
+              "title": "Dog Fight Position | Iranian Underhook | Part 3",
+              "channel": "Wrestling Rabbit Hole",
+              "url": "https://www.youtube.com/watch?v=FRc3FGxbefs"
             },
             {
-              "id": "p4zRBQwkmn4",
-              "title": "60 Dog Fight Under-Hook Half Guard Techniques In Just 18 Minutes by Jason Scully - BJJ Grappling",
-              "channel": "Jiu Jitsu In Minutes by Jason Scully",
-              "url": "https://www.youtube.com/watch?v=p4zRBQwkmn4"
+              "id": "HyI7YWrsEZw",
+              "title": "The Underhook: Wrestling's Best Tie-Up",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=HyI7YWrsEZw"
             }
           ]
         },
