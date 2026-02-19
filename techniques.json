@@ -427,6 +427,39 @@
               "url": "https://www.youtube.com/watch?v=AgHmuB9ortk"
             }
           ]
+        },
+        {
+          "id": "elbow-control",
+          "name": "Elbow Control",
+          "category": "tie-ups",
+          "description": "Controlling opponent's elbow to limit arm movement and set up attacks. Elbow control gives you leverage over their entire arm.",
+          "keyPoints": [
+            "Hard grip above opponent's elbow from outside",
+            "Drive elbow up or across to create openings",
+            "Use elbow control to set up dumps and duck unders"
+          ],
+          "commonMistakes": [
+            "Grabbing too high on the arm",
+            "Not using the control to attack"
+          ],
+          "related": [
+            "inside-control",
+            "duck-under"
+          ],
+          "videos": [
+            {
+              "id": "dCK8316H-Ao",
+              "title": "Inside Tie & Collar Tie | Wrestling Moves",
+              "channel": "Iron Faith Wrestling",
+              "url": "https://www.youtube.com/watch?v=dCK8316H-Ao"
+            },
+            {
+              "id": "6D-vO5QtRsw",
+              "title": "Wrist Control Clearing Ties - Cary Kolat Wrestling Moves",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=6D-vO5QtRsw"
+            }
+          ]
         }
       ]
     },
@@ -455,40 +488,6 @@
             "two-on-one",
             "elbow-control",
             "inside-control"
-          ],
-          "videos": [
-            {
-              "id": "dCK8316H-Ao",
-              "title": "Inside Tie & Collar Tie | Wrestling Moves",
-              "channel": "Iron Faith Wrestling",
-              "url": "https://www.youtube.com/watch?v=dCK8316H-Ao"
-            },
-            {
-              "id": "6D-vO5QtRsw",
-              "title": "Wrist Control Clearing Ties - Cary Kolat Wrestling Moves",
-              "channel": "Cary Kolat",
-              "url": "https://www.youtube.com/watch?v=6D-vO5QtRsw"
-            }
-          ]
-        },
-        {
-          "id": "elbow-control",
-          "name": "Elbow Control",
-          "category": "hand-fighting",
-          "description": "Controlling opponent's elbow to limit arm movement and set up attacks. Elbow control gives you leverage over their entire arm.",
-          "keyPoints": [
-            "Cup opponent's elbow from underneath",
-            "Drive elbow up or across to create openings",
-            "Use elbow control to set up dumps and duck unders",
-            "Maintain inside position for best control"
-          ],
-          "commonMistakes": [
-            "Grabbing too high on the arm",
-            "Not using the control to attack"
-          ],
-          "related": [
-            "inside-control",
-            "duck-under"
           ],
           "videos": [
             {
