@@ -184,8 +184,8 @@
       let isPanning = false;
       let panStart = null;
       let panVBStart = null;
-      // Prevent node click after drag
       let dragMoved = false;
+      let clickTarget = null;
 
       function svgPoint(clientX, clientY) {
         // Convert screen coords to viewBox coords
@@ -201,6 +201,7 @@
         pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
         wrapper.setPointerCapture(e.pointerId);
         dragMoved = false;
+        clickTarget = e.target.closest('.fc-node');
 
         if (pointers.size === 1) {
           isPanning = true;
@@ -254,6 +255,11 @@
         if (pointers.size === 0) {
           isPanning = false;
           panStart = null;
+          if (!dragMoved && clickTarget) {
+            const nodeId = clickTarget.getAttribute('data-id');
+            if (nodeId) showNodeInfo(nodeId);
+          }
+          clickTarget = null;
         }
       }
 
@@ -268,13 +274,6 @@
         zoomTo(currentZoom * factor, pt.x, pt.y);
       }, { passive: false });
 
-      // Suppress click on nodes after drag
-      svg.addEventListener('click', e => {
-        if (dragMoved) {
-          e.stopPropagation();
-          e.preventDefault();
-        }
-      }, true);
     }
 
     // --- BFS tree layout (matches gen_flowcharts.py) ---
@@ -401,7 +400,6 @@
         if (matchedTech && matchedTech.critical) nodeClass += ' node-critical';
         g.setAttribute('class', nodeClass);
         g.setAttribute('data-id', n.id);
-        g.addEventListener('click', () => showNodeInfo(n.id));
 
         const ellipse = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
         ellipse.setAttribute('cx', pos.x);
