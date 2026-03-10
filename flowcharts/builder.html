@@ -190,6 +190,7 @@
       <button class="tb-btn" id="btn-export" title="Export as JSON">Export JSON</button>
       <button class="tb-btn" id="btn-import" title="Import from JSON file">Import JSON</button>
       <input type="file" id="import-file" accept=".json" style="display:none">
+      <button class="tb-btn" id="btn-save" title="Save to GitHub via Worker API" style="border-left:3px solid var(--accent);">Save to GitHub</button>
     </div>
     <div class="tb-sep"></div>
     <div class="tb-group">
@@ -225,6 +226,27 @@
   </div>
 
   <div class="status-msg" id="status"></div>
+
+  <!-- Save to GitHub modal -->
+  <div class="popup-overlay" id="save-modal" onclick="if(event.target===this)document.getElementById('save-modal').classList.remove('active')">
+    <div class="popup-panel" style="max-width:480px;">
+      <button class="popup-close" onclick="document.getElementById('save-modal').classList.remove('active')">&times;</button>
+      <h2 style="color:var(--primary);margin-bottom:1rem;">Save to GitHub</h2>
+      <div id="save-new-fields" style="display:none;margin-bottom:1rem;">
+        <label style="display:block;font-size:0.85rem;font-weight:600;margin-bottom:0.25rem;">Chart ID (slug, e.g. "front-headlock-series")</label>
+        <input type="text" id="save-chart-id" placeholder="my-series-name" style="width:100%;padding:0.4rem 0.5rem;border:1px solid var(--border);border-radius:4px;font-size:0.9rem;box-sizing:border-box;margin-bottom:0.75rem;">
+        <label style="display:block;font-size:0.85rem;font-weight:600;margin-bottom:0.25rem;">Chart Name</label>
+        <input type="text" id="save-chart-name" placeholder="Front Headlock Series" style="width:100%;padding:0.4rem 0.5rem;border:1px solid var(--border);border-radius:4px;font-size:0.9rem;box-sizing:border-box;margin-bottom:0.75rem;">
+      </div>
+      <label style="display:block;font-size:0.85rem;font-weight:600;margin-bottom:0.25rem;">Commit Message</label>
+      <input type="text" id="save-commit-msg" placeholder="Update flowchart" style="width:100%;padding:0.4rem 0.5rem;border:1px solid var(--border);border-radius:4px;font-size:0.9rem;box-sizing:border-box;margin-bottom:1rem;">
+      <div style="display:flex;gap:0.5rem;justify-content:flex-end;">
+        <button class="tb-btn" onclick="document.getElementById('save-modal').classList.remove('active')">Cancel</button>
+        <button class="tb-btn active" id="save-confirm-btn" onclick="confirmSaveToGitHub()">Save</button>
+      </div>
+      <p id="save-error" style="color:#c00;font-size:0.85rem;margin-top:0.5rem;display:none;"></p>
+    </div>
+  </div>
 
   <script>
   (function() {
@@ -931,6 +953,89 @@
         console.error(e);
       }
     }
+
+    // --- Save to GitHub ---
+    document.getElementById('btn-save').addEventListener('click', () => {
+      if (nodes.length === 0) { showStatus('Nothing to save'); return; }
+      const isNew = !chartMeta;
+      document.getElementById('save-new-fields').style.display = isNew ? 'block' : 'none';
+      document.getElementById('save-chart-id').value = '';
+      document.getElementById('save-chart-name').value = '';
+      document.getElementById('save-commit-msg').value = chartMeta ? 'Update ' + chartMeta.name + ' flowchart' : 'Add new flowchart';
+      document.getElementById('save-error').style.display = 'none';
+      document.getElementById('save-modal').classList.add('active');
+      document.getElementById(isNew ? 'save-chart-id' : 'save-commit-msg').focus();
+    });
+
+    window.confirmSaveToGitHub = async function() {
+      const isNew = !chartMeta;
+      const errorEl = document.getElementById('save-error');
+      errorEl.style.display = 'none';
+
+      let id, name;
+      if (isNew) {
+        id = document.getElementById('save-chart-id').value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-');
+        name = document.getElementById('save-chart-name').value.trim();
+        if (!id || !name) { errorEl.textContent = 'Chart ID and Name are required.'; errorEl.style.display = 'block'; return; }
+      } else {
+        id = chartMeta.id;
+        name = chartMeta.name;
+      }
+
+      const msg = document.getElementById('save-commit-msg').value.trim() || 'Update flowchart';
+      const confirmBtn = document.getElementById('save-confirm-btn');
+      confirmBtn.textContent = 'Saving...';
+      confirmBtn.disabled = true;
+
+      try {
+        // Build flowchart block
+        const rootN = nodes.find(n => n.type === 'root') || nodes[0];
+        const nodesOut = nodes.map(n => ({ id: n.id, label: n.label, type: n.type }));
+        const edgesOut = edges.map(e => ({ from: e.from, to: e.to }));
+        const fcBlock = {
+          id,
+          name,
+          file: 'flowcharts/chart.html?chart=' + id,
+          rootNode: rootN.id,
+          nodes: nodesOut,
+          edges: edgesOut
+        };
+        if (chartMeta && chartMeta.slide) fcBlock.slide = chartMeta.slide;
+
+        // Fetch current techniques.json
+        const resp = await fetch('../techniques.json');
+        const data = await resp.json();
+
+        // Replace or append flowchart
+        const idx = data.flowcharts.findIndex(f => f.id === id);
+        if (idx >= 0) {
+          data.flowcharts[idx] = fcBlock;
+        } else {
+          data.flowcharts.push(fcBlock);
+        }
+
+        // Save via Worker API
+        const saveResp = await fetch('/hs/coaches/api/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ file: 'techniques.json', content: data, message: msg })
+        });
+
+        const result = await saveResp.json();
+        if (!saveResp.ok) throw new Error(result.error || 'Save failed');
+
+        // Update chartMeta if new
+        if (isNew) chartMeta = { id, name, file: fcBlock.file, rootNode: rootN.id };
+        document.getElementById('save-modal').classList.remove('active');
+        showStatus('Saved to GitHub!');
+      } catch(err) {
+        errorEl.textContent = err.message;
+        errorEl.style.display = 'block';
+      } finally {
+        confirmBtn.textContent = 'Save';
+        confirmBtn.disabled = false;
+      }
+    };
 
     // Initial render
     render();
