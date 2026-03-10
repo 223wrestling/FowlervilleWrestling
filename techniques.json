@@ -1116,6 +1116,35 @@
               "url": "https://www.youtube.com/watch?v=C20iZwMO7NE"
             }
           ]
+        },
+        {
+          "id": "foot-block",
+          "name": "Foot Block",
+          "category": "takedowns-1",
+          "description": "Shown from a 2-on-1 or Russian. Utilize your lead foot to block behind opponents heel. Heavy head an level change pressure to drive backwards over your foot that is blocking. Like a dump but backwards.",
+          "keyPoints": [
+            "Block Foot",
+            "Level Change",
+            "Head Pressure"
+          ],
+          "commonMistakes": [
+            "Slow or not heavy enough level change",
+            "Not blocking the foot",
+            "Not tight enough on arm"
+          ],
+          "related": [
+            "two-on-one",
+            "foot-sweep",
+            "firemans-carry"
+          ],
+          "videos": [
+            {
+              "id": "zJbtWYUoQ4c",
+              "title": "Russian 2 on 1 Knee Pick with Foot Block",
+              "channel": "Cary Kolat",
+              "url": "https://www.youtube.com/watch?v=zJbtWYUoQ4c"
+            }
+          ]
         }
       ]
     },
@@ -3693,7 +3722,8 @@
     {
       "id": "russian-tie-reactions",
       "name": "Russian Tie Opponent Reactions",
-      "file": "flowcharts/chart.html?chart=russian-tie-reactions",
+      "slide": 16,
+      "file": "flowcharts/russian-tie-reactions.html",
       "rootNode": "rt-reactions",
       "nodes": [
         {
@@ -3704,36 +3734,36 @@
         {
           "id": "opp-head-pos",
           "label": "Opp. Head Position",
-          "type": "action"
+          "type": "reaction"
         },
         {
           "id": "my-head-pos",
           "label": "My Head Position",
-          "type": "action"
+          "type": "reaction"
         },
         {
           "id": "pulls-arm",
           "label": "Pulls Arm Away",
-          "type": "action"
+          "type": "reaction"
         },
         {
           "id": "head-post-rt",
           "label": "Head Post",
-          "type": "action"
+          "type": "reaction"
         },
         {
           "id": "square-up",
           "label": "Square Up",
-          "type": "action"
+          "type": "reaction"
         },
         {
           "id": "fireman-dump",
-          "label": "Fireman's Carry",
+          "label": "Fireman or Dump",
           "type": "finish"
         },
         {
           "id": "snap-shuck-rt",
-          "label": "Snapdown",
+          "label": "Snap or Shuck",
           "type": "finish"
         },
         {
@@ -3775,11 +3805,6 @@
           "id": "leg-block",
           "label": "Leg Block or Carryover",
           "type": "finish"
-        },
-        {
-          "id": "n18",
-          "label": "Snatch Single",
-          "type": "finish"
         }
       ],
       "edges": [
@@ -3805,18 +3830,45 @@
         },
         {
           "from": "opp-head-pos",
-          "to": "snap-shuck-rt"
-        },
-        {
-          "from": "opp-head-pos",
           "to": "fireman-dump"
         },
         {
           "from": "opp-head-pos",
+          "to": "snap-shuck-rt"
+        },
+        {
+          "from": "my-head-pos",
           "to": "foot-sweep-react"
+        },
+        {
+          "from": "my-head-pos",
+          "to": "key-lock"
+        },
+        {
+          "from": "my-head-pos",
+          "to": "throw-react"
+        },
+        {
+          "from": "my-head-pos",
+          "to": "uchi-mata"
+        },
+        {
+          "from": "pulls-arm",
+          "to": "elbow-pass-rt"
+        },
+        {
+          "from": "pulls-arm",
+          "to": "double-leg-rt"
+        },
+        {
+          "from": "head-post-rt",
+          "to": "attack-far-leg"
+        },
+        {
+          "from": "square-up",
+          "to": "leg-block"
         }
-      ],
-      "slide": 16
+      ]
     },
     {
       "id": "elbow-control-series",
