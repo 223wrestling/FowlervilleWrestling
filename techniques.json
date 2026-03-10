@@ -3772,7 +3772,7 @@
         },
         {
           "id": "key-lock",
-          "label": "Key Lock",
+          "label": "Keyhole Lock",
           "type": "finish"
         },
         {
