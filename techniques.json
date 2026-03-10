@@ -3596,8 +3596,7 @@
     {
       "id": "russian-tie-series",
       "name": "Russian Tie Series",
-      "slide": 15,
-      "file": "flowcharts/russian-tie.html",
+      "file": "flowcharts/chart.html?chart=russian-tie-series",
       "rootNode": "russian-tie-root",
       "nodes": [
         {
@@ -3616,18 +3615,13 @@
           "type": "action"
         },
         {
-          "id": "dump-rt",
-          "label": "Dump",
-          "type": "action"
-        },
-        {
           "id": "snap-rt",
           "label": "Snap",
           "type": "action"
         },
         {
           "id": "foot-sweep-rt",
-          "label": "Foot Sweep or Trip",
+          "label": "Foot Sweep",
           "type": "action"
         },
         {
@@ -3646,9 +3640,14 @@
           "type": "finish"
         },
         {
-          "id": "high-c-double",
-          "label": "High C or Double",
-          "type": "finish"
+          "id": "n11",
+          "label": "High Crotch",
+          "type": "action"
+        },
+        {
+          "id": "n21",
+          "label": "Fireman's Carry",
+          "type": "action"
         }
       ],
       "edges": [
@@ -3662,10 +3661,6 @@
         },
         {
           "from": "russian-tie-root",
-          "to": "dump-rt"
-        },
-        {
-          "from": "russian-tie-root",
           "to": "snap-rt"
         },
         {
@@ -3673,22 +3668,27 @@
           "to": "foot-sweep-rt"
         },
         {
-          "from": "dump-rt",
-          "to": "throw-rt"
-        },
-        {
-          "from": "dump-rt",
-          "to": "snap-sub-rt"
-        },
-        {
           "from": "snap-rt",
           "to": "go-behind-rt"
         },
         {
-          "from": "snap-rt",
-          "to": "high-c-double"
+          "from": "double-wrist-lock",
+          "to": "throw-rt"
+        },
+        {
+          "from": "double-wrist-lock",
+          "to": "snap-sub-rt"
+        },
+        {
+          "from": "russian-tie-root",
+          "to": "n11"
+        },
+        {
+          "from": "russian-tie-root",
+          "to": "n21"
         }
-      ]
+      ],
+      "slide": 15
     },
     {
       "id": "russian-tie-reactions",
