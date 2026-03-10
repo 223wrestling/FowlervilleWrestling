@@ -3693,8 +3693,7 @@
     {
       "id": "russian-tie-reactions",
       "name": "Russian Tie Opponent Reactions",
-      "slide": 16,
-      "file": "flowcharts/russian-tie-reactions.html",
+      "file": "flowcharts/chart.html?chart=russian-tie-reactions",
       "rootNode": "rt-reactions",
       "nodes": [
         {
@@ -3705,36 +3704,36 @@
         {
           "id": "opp-head-pos",
           "label": "Opp. Head Position",
-          "type": "reaction"
+          "type": "action"
         },
         {
           "id": "my-head-pos",
           "label": "My Head Position",
-          "type": "reaction"
+          "type": "action"
         },
         {
           "id": "pulls-arm",
           "label": "Pulls Arm Away",
-          "type": "reaction"
+          "type": "action"
         },
         {
           "id": "head-post-rt",
           "label": "Head Post",
-          "type": "reaction"
+          "type": "action"
         },
         {
           "id": "square-up",
           "label": "Square Up",
-          "type": "reaction"
+          "type": "action"
         },
         {
           "id": "fireman-dump",
-          "label": "Fireman or Dump",
+          "label": "Fireman's Carry",
           "type": "finish"
         },
         {
           "id": "snap-shuck-rt",
-          "label": "Snap or Shuck",
+          "label": "Snapdown",
           "type": "finish"
         },
         {
@@ -3776,6 +3775,11 @@
           "id": "leg-block",
           "label": "Leg Block or Carryover",
           "type": "finish"
+        },
+        {
+          "id": "n18",
+          "label": "Snatch Single",
+          "type": "finish"
         }
       ],
       "edges": [
@@ -3801,45 +3805,18 @@
         },
         {
           "from": "opp-head-pos",
+          "to": "snap-shuck-rt"
+        },
+        {
+          "from": "opp-head-pos",
           "to": "fireman-dump"
         },
         {
           "from": "opp-head-pos",
-          "to": "snap-shuck-rt"
-        },
-        {
-          "from": "my-head-pos",
           "to": "foot-sweep-react"
-        },
-        {
-          "from": "my-head-pos",
-          "to": "key-lock"
-        },
-        {
-          "from": "my-head-pos",
-          "to": "throw-react"
-        },
-        {
-          "from": "my-head-pos",
-          "to": "uchi-mata"
-        },
-        {
-          "from": "pulls-arm",
-          "to": "elbow-pass-rt"
-        },
-        {
-          "from": "pulls-arm",
-          "to": "double-leg-rt"
-        },
-        {
-          "from": "head-post-rt",
-          "to": "attack-far-leg"
-        },
-        {
-          "from": "square-up",
-          "to": "leg-block"
         }
-      ]
+      ],
+      "slide": 16
     },
     {
       "id": "elbow-control-series",
