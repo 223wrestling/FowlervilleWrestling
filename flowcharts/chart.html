@@ -505,7 +505,7 @@
     });
 
     // --- Load and render ---
-    fetch('../techniques.json')
+    fetch('../techniques.json', { cache: 'no-cache' })
       .then(r => r.json())
       .then(data => {
         techniquesData = data;

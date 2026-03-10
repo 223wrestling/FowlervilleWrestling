@@ -266,7 +266,7 @@
     // --- Technique data for autocomplete and preview popups ---
     let techniquesData = null;
     let techniqueNames = [];
-    fetch('../techniques.json')
+    fetch('../techniques.json', { cache: 'no-cache' })
       .then(r => r.json())
       .then(data => {
         techniquesData = data;
@@ -919,7 +919,7 @@
 
     async function loadFlowchartFromJSON(id) {
       try {
-        const resp = await fetch('../techniques.json');
+        const resp = await fetch('../techniques.json', { cache: 'no-cache' });
         const data = await resp.json();
         const fc = data.flowcharts.find(f => f.id === id);
         if (!fc) { showStatus('Flowchart not found: ' + id); return; }
@@ -1003,7 +1003,7 @@
         if (chartMeta && chartMeta.slide) fcBlock.slide = chartMeta.slide;
 
         // Fetch current techniques.json
-        const resp = await fetch('../techniques.json');
+        const resp = await fetch('../techniques.json', { cache: 'no-cache' });
         const data = await resp.json();
 
         // Replace or append flowchart
