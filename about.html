@@ -42,42 +42,36 @@
       <div class="card">
         <h3>Youth Club</h3>
         <p style="margin-top:0.5rem;">For questions about the youth program, registration, or volunteering:</p>
-        <p style="margin-top:0.5rem;"><strong>Email:</strong> <a href="mailto:fowlervillewrestling@gmail.com" style="color:var(--primary);">fowlervillewrestling@gmail.com</a></p>
+        <button id="contact-youth" class="btn btn-outline" style="margin-top:0.75rem;">Email Us</button>
       </div>
       <div class="card">
         <h3>High School Program</h3>
         <p style="margin-top:0.5rem;">For questions about the high school team, tryouts, or the season:</p>
-        <p style="margin-top:0.5rem;"><strong>Email:</strong> <a href="mailto:fowlervillewrestling@gmail.com" style="color:var(--primary);">fowlervillewrestling@gmail.com</a></p>
+        <button id="contact-hs" class="btn btn-outline" style="margin-top:0.75rem;">Email Us</button>
       </div>
     </div>
 
     <!-- Location -->
     <h2 class="section-title">Location</h2>
     <div class="card">
-      <div class="grid-2">
-        <div>
-          <h3>Youth Practices</h3>
-          <p style="margin-top:0.5rem;">Fowlerville Community Center<br>Fowlerville, MI 48836</p>
-          <p style="margin-top:0.5rem;font-size:0.9rem;color:var(--text-light);">Mondays &amp; Wednesdays, 6:00 - 7:30 PM</p>
-        </div>
-        <div>
-          <h3>High School Practices</h3>
-          <p style="margin-top:0.5rem;">Fowlerville High School Wrestling Room<br>7060 W Grand River Ave<br>Fowlerville, MI 48836</p>
-          <p style="margin-top:0.5rem;font-size:0.9rem;color:var(--text-light);">Mon-Fri, 3:30 - 5:30 PM (in season)</p>
-        </div>
-      </div>
+      <h3>Fowlerville High School Wrestling Room</h3>
+      <p style="margin-top:0.5rem;">700 N Grand Ave, Fowlerville, MI 48836</p>
+      <a href="https://www.google.com/maps/search/?api=1&query=700+N+Grand+Ave+Fowlerville+MI+48836" target="_blank" style="display:inline-block;margin-top:0.75rem;font-size:0.9rem;">Get Directions &rarr;</a>
     </div>
   </div>
 
-  <footer class="site-footer">
-    <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="youth/index.html">Youth Club</a>
-      <a href="hs/index.html">High School</a>
-      <a href="news/index.html">News</a>
-      <a href="sponsors.html">Sponsors</a>
-    </div>
-    <div class="footer-copy">Fowlerville Wrestling &mdash; Fowlerville, Michigan</div>
-  </footer>
+  <script>
+    (function() {
+      const a = '223wrestling', b = 'gmail.com';
+      const mailto = 'mailto:' + a + '\x40' + b;
+      document.getElementById('contact-youth').addEventListener('click', function() {
+        window.location = mailto + '?subject=' + encodeURIComponent('Youth Club Question');
+      });
+      document.getElementById('contact-hs').addEventListener('click', function() {
+        window.location = mailto + '?subject=' + encodeURIComponent('High School Program Question');
+      });
+    })();
+  </script>
+  <script src="js/footer.js"></script>
 </body>
 </html>
