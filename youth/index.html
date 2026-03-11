@@ -133,7 +133,7 @@
 
     function openFlyerPopup(url, title) {
       document.getElementById('flyer-title').textContent = title;
-      document.getElementById('flyer-frame').src = url;
+      document.getElementById('flyer-frame').src = url + '#toolbar=0&navpanes=0';
       const overlay = document.getElementById('flyer-overlay');
       overlay.style.display = 'flex';
     }
