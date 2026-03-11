@@ -12,7 +12,12 @@ A self-contained wrestling curriculum website for Fowlerville Wrestling Club. Pu
 - `flowcharts/chart.html` - Dynamic flowchart viewer (renders live from `techniques.json`, no build step)
 - `flowcharts/builder.html` - Visual flowchart builder/editor with preview mode
 - `flowcharts/index.html` - Flowchart listing page with links to dynamic viewer
-- `flowcharts/*.html` - Legacy static flowcharts (kept for reference, no longer linked)
+- `flowcharts/*.html` - Orphaned static flowcharts (no longer linked; safe to delete)
+- `gen_flowcharts.py` - Orphaned legacy Python generator (no longer needed; safe to delete)
+- `youth/index.html` - Youth program landing page
+- `youth/schedule.html` - Youth schedule page (fetches from Google Calendar)
+- `youth/flyers/` - Practice session flyers (PDFs); one per session, updated yearly
+  - `fall-folkstyle.pdf`, `full-season-folkstyle.pdf`, `freestyle-greco.pdf`
 - `hs/roster.json` - Roster data: wrestlers (name, weight, year, photo) and coaches/staff
 - `hs/coaches/coaches-data.json` - Practice plans, wrestler notes, scouting reports, forms
 - `hs/coaches/index.html` - Coaches area app: editable roster, plans, notes, scouting, forms with Worker API save
@@ -23,7 +28,6 @@ A self-contained wrestling curriculum website for Fowlerville Wrestling Club. Pu
 - `data/schedule-youth.json` - Static fallback youth schedule data
 - `workers/coaches-auth.js` - Cloudflare Worker: basic auth + API proxy + Google Calendar proxy
 - `wrangler.toml` - Cloudflare Worker config
-- `gen_flowcharts.py` - Legacy Python generator (no longer needed, kept for reference)
 - `CNAME` - Custom domain for GitHub Pages
 - `cards.pptx` - Source PowerPoint with 19 slides (gitignored)
 - `cards_extracted/` - Unzipped pptx XML for reference (gitignored)

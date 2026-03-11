@@ -18,7 +18,6 @@ Open `http://localhost:8000` in your browser.
 ├── index.html               Hub page linking to everything
 ├── checklist.html           Printable student checklist
 ├── techniques.html          Technique viewer (hash-routed single-page app)
-├── gen_flowcharts.py        Legacy script (static flowcharts, no longer needed)
 ├── CNAME                    Custom domain for GitHub Pages
 ├── wrangler.toml            Cloudflare Worker config
 ├── data/
@@ -32,13 +31,33 @@ Open `http://localhost:8000` in your browser.
 ├── flowcharts/
 │   ├── chart.html           Dynamic flowchart viewer (renders from techniques.json)
 │   ├── builder.html         Visual flowchart builder/editor
-│   ├── index.html           Flowchart listing page
-│   └── *.html               Legacy static flowcharts (kept for reference)
+│   └── index.html           Flowchart listing page
+├── youth/
+│   ├── index.html           Youth program landing page
+│   ├── schedule.html        Youth schedule page
+│   └── flyers/              Practice session flyers (PDF) — replace yearly
+│       ├── fall-folkstyle.pdf
+│       ├── full-season-folkstyle.pdf
+│       └── freestyle-greco.pdf
 ├── hs/coaches/
 │   ├── index.html           Coaches area (Flowchart Editor + Technique Editor)
 │   └── editor.html          Technique editor with GitHub API save
 └── cards.pptx               Original PowerPoint source material
 ```
+
+## Youth Program Flyers
+
+Each practice session card on the youth page (`youth/index.html`) shows a **View Flyer** button when a matching PDF exists in `youth/flyers/`. The button is hidden automatically if the file is missing.
+
+To update a flyer for a new season, upload a PDF with the exact filename:
+
+| Session | Filename |
+|---------|----------|
+| Fall Folkstyle | `youth/flyers/fall-folkstyle.pdf` |
+| Full Season Folkstyle | `youth/flyers/full-season-folkstyle.pdf` |
+| Freestyle & Greco | `youth/flyers/freestyle-greco.pdf` |
+
+Upload via the Coaches Area file upload, or commit the PDF directly to GitHub. The button appears automatically once the file is live.
 
 ## Editing Videos
 
