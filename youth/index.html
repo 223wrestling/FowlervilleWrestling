@@ -30,16 +30,19 @@
         <h3>Fall Folkstyle</h3>
         <p>Tuesday &amp; Thursday</p>
         <p style="margin-top:0.5rem;color:var(--text-light);font-size:0.9rem;">November through Christmas Break</p>
+        <button class="btn btn-outline flyer-btn" style="margin-top:1rem;display:none;" data-flyer="flyers/fall-folkstyle.pdf">View Flyer</button>
       </div>
       <div class="card">
         <h3>Full Season Folkstyle</h3>
         <p>Tuesday &amp; Thursday<br><span style="color:var(--text-light);font-size:0.9rem;">November through December</span></p>
         <p style="margin-top:0.5rem;">Monday &amp; Thursday<br><span style="color:var(--text-light);font-size:0.9rem;">January through March</span></p>
+        <button class="btn btn-outline flyer-btn" style="margin-top:1rem;display:none;" data-flyer="flyers/full-season-folkstyle.pdf">View Flyer</button>
       </div>
       <div class="card">
         <h3>Freestyle &amp; Greco</h3>
         <p>Monday &amp; Wednesday</p>
         <p style="margin-top:0.5rem;color:var(--text-light);font-size:0.9rem;">March through May</p>
+        <button class="btn btn-outline flyer-btn" style="margin-top:1rem;display:none;" data-flyer="flyers/freestyle-greco.pdf">View Flyer</button>
       </div>
     </div>
     <div class="card" style="margin-top:1.5rem;">
@@ -108,7 +111,40 @@
     <div class="footer-copy">Fowlerville Wrestling &mdash; Fowlerville, Michigan</div>
   </footer>
 
+  <!-- Flyer popup -->
+  <div id="flyer-overlay" onclick="if(event.target===this)closeFlyerPopup()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center;padding:1rem;">
+    <div style="background:#fff;border-radius:8px;width:100%;max-width:820px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1rem;border-bottom:1px solid #e0e0e0;">
+        <span id="flyer-title" style="font-weight:600;color:var(--primary);"></span>
+        <button onclick="closeFlyerPopup()" style="background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--text-light);line-height:1;">&times;</button>
+      </div>
+      <iframe id="flyer-frame" src="" style="flex:1;border:none;min-height:70vh;"></iframe>
+    </div>
+  </div>
+
   <script>
+    // Check each flyer file and show button only if it exists
+    document.querySelectorAll('.flyer-btn').forEach(btn => {
+      fetch(btn.dataset.flyer, { method: 'HEAD' })
+        .then(r => { if (r.ok) btn.style.display = ''; })
+        .catch(() => {});
+      btn.addEventListener('click', () => openFlyerPopup(btn.dataset.flyer, btn.closest('.card').querySelector('h3').textContent));
+    });
+
+    function openFlyerPopup(url, title) {
+      document.getElementById('flyer-title').textContent = title;
+      document.getElementById('flyer-frame').src = url;
+      const overlay = document.getElementById('flyer-overlay');
+      overlay.style.display = 'flex';
+    }
+
+    function closeFlyerPopup() {
+      document.getElementById('flyer-overlay').style.display = 'none';
+      document.getElementById('flyer-frame').src = '';
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFlyerPopup(); });
+
     const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
     // Fetch all 3 youth calendars, merge and deduplicate (fallback to static JSON)
