@@ -1,5 +1,5 @@
 /**
- * Site-wide navigation component for Fowlerville Wrestling.
+ * Site-wide navigation component for 223 Wrestling.
  * Include this script on every page. Set window.NAV_BASE before loading
  * to configure the base path (e.g., '../' for pages in subdirectories).
  */
@@ -10,8 +10,8 @@
   nav.className = 'site-nav';
   nav.innerHTML = `
     <a href="${base}index.html" class="nav-brand">
-      <img src="${base}img/logo.png" alt="Fowlerville Wrestling">
-      <span>Fowlerville Wrestling</span>
+      <img src="${base}img/logo.png" alt="223 Wrestling">
+      <span>223 Wrestling</span>
     </a>
     <button class="nav-toggle" aria-label="Menu">&#9776;</button>
     <ul class="nav-links">
