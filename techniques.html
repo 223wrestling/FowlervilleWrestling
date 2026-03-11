@@ -142,8 +142,17 @@
 
   <div class="hero">
     <h1>Wrestling Techniques</h1>
-    <p>Complete technique library with videos</p>
+    <p>Technique breakdowns, coaching points, key videos, and chain wrestling flowcharts — always growing.</p>
+    <p style="font-size:0.9rem;margin-top:0.5rem;opacity:0.85;">This library is a work in progress. Have a suggestion or see something that needs updating?
+      <button id="contact-btn" style="background:none;border:none;color:inherit;text-decoration:underline;cursor:pointer;font-size:inherit;padding:0;opacity:1;">Reach out to us.</button>
+    </p>
   </div>
+  <script>
+    document.getElementById('contact-btn').addEventListener('click', function() {
+      const a = '223wrestling', b = 'gmail.com';
+      window.location = 'mailto:' + a + '\x40' + b + '?subject=' + encodeURIComponent('Technique Library Suggestion');
+    });
+  </script>
 
   <div class="container">
     <div id="list-view" class="list-view">
