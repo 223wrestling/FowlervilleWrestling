@@ -590,6 +590,7 @@
     // Node type add buttons
     toolbar.querySelectorAll('[data-add]').forEach(btn => {
       btn.addEventListener('click', () => {
+        if (mode === 'add' && addType === btn.dataset.add) { setMode('add'); return; }
         setMode('add');
         addType = btn.dataset.add;
         clearActiveButtons();
